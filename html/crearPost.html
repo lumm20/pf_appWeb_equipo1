@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Post</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/post.css">
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+</head>
+
+<body>
+    <header>
+        <a href="" class="contenedor_logo">
+            <img class="logo" src="../img/logo.png" alt="Logo de Koopa Archives">
+            <div class="logo_texto">
+                <h1>
+                    <span class="logo_koopas">Koopa</span><br>
+                    Archives
+                </h1>
+            </div>
+        </a>
+        <div class="sesion_contenedor">
+            <a href="" class="sesion_link">
+                <p><i class="fa-solid fa-user"></i></p>
+                <p>Perfil</p>
+            </a>
+        </div>
+    </header>
+
+    <nav class="contenedor_nav">
+        <div class="nav_links">
+            <a class="nav_link" href="#">Noticias</a>
+            <a class="nav_link" href="#">Buscar</a>
+            <a class="nav_link" href="#">Nosotros</a>
+        </div>
+    </nav>
+    <main class="contenedor">
+        <div class="encabezado_crear_post">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <h1>Crear Post</h1>
+        </div>
+
+        <form>
+            <div class="grupo_formulario">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo"
+                    value="The Legend of Zelda: Echoes of Wisdom, el sorpresivo último baile de Hyrule en la Nintendo Switch">
+            </div>
+
+            <div class="fila">
+                <div class="columna">
+                    <div class="grupo_formulario">
+                        <label for="categoria">Categoría:</label>
+                        <select id="categorias" name="videojuegos">
+                            <option value="mario-bros">Mario Bros</option>
+                            <option value="zelda" selected>The Legend Of Zelda</option>
+                            <option value="kirby">Kirby</option>
+                            <option value="smash-bros">Smash Bros</option>
+                            <option value="metroid">Metroid</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="columna">
+                    <div class="grupo_formulario">
+                        <label>Post destacado</label>
+                        <div class="contenedor_interruptor">
+                            <label class="interruptor">
+                                <input type="checkbox" checked>
+                                <span class="deslizador"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grupo_formulario">
+                <label>Imagen principal</label>
+                <input type="file" placeholder="Img a visualizar" accept=".png, .jpg, .jpeg">
+                <div class="vista_previa_imagen">
+                    <img src="../img/noti_ejemplo.png" alt="Vista previa">
+                </div>
+            </div>
+
+            <div class="grupo_formulario">
+                <label>Contenido:</label>
+                <textarea
+                    class="contenido">The Legend of Zelda: Echoes of Wisdom es el más reciente título de la 'saga más legendaria de Nintendo', que plantea muchos cambios con relación a lo que popularmente es conocido como la 'línea 2D' y cuyo anuncio nos tomó a todos por sorpresa a mitad de año.</textarea>
+            </div>
+
+            <div class="subtema">
+                <div class="encabezado_subtema">
+                    <h3>Los realmente pocos problemas del juego</h3>
+                </div>
+                <textarea
+                    class="contenido">Todo tiene un lado 'B'. Y aunque como fan de la saga es complicado admitir las imperfecciones, también son parte de, aunque a mi parecer, son casi insignificantes al lado de lo bueno que hay para decir. Uno es técnico, y una cantaleta ya conocida en la Switch: el rendimiento.</textarea>
+                <div class="grupo_formulario">
+                    <label>Añadir imagen</label>
+                    <input type="file" placeholder="Null" accept=".png, .jpg, .jpeg">
+                    <div class="vista_previa_imagen">
+                        <img src="" alt="Vista previa">
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn_form">
+                <button type="button" class="agregar_subtema">
+                    <i class="fa-solid fa-plus"></i>
+                    Añadir nuevo subtema
+                </button>
+                <button type="submit" class="agregar_subtema">
+                    Subir Post
+                </button>
+            </div>
+        </form>
+    </main>
+    <footer class="footer">
+        <p>Hecho por Equipo: Batifamilia - &copy;Aplicaciones Web</p>
+    </footer>
+</body>
+</html>
