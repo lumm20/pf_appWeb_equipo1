@@ -1,0 +1,211 @@
+:root {
+    --colorFondo: #2B2C34;
+    --rojoNintendo: #ff6b6b;
+    --morado: #6246EA;
+    --moradoClaro: #D1D1E9;
+    --blanco: #FFFFFE;
+    --gris: #D9D9D9;
+    --fuentePrincipal: 'Nunito', sans-serif;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--fuentePrincipal);
+}
+
+body {
+    font-size: 1rem;
+    background-color: #f5f5ff;
+}
+
+header {
+    background-color: var(--rojoNintendo);
+    padding: 0.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+a,
+a:hover,
+input {
+    text-decoration: none;
+}
+
+.contenedor_logo {
+    display: flex;
+    align-items: center;
+
+}
+
+.logo {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 4.9rem;
+    width: 5.7rem;
+}
+
+.logo_texto {
+    color: var(--blanco);
+    font-family: var(--fuentePrincipal);
+
+}
+
+.logo_koopas {
+    font-size: 1rem;
+}
+
+h1 {
+    line-height: .9;
+    font-size: 2rem;
+}
+
+.btn_header {
+    padding: .8rem 2rem;
+    border-radius: 1.5rem;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--colorFondo);
+    background-color: var(--moradoClaro);
+    font-weight: 800;
+}
+.btn_header:nth-of-type(2) {
+    background-color: var(--morado);
+    color: var(--blanco);
+    margin-left: 1rem;
+}
+
+
+
+.auth-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.auth-buttons button {
+    padding: 0.3rem 1rem;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.register {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.login {
+    background-color: #4a90e2;
+    color: white;
+}
+
+nav {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+    margin-left: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+nav a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.featured-grid .main-card {
+    grid-column: span 3;
+    display: flex;
+    gap: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.main-card img {
+    width: 50%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.card {
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 4px;
+}
+
+.card-content {
+    padding: 0.5rem;
+}
+
+h2 {
+    color: #ff4444;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.game-title {
+    color: #666;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+.latest-news {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.news-card {
+    display: flex;
+    gap: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.news-card img {
+    width: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.load-more {
+    background: #f0f0f0;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    color: #666;
+    cursor: pointer;
+}
