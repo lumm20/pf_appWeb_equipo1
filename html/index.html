@@ -22,84 +22,169 @@
                     Archives
                 </h1>
             </div>
-            </div>
-            <div class="auth-buttons">
-                <input type="button" class="btn_header" value="Registrarse">
-                <input type="button" class="btn_header" value="Iniciar Sesión">
         </a>
+        <div class="iniciadoSesion">
+            <input type="button" class="btn_header" value="Registrarse">
+            <input type="button" class="btn_header" value="Iniciar Sesión">
+        </div>
     </header>
 
-    <nav>
-        <a href="#">Noticias</a>
-        <a href="#">Buscar</a>
-        <a href="#">Nosotros</a>
+    <nav class="contenedor_nav">
+        <div class="nav_links">
+            <a class="nav_link" href="#">Noticias</a>
+            <a class="nav_link" href="#">Buscar</a>
+            <a class="nav_link" href="#">Nosotros</a>
+        </div>
     </nav>
 
     <main>
         <section>
-            <h2>Noticias destacadas</h2>
+            <h2 class="titular">Noticias destacadas</h2>
+
             <div class="featured-grid">
                 <article class="main-card">
-                    <img src="/api/placeholder/400/320" alt="Zelda game screenshot">
-                    <div class="card-content">
-                        <h2>El sorpresivo último baile de Hyrule en la Nintendo Switch...</h2>
-                        <p class="game-title">The Legend of Zelda Echoes of Wisdom es el más reciente título de la saga
-                            más legendaria de Nintendo ...</p>
-                    </div>
+                    <a href="" class="destacada_link">
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_destacada">El sorpresivo último baile de Hyrule en la Nintendo Switch...
+                            </h4>
+                            <p class="info_destacada">The Legend of Zelda Echoes of Wisdom es el más reciente título de
+                                la
+                                saga
+                                más legendaria de Nintendo ...</p>
+                            <p class="categoria_destacada">The Legend of Zelda</p>
+                        </div>
+                    </a>
                 </article>
                 <article class="card">
-                    <img src="/api/placeholder/400/320" alt="Zelda game screenshot">
-                    <div class="card-content">
-                        <h2>El sorpresivo último baile de Hyrule en la ...</h2>
-                        <p class="game-title">The Legend of Zelda</p>
-                    </div>
+                    <a href="" class="destacada_link">
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_destacada">El sorpresivo último baile de Hyrule en la ...</h4>
+                            <p class="categoria_destacada">The Legend of Zelda</p>
+                        </div>
+                    </a>
                 </article>
                 <article class="card">
-                    <img src="/api/placeholder/400/320" alt="Zelda game screenshot">
-                    <div class="card-content">
-                        <h2>El sorpresivo último baile de Hyrule en la ...</h2>
-                        <p class="game-title">The Legend of Zelda</p>
-                    </div>
+                    <a href="" class="destacada_link">
+
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_destacada">El sorpresivo último baile de Hyrule en la ...</h4>
+                            <p class="categoria_destacada">The Legend of Zelda</p>
+                        </div>
+                    </a>
                 </article>
                 <article class="card">
-                    <img src="/api/placeholder/400/320" alt="Zelda game screenshot">
-                    <div class="card-content">
-                        <h2>El sorpresivo último baile de Hyrule en la ...</h2>
-                        <p class="game-title">The Legend of Zelda</p>
-                    </div>
+                    <a href="" class="destacada_link">
+
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_destacada">El sorpresivo último baile de Hyrule en la ...</h4>
+                            <p class="categoria_destacada">The Legend of Zelda</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="card">
+                    <a href="" class="destacada_link">
+
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_destacada">El sorpresivo último baile de Hyrule en la ...</h4>
+                            <p class="categoria_destacada">The Legend of Zelda</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="card">
+                    <a href="" class="destacada_link">
+
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_destacada">El sorpresivo último baile de Hyrule en la ...</h4>
+                            <p class="categoria_destacada">The Legend of Zelda</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="main-card">
+                    <a href="" class="destacada_link">
+
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_destacada">El sorpresivo último baile de Hyrule en la ...</h4>
+                            <p class="info_destacada">The Legend of Zelda Echoes of Wisdom es el más reciente título de
+                                la
+                                saga
+                                más legendaria de Nintendo ...</p>
+                            <p class="categoria_destacada">The Legend of Zelda</p>
+                        </div>
+                    </a>
                 </article>
             </div>
 
-            <h3>Últimas noticias</h3>
+            <div class="subtitulo_UltimasNoticias">
+                <h3>Últimas noticias</h3>
+                <div class="centrar_verticalmente">
+                    <label for="videojuegos">Categorias</label>
+                    <select id="categorias" name="videojuegos">
+                        <option value="ultimas" selected>Últimas</option>
+                        <option value="mario-bros">Mario Bros</option>
+                        <option value="zelda">The Legend Of Zelda</option>
+                        <option value="kirby">Kirby</option>
+                        <option value="smash-bros">Smash Bros</option>
+                        <option value="metroid">Metroid</option>
+                    </select>
+                </div>
+            </div>
             <section class="latest-news">
                 <article class="news-card">
-                    <img src="/api/placeholder/400/320" alt="Zelda game screenshot">
-                    <div class="card-content">
-                        <h2>El sorpresivo último baile de Hyrule en la Nintendo Switch...</h2>
-                        <p class="game-title">The Legend of Zelda Echoes of Wisdom es el más reciente título de la saga
-                            más legendaria de Nintendo ...</p>
-                    </div>
+                    <a href="">
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_ultimasNoticias">El sorpresivo último baile de Hyrule en la Nintendo
+                                Switch...
+                            </h4>
+                            <p class="info_destacada">The Legend of Zelda Echoes of Wisdom es el más reciente título de
+                                la saga más legendaria de Nintendo ...</p>
+                        </div>
+                    </a>
                 </article>
                 <article class="news-card">
-                    <img src="/api/placeholder/400/320" alt="Zelda game screenshot">
-                    <div class="card-content">
-                        <h2>El sorpresivo último baile de Hyrule en la Nintendo Switch...</h2>
-                        <p class="game-title">The Legend of Zelda Echoes of Wisdom es el más reciente título de la saga
-                            más legendaria de Nintendo ...</p>
-                    </div>
+                    <a href="">
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_ultimasNoticias">El sorpresivo último baile de Hyrule en la Nintendo
+                                Switch...
+                            </h4>
+                            <p class="info_destacada">The Legend of Zelda Echoes of Wisdom es el más reciente título de
+                                la
+                                saga
+                                más legendaria de Nintendo ...</p>
+                        </div>
+                    </a>
                 </article>
                 <article class="news-card">
-                    <img src="/api/placeholder/400/320" alt="Zelda game screenshot">
-                    <div class="card-content">
-                        <h2>El sorpresivo último baile de Hyrule en la Nintendo Switch...</h2>
-                        <p class="game-title">The Legend of Zelda Echoes of Wisdom es el más reciente título de la saga
-                            más legendaria de Nintendo ...</p>
-                    </div>
+                    <a href="">
+                        <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                        <div class="card-content">
+                            <h4 class="titulo_ultimasNoticias">El sorpresivo último baile de Hyrule en la Nintendo
+                                Switch...
+                            </h4>
+                            <p class="info_destacada">The Legend of Zelda Echoes of Wisdom es el más reciente título de
+                                la
+                                saga
+                                más legendaria de Nintendo ...</p>
+                        </div>
+                    </a>
                 </article>
-                <button class="load-more">Ver más...</button>
+                <article class="contenedor_btn">
+                    <input class="load-more" type="button" value="Ver más...">
+                </article>
             </section>
         </section>
     </main>
+    <footer class="footer">
+        <p>Hecho por Equipo: Batifamilia - &copy;Aplicaciones Web</p>
+    </footer>
 </body>
 
 </html>
