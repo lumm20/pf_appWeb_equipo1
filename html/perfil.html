@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/post.css">
 </head>
 
 <body>
@@ -39,28 +40,31 @@
     </nav>
 
     <main class="contenedor">
-        <h1>Buscador de noticias</h1>
+        <h1>Tu Perfil</h1>
 
 
         <form method="get">
-            <div id="grid_buscador">
-                <div id="titular">
-                    <label>Titular</label>
+            <div id="grid_campos">
+                <div id="nombre_usuario">
+                    <label>Nombre</label>
                     <input type="text">
                 </div>
-                <div id="categorias">
-                    <label for="categoria">Categoría</label>
-                    <input type="text" id="categoria">
+                <div id="apellido_usuario">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="last_name">
                 </div>
-                <div id="periodo">
-                    <label>Periodo de fechas</label>
-                    <input type="date" id="date1">
-                    <input type="date" id="date2">
+                <div id="email_usuario">
+                    <label>Email</label>
+                    <input type="email" id="email">
+                    <br>
+                    <button class="btn_agregar_mail"> Agregar email +</button>
+                </div>
+                <div id="password">
+                    <label>Contraseña</label>
+                    <input type="password" id="password">
                 </div>
                 <div id="botones_form">
-
-                    <button class="btn_form">Limpiar</button>
-                    <button class="btn_form">Buscar</button>
+                    <button class="btn_guardar">Guardar cambios</button>
                 </div>
             </div>
         </form>

@@ -140,6 +140,7 @@ main {
     margin: 2rem 0;
     text-align: center;
     color: var(--colorFondo);
+    box-sizing: border-box;
 }
 
 .featured-grid {
@@ -147,6 +148,11 @@ main {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     margin-bottom: 2rem;
+}
+
+.featured-grid #mas{
+    width: 135px;
+    height: 135px;
 }
 
 .featured-grid .main-card {
