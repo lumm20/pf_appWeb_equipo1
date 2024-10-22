@@ -81,15 +81,6 @@ input[type="password"] {
     margin-bottom: 15px;
 }
 
-.inline-group {
-    display: flex;
-    gap: 10px;
-}
-
-.form-group {
-    flex: 1;
-}
-
 button {
     background-color: #3f50b5;
     color: white;
