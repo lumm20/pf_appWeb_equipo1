@@ -13,6 +13,7 @@ body {
     border-radius: 8px;
     padding: 20px;
     width: 350px;
+    height: 500px;
     text-align: center;
 }
 
@@ -25,8 +26,8 @@ body {
 }
 
 .logo {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
 }
 
 h1 {
@@ -54,7 +55,7 @@ h2 {
 .box {
     background-color: #f0f0f0;
     border-radius: 8px;
-    padding: 20px;
+    padding: 35px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -65,7 +66,6 @@ label {
 }
 
 input[type="text"],
-input[type="email"],
 input[type="password"] {
     width: 100%;
     padding: 8px;
