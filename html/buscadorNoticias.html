@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <header>
+        <a href="" class="contenedor_logo">
+            <img class="logo" src="../img/logo.png" alt="Logo de Koopa Archives">
+            <div class="logo_texto">
+                <h1>
+                    <span class="logo_koopas">Koopa</span><br>
+                    Archives
+                </h1>
+            </div>
+        </a>
+        <div class="iniciadoSesion">
+            <input type="button" class="btn_header" value="Registrarse">
+            <input type="button" class="btn_header" value="Iniciar Sesión">
+        </div>
+    </header>
+
+    <nav class="contenedor_nav">
+        <div class="nav_links">
+            <a class="nav_link" href="#">Noticias</a>
+            <a class="nav_link" href="#">Buscar</a>
+            <a class="nav_link" href="#">Nosotros</a>
+            <a class="nav_link" href="#">Crear</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Buscador de noticias</h1>
+
+
+        <form method="get">
+            <div id="grid_buscador">
+                <div id="titular">
+                    <label>Titular</label>
+                    <input type="text">
+                </div>
+                <div id="categoria">
+                    <label for="categoria">Categoría</label>
+                    <input type="text" id="categoria">
+                </div>
+                <div id="periodo">
+                    <label>Periodo de fechas</label>
+                    <input type="date">
+                    <input type="date">
+                </div>
+                <div id="botones_form">
+
+                    <button class="btn_form">Limpiar</button>
+                    <button class="btn_form">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        <section>
+            <h2>Resultados 0</h2>
+        </section>
+    </main>
+</body>
+
+</html>
