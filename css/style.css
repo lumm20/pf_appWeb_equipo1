@@ -40,6 +40,12 @@ input {
     text-decoration: none;
 }
 
+.btn_header {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+}
+
 .contenedor_logo {
     display: flex;
     align-items: center;
@@ -70,7 +76,7 @@ h1 {
     font-size: 2rem;
 }
 
-.btn_header {
+.btn_registro, .btn_login {
     padding: .8rem 2rem;
     border-radius: 1.5rem;
     border: none;
@@ -81,7 +87,7 @@ h1 {
     font-weight: 800;
 }
 
-.btn_header:nth-of-type(2) {
+.btn_login{
     background-color: var(--morado);
     color: var(--blanco);
     margin-left: 1rem;
