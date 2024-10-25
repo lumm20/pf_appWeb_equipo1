@@ -1,0 +1,92 @@
+:root {
+    --colorFondo: #2B2C34;
+    --rojoNintendo: #ff6b6b;
+    --morado: #6246EA;
+    --moradoClaro: #D1D1E9;
+    --blanco: #FFFFFE;
+    --gris: #D9D9D9;
+    --grisOscuro: #666;
+    --fuentePrincipal: 'Nunito', sans-serif;
+}
+
+body {
+    font-family: var(--fuentePrincipal);
+    background-color: var(--blanco);
+}
+
+a,
+a:hover,
+input {
+    text-decoration: none;
+}
+
+.contenedor_logo {
+    display: flex;
+    align-items: center;
+}
+
+.contenedor {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: var(--blanco);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--gris);
+}
+
+.encabezado_tu_perfil {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.encabezado_tu_perfil h1{
+    font-size: 34px;
+    color: var(--colorFondo);
+}
+
+.grid_campos {
+    display: grid;
+    grid-template-areas:
+    'nombre imagen'
+    'apellido'
+    'email'
+    'pass'
+    'botones_form';
+    gap: 20px;
+}
+
+.grid_campos #img_perfil{
+    display: grid;
+    grid-template-areas: 
+    'imagen'
+    'btn_cambiar_img';
+    gap: 20px;
+}
+
+.grid_campos .btn_cambiar_img{
+    width: 150px;
+    height: 20px;
+}
+.campos {
+    margin-bottom: 20px;
+}
+
+.campos label {
+    display: block;
+    margin-bottom: 20px;
+    color: var(--grisOscuro);
+    font-weight: 500;
+    font-size: large;
+}
+
+.campos input[type="text"],
+.campos input[type="password"],
+.campos input[type="email"]{
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}

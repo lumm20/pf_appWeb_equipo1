@@ -28,7 +28,7 @@ body {
     box-shadow: 0 2px 4px var(--gris);
 }
 
-.encabezado_crear_post , .encabezado_tu_perfil {
+.encabezado_crear_post {
     display: flex;
     align-items: center;
     gap: 10px;

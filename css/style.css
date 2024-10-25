@@ -33,17 +33,10 @@ header {
     align-items: center;
 }
 
-
 a,
 a:hover,
 input {
     text-decoration: none;
-}
-
-.btn_header {
-    display: inline-block;
-    text-decoration: none;
-    padding: 10px 20px;
 }
 
 .contenedor_logo {
@@ -76,7 +69,8 @@ h1 {
     font-size: 2rem;
 }
 
-.btn_registro, .btn_login {
+.btn_header,
+.btn_form {
     padding: .8rem 2rem;
     border-radius: 1.5rem;
     border: none;
@@ -87,7 +81,8 @@ h1 {
     font-weight: 800;
 }
 
-.btn_login{
+.btn_header:nth-of-type(2),
+.btn_form:nth-of-type(2) {
     background-color: var(--morado);
     color: var(--blanco);
     margin-left: 1rem;
@@ -140,7 +135,6 @@ main {
     margin: 2rem 0;
     text-align: center;
     color: var(--colorFondo);
-    box-sizing: border-box;
 }
 
 .featured-grid {
@@ -150,12 +144,8 @@ main {
     margin-bottom: 2rem;
 }
 
-.featured-grid #mas{
-    width: 135px;
-    height: 135px;
-}
-
-.featured-grid .main-card {
+.featured-grid .main-card,
+.featured-grid .anhadir-card {
     grid-column: span 2;
 
 }
@@ -174,7 +164,7 @@ main {
     border-radius: 4px;
 }
 
-/* 
+/*
 .destacada_link{
     border: var(--moradoClaro) 2px solid;
 } */
@@ -487,4 +477,65 @@ main {
     font-size: 1.2rem;
     color: var(--morado);
     text-align: right;
+}
+
+.anhadir-card {
+    background-color: var(--morado);
+}
+
+.anhadir-noticia {
+    color: white;
+    text-align: center;
+    font-size: 25px;
+}
+
+
+#titulo_admin {
+    width: 90%;
+    display: inline-block;
+}
+
+#editar {
+    height: 50px;
+}
+
+#anclar {
+    font-size: 20px;
+    color: var(--morado);
+}
+
+#mas {
+    width: 20%;
+    display: block;
+    padding-top: 45px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#titular {
+    grid-area: titular;
+    white-space: pre;
+}
+
+#categoria {
+    grid-area: categoria;
+    white-space: pre;
+}
+
+#periodo {
+    grid-area: periodo;
+}
+
+#botones_form {
+    grid-area: botones;
+}
+
+#grid_buscador {
+    display: grid;
+    grid-template-areas:
+        'titular categoria'
+        'periodo botones';
+    gap: 10px;
+
+    padding: 20px;
 }
