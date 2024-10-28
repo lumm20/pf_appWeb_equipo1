@@ -39,7 +39,7 @@
             <div class="titulo_principal">
                 <p>Publicaciones</p>
             </div>
-            <div class="contenedor_posts">
+            <div class="container relative">
                 <section class="pestanias">
                     <div class="contenedor">
                         <button type="button" id="todos" class="btn" onclick="">Todos</button>
@@ -49,19 +49,17 @@
                         <button type="button" id="zelda" class="btn">Zelda</button>
                     </div>
                 </section>
-                <section class="publicaciones">
+                <section class="flex-container publicaciones">
                     <article id="card1" class="card" onclick="window.location.href='publicacion.html'">
                         <div class="card-header">
                             <h3>Nombre del publicador</h3>
                         </div>
-                        <div class="card-body">
-                            <div class="flex-container mobile-stack">
-                                <a href="publicacion.html" class="post">
-                                    <div class="contenido_post">
-                                        <p>este es el primer post</p>
-                                    </div>
-                                </a>
-                            </div>
+                        <div class="card-body flex-container">
+                            <a href="publicacion.html">
+                                <div class="contenido_post">
+                                    <p>este es el primer post</p>
+                                </div>
+                            </a>
                         </div>
                         <div class="card-footer">
                             <p>publicacion para todos</p>
@@ -71,14 +69,12 @@
                         <div class="card-header">
                             <h3>Nombre del publicador</h3>
                         </div>
-                        <div class="card-body">
-                            <div class="flex-container mobile-stack">
-                                <a href="publicacion.html" class="post">
-                                    <div class="contenido_post">
-                                        <p>este es el segundo post</p>
-                                    </div>
-                                </a>
-                            </div>
+                        <div class="card-body flex-container">
+                            <a href="publicacion.html">
+                                <div class="contenido_post">
+                                    <p>este es el segundo post</p>
+                                </div>
+                            </a>
                         </div>
                         <div class="card-footer">
                             <p>publicacion para todos</p>
@@ -88,14 +84,12 @@
                         <div class="card-header">
                             <h3>Nombre del publicador</h3>
                         </div>
-                        <div class="card-body">
-                            <div class="flex-container mobile-stack">
-                                <a href="publicacion.html" class="post">
-                                    <div class="contenido_post">
-                                        <p>este es el tercer post</p>
-                                    </div>
-                                </a>
-                            </div>
+                        <div class="card-body flex-container">
+                            <a href="publicacion.html">
+                                <div class="contenido_post">
+                                    <p>este es el tercer post</p>
+                                </div>
+                            </a>
                         </div>
                         <div class="card-footer">
                             <p>publicacion para todos</p>
@@ -112,9 +106,9 @@
         botonTodos.classList.toggle('active');
 
 
-        for(let boton of botones){
-            boton.addEventListener('click',function(){
-                for(let b of botones){
+        for (let boton of botones) {
+            boton.addEventListener('click', function () {
+                for (let b of botones) {
                     b.classList.remove('active');
                 }
                 this.classList.add('active');
