@@ -2,6 +2,7 @@
     --colorFondo: #2B2C34;
     --rojoNintendo: #ff6b6b;
     --morado: #6246EA;
+    --moradoOscuro: #201364;
     --moradoClaro: #D1D1E9;
     --blanco: #FFFFFE;
     --gris: #D9D9D9;
@@ -69,6 +70,35 @@ h1 {
     font-size: 2rem;
 }
 
+
+.iniciadoSesion #btn{
+    padding: .8rem 2rem;
+    border-radius: 1.5rem;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.registro{
+    background-color: var(--morado);
+    color: var(--blanco);
+    margin-left: 1rem;
+}
+
+.registro:hover{
+    background-color: var(--moradoOscuro);
+}
+
+.login{
+    background-color: var(--moradoClaro);
+    color: var(--colorFondo)
+}
+
+.login:hover{
+    background-color: var(--grisOscuro);
+}
+
 .btn_header,
 .btn_form {
     padding: .8rem 2rem;
@@ -101,21 +131,24 @@ h1 {
 }
 
 .contenedor_nav {
-    padding: 0.5rem;
+    padding: 0.7rem;
     display: flex;
     justify-content: center;
-
-    gap: 2rem;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    gap: 60px;
     margin: 0 auto;
     border-bottom: 1px solid #eee;
     background-color: var(--moradoClaro);
 }
 
-.nav-links {
+.nav_links {
     max-width: 50rem;
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    gap: 40px;
+    justify-content: center;
 }
 
 .nav_link {

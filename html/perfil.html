@@ -9,8 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/post.css">
+    <link rel="stylesheet" type="text/css" href="/css/perfil.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
 </head>
 
 <body>
@@ -36,33 +37,38 @@
     </nav>
 
     <main class="contenedor">
-        <div id="encabezado_tu_perfil">
+        <div class="encabezado_tu_perfil">
             <h1>Tu Perfil</h1>
         </div>
-        <form method="get">
-            <div id="grid_campos">
+        <form class="campos" method="get">
+            <div class="grid_campos">
                 <div id="nombre_usuario">
-                    <label>Nombre</label>
-                    <input type="text">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre">
+                </div>
+                <div id="img_perfil">
+                    <img class="imagen" src="" alt="img">
+                    <button class="btn_cambiar_img">Cambiar foto de perfil</button>
                 </div>
                 <div id="apellido_usuario">
                     <label for="apellido">Apellido</label>
                     <input type="text" id="last_name">
                 </div>
                 <div id="email_usuario">
-                    <label>Email</label>
-                    <input type="email" id="email">
+                    <label id="label">Email</label>
+                    <input type="email" id="input">
                     <br>
-                    <button class="btn_agregar_mail"> Agregar email +</button>
+                    <button id="btn_agregar_mail"> Agregar email +</button>
                 </div>
                 <div id="password">
                     <label>Contraseña</label>
-                    <input type="password" id="password">
+                    <input type="password" class="pass">
                 </div>
                 <div id="botones_form">
                     <button class="btn_guardar">Guardar cambios</button>
                 </div>
             </div>
+
         </form>
 
         <section>
