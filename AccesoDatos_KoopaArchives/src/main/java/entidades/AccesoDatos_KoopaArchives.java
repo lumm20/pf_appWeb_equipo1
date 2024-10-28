@@ -25,27 +25,27 @@ import org.bson.types.ObjectId;
 public class AccesoDatos_KoopaArchives {
 
     public static void main(String[] args) throws PersistenciaException {
-//        Subtema subtema1 = new Subtema("Subtitulo1", "Descripcion 1", "Img 1");
-//        Subtema subtema2 = new Subtema("Subtitulo2", "Descripcion 2", "Img 2");
-//        Subtema subtema3 = new Subtema("Subtitulo3", "Descripcion 3", "Img 3");
-//        Subtema subtema4 = new Subtema("Subtitulo4", "Descripcion 4", "Img 4");
-//        
-//        List<Subtema> lista1 = Arrays.asList(subtema1,subtema2);
-//        List<Subtema> lista2 = Arrays.asList(subtema4,subtema2,subtema3);
-//        
-//        Contenido contenido1 = new Contenido("Texto 1", "Titulo 1", lista2, "Png 1");
-//        Contenido contenido2 = new Contenido("Texto 2", "Titulo 2", lista2, "Png 2");
-//        Contenido contenido3 = new Contenido("Texto 2", "Titulo 3", lista1, "Png 3");
-//        
-//        Noticia noticia1 = new Noticia("Zelda", new Date());
-//        Noticia noticia2 = new Noticia("Mario", new Date());
-//        Noticia noticia3 = new Noticia("Metroid", new Date());
+        Subtema subtema1 = new Subtema("Subtitulo1", "Descripcion 1", "Img 1");
+        Subtema subtema2 = new Subtema("Subtitulo2", "Descripcion 2", "Img 2");
+        Subtema subtema3 = new Subtema("Subtitulo3", "Descripcion 3", "Img 3");
+        Subtema subtema4 = new Subtema("Subtitulo4", "Descripcion 4", "Img 4");
+        
+        List<Subtema> lista1 = Arrays.asList(subtema1,subtema2);
+        List<Subtema> lista2 = Arrays.asList(subtema4,subtema2,subtema3);
+        
+        Contenido contenido1 = new Contenido("Texto 1", "Titulo 1", lista2, "Png 1");
+        Contenido contenido2 = new Contenido("Texto 2", "Titulo 2", lista2, "Png 2");
+        Contenido contenido3 = new Contenido("Texto 2", "Titulo 3", lista1, "Png 3");
+        
+        Noticia noticia1 = new Noticia("Zelda", new Date());
+        Noticia noticia2 = new Noticia("Mario", new Date());
+        Noticia noticia3 = new Noticia("Metroid", new Date());
 //        
         INoticiaDAO noticiasDAO = new NoticiaDAO();
 //
-//        noticiasDAO.publicarNuevaNoticia(noticia1, contenido1);
-//        noticiasDAO.publicarNuevaNoticia(noticia2, contenido2);
-//        noticiasDAO.publicarNuevaNoticia(noticia3, contenido3);
+        noticiasDAO.publicarNuevaNoticia(noticia1, contenido1);
+        noticiasDAO.publicarNuevaNoticia(noticia2, contenido2);
+        noticiasDAO.publicarNuevaNoticia(noticia3, contenido3);
 
              // Crear un objeto Calendar
         Calendar calendar = Calendar.getInstance();
