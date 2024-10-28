@@ -1,0 +1,82 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoopaArchives</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/publicaciones.css">
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="contenedor_logo">
+            <img class="logo" src="../img/logo.png" alt="Logo de Koopa Archives">
+            <div class="logo_texto">
+                <h1>
+                    <span class="logo_koopas">Koopa</span><br>
+                    Archives
+                </h1>
+            </div>
+        </a>
+
+    </header>
+    <nav class="contenedor_nav">
+        <div class="nav_links">
+            <a class="nav_link" href="indexLogged.html">Noticias</a>
+            <a class="nav_link" href="publicaciones.html">Publicaciones</a>
+            <a class="nav_link" href="buscadorNoticias.html">Buscar</a>
+            <a class="nav_link" href="#">Nosotros</a>
+        </div>
+    </nav>
+    <main>
+        <section>
+            <div class="titulo_principal">
+                <p>Publicaciones</p>
+            </div>
+            <div class="contenedor_posts">
+                <section class="pestanias">
+                    <div class="contenedor">
+                        <button type="button" id="todos" class="btn">Todos</button>
+                        <button type="button" id="mario" class="btn">Mario Bros</button>
+                        <button type="button" id="pokemon" class="btn">Pokémon</button>
+                        <button type="button" id="animalX" class="btn">Animal Crossing</button>
+                        <button type="button" id="zelda" class="btn">Zelda</button>
+                    </div>
+                </section>
+                <section class="publicaciones">
+                    <article id="post1" class="post" onclick="window.location.href='publicacion.html'">
+                        <a href="publicacion.html" class="post">
+                            <div class="contenido_post">
+                                <p>este es el primer post</p>
+                            </div>
+                        </a>
+                    </article>
+                    <article id="post2" class="post" onclick="window.location.href='publicacion.html'">
+                        <a href="publicacion.html" class="post">
+                            <div class="contenido_post">
+                                <p>este es el primer post</p>
+                            </div>
+                        </a>
+                    </article>
+                    <article id="post3" class="post" onclick="window.location.href='publicacion.html'">
+                        <a href="publicacion.html" class="post">
+                            <div class="contenido_post">
+                                <p>este es el primer post</p>
+                            </div>
+                        </a>
+                    </article>
+                </section>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+
+</html>
