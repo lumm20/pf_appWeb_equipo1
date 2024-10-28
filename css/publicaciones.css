@@ -63,12 +63,6 @@
 }
 
 .publicaciones {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 90%;
-    border-color: black; */
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: var(--moradoClaro);
@@ -79,16 +73,6 @@
     font-weight: normal;
     font-size: large;
 }
-
-/* .publicaciones .post {
-    width: 90%;
-    height: 25%;
-    align-content: center;
-    padding: 0.2rem;
-    margin-top: 2.5rem;
-    background-color: var(--blanco);
-    border-radius: 0.8rem;
-} */
 
 .card {
     background: white;
@@ -130,16 +114,3 @@
     flex: 1;
     padding: 15px;
 }
-
-@media (max-width: 768px) {
-    .mobile-stack {
-        flex-direction: column;
-    }
-}
-
-/* .flex-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-} */
