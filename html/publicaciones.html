@@ -42,7 +42,7 @@
             <div class="contenedor_posts">
                 <section class="pestanias">
                     <div class="contenedor">
-                        <button type="button" id="todos" class="btn">Todos</button>
+                        <button type="button" id="todos" class="btn" onclick="">Todos</button>
                         <button type="button" id="mario" class="btn">Mario Bros</button>
                         <button type="button" id="pokemon" class="btn">Pokémon</button>
                         <button type="button" id="animalX" class="btn">Animal Crossing</button>
@@ -50,33 +50,77 @@
                     </div>
                 </section>
                 <section class="publicaciones">
-                    <article id="post1" class="post" onclick="window.location.href='publicacion.html'">
-                        <a href="publicacion.html" class="post">
-                            <div class="contenido_post">
-                                <p>este es el primer post</p>
+                    <article id="card1" class="card" onclick="window.location.href='publicacion.html'">
+                        <div class="card-header">
+                            <h3>Nombre del publicador</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="flex-container mobile-stack">
+                                <a href="publicacion.html" class="post">
+                                    <div class="contenido_post">
+                                        <p>este es el primer post</p>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
+                        </div>
+                        <div class="card-footer">
+                            <p>publicacion para todos</p>
+                        </div>
                     </article>
-                    <article id="post2" class="post" onclick="window.location.href='publicacion.html'">
-                        <a href="publicacion.html" class="post">
-                            <div class="contenido_post">
-                                <p>este es el primer post</p>
+                    <article id="post2" class="card" onclick="window.location.href='publicacion.html'">
+                        <div class="card-header">
+                            <h3>Nombre del publicador</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="flex-container mobile-stack">
+                                <a href="publicacion.html" class="post">
+                                    <div class="contenido_post">
+                                        <p>este es el segundo post</p>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
+                        </div>
+                        <div class="card-footer">
+                            <p>publicacion para todos</p>
+                        </div>
                     </article>
-                    <article id="post3" class="post" onclick="window.location.href='publicacion.html'">
-                        <a href="publicacion.html" class="post">
-                            <div class="contenido_post">
-                                <p>este es el primer post</p>
+                    <article id="post3" class="card" onclick="window.location.href='publicacion.html'">
+                        <div class="card-header">
+                            <h3>Nombre del publicador</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="flex-container mobile-stack">
+                                <a href="publicacion.html" class="post">
+                                    <div class="contenido_post">
+                                        <p>este es el tercer post</p>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
+                        </div>
+                        <div class="card-footer">
+                            <p>publicacion para todos</p>
+                        </div>
                     </article>
                 </section>
             </div>
         </section>
 
     </main>
+    <script>
+        const botones = document.getElementsByClassName("btn");
+        const botonTodos = document.getElementById('todos');
+        botonTodos.classList.toggle('active');
 
+
+        for(let boton of botones){
+            boton.addEventListener('click',function(){
+                for(let b of botones){
+                    b.classList.remove('active');
+                }
+                this.classList.add('active');
+            });
+        }
+    </script>
 </body>
 
 </html>

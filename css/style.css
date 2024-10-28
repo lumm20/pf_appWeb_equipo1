@@ -131,10 +131,10 @@ h1 {
 }
 
 .contenedor_nav {
-    padding: 0.7rem;
+    /*padding: 0.4rem;*/
     display: flex;
+    height: 3rem;
     justify-content: center;
-    align-items: center;
     position: sticky;
     top: 0;
     gap: 60px;
@@ -146,15 +146,23 @@ h1 {
 .nav_links {
     max-width: 50rem;
     width: 100%;
+    height: 100%;
     display: flex;
-    gap: 40px;
+    gap: 10px;
     justify-content: center;
+    align-content: center;
 }
 
 .nav_link {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    width: 50%;
+    height: 100%;
     color: var(--grisOscuro);
     text-decoration: none;
     font-size: 1.4rem;
+    justify-content: center;
 }
 
 main {
