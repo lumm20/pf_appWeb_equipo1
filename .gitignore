@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ##############################
 ## Java
 ##############################
@@ -51,3 +52,9 @@ nb-configuration.xml
 ##############################
 .vscode/
 .code-workspace
+=======
+/KoopaArchives_Persistencia/target/
+/mavenproject1/target/
+/ProyectoFinal_KoopaArchives/target/
+/AccesoDatos_KoopaArchives/target/
+>>>>>>> 3470d2a (Creacion se la primera DAO)
