@@ -1,5 +1,12 @@
 package entidades;
 
+/**
+ * @author José Karim Franco Valencia - 00000245138
+ * @author Luisa Fernanda Morales Espinoza - 000000233450
+ * @author Juventino López García - 00000248547
+ * @author Paul Alejandro Vazquez Cervantes - 00000241400
+ */
+
 import java.util.Date;
 import org.bson.types.ObjectId;
 
@@ -10,6 +17,7 @@ public class Comentario {
     private Date fecha_comentario;
     private ObjectId idNoticia;
     private Noticia noticia;
+    private boolean anclado;
 
     public Comentario() {
 
@@ -58,6 +66,14 @@ public class Comentario {
 
     public void setNoticia(Noticia noticia) {
         this.noticia = noticia;
+    }
+
+    public boolean isAnclado() {
+        return anclado;
+    }
+
+    public void setAnclado(boolean anclado) {
+        this.anclado = anclado;
     }
 
     @Override
