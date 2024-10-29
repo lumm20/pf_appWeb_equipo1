@@ -12,18 +12,18 @@ public class Contenido {
     private String descripcion;
     private String titulo;
     private List<Subtema> subtemas;
-    private String url_img;
+    private String urlImg;
 
     public Contenido() {
     }
 
     
     
-    public Contenido(String descripcion, String titulo, List<Subtema> subtemas, String url_img) {
+    public Contenido(String descripcion, String titulo, List<Subtema> subtemas, String urlImg) {
         this.descripcion = descripcion;
         this.titulo = titulo;
         this.subtemas = subtemas;
-        this.url_img = url_img;
+        this.urlImg = urlImg;
     }
 
     public ObjectId getIdContenido() {
@@ -58,12 +58,12 @@ public class Contenido {
         this.subtemas = subtemas;
     }
 
-    public String getUrl_img() {
-        return url_img;
+    public String getUrlImg() {
+        return urlImg;
     }
 
-    public void setUrl_img(String url_img) {
-        this.url_img = url_img;
+    public void setUrlImg(String urlImg) {
+        this.urlImg = urlImg;
     }
 
     @Override
