@@ -4,6 +4,7 @@
  */
 package daos;
 
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -17,47 +18,33 @@ import excepciones.PersistenciaException;
  *
  * @author luisa M
  */
-public class UsuarioDAO {
+public class UsuarioNormalDAO implements IUsuarioDAO{
     private IConexion conexion;
-    private MongoCollection<Usuario> usuariosNormales;
-    private MongoCollection<Usuario> usuariosAdmin;
+    private final MongoCollection<Usuario> usuariosNormales;
     
-    public UsuarioDAO(){
+    public UsuarioNormalDAO(){
         this.conexion = Conexion.getInstance();
         MongoDatabase baseDatos = this.conexion.obtenerBaseDatos();
         usuariosNormales = baseDatos.getCollection("UsuariosNormales", Usuario.class);
-        usuariosAdmin = baseDatos.getCollection("UsuariosAdmin", Usuario.class);
     }
     
-    public Usuario agregarUsuario(Usuario usuario, boolean esAdmin) throws PersistenciaException{
-        InsertOneResult result;
+    @Override
+    public Usuario registrarUsuario(Usuario usuario) throws PersistenciaException{
         try {
-            if(esAdmin){
-                result = usuariosAdmin.insertOne(usuario);
-            }else{
-                result = usuariosNormales.insertOne(usuario);
-            }
-            
-            if(result != null){
-                usuario.setAdmin(esAdmin);
-                usuario.setId(result.getInsertedId().asObjectId().getValue());
-                return usuario;
-            }
-            return null;
-        } catch (Exception e) {
+            if(buscarUsuario(usuario) != null)
+                throw new PersistenciaException("ya hay un usuario registrado con ese Id");
+            usuariosNormales.insertOne(usuario);
+            return usuario;
+        } catch (MongoException e) {
             System.out.println(e.getMessage());
             throw new PersistenciaException("error al agregar el usuario");
         }
     }
     
+    @Override
     public Usuario buscarUsuario(Usuario usuario) throws PersistenciaException{
         try {
-            Usuario user;
-            if(usuario.isAdmin()){
-                user = usuariosAdmin.find(Filters.eq("idUsuario",usuario.getIdUsuario())).first();
-            }else{
-                user = usuariosNormales.find(Filters.eq("idUsuario",usuario.getIdUsuario())).first();
-            }
+            Usuario user = usuariosNormales.find(Filters.eq("idUsuario",usuario.getIdUsuario())).first();
             return user;
         } catch (Exception e) {
             System.out.println(e.getMessage());

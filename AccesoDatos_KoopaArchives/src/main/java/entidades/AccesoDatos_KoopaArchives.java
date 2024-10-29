@@ -9,7 +9,7 @@ import conexion.IConexion;
 import daos.INoticiaDAO;
 import daos.IUsuarioDAO;
 import daos.NoticiaDAO;
-import daos.UsuarioDAO;
+import daos.UsuarioNormalDAO;
 import excepciones.PersistenciaException;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -80,7 +80,7 @@ public class AccesoDatos_KoopaArchives {
        // Usuario admin1 = new Usuario("1234", "luisa", "morales", "noseTengoSuenio");
         Usuario normal1 = new Usuario("0001233", "fernanda", "espinoza", "mequiero_Dormir");
         
-        UsuarioDAO dao = new UsuarioDAO();
+        UsuarioNormalDAO dao = new UsuarioNormalDAO();
         
         normal1= dao.buscarUsuario(normal1);
         System.out.println(normal1);
