@@ -40,7 +40,7 @@ body {
     color: var(--grisOscuro);
 }
 
-.encabezado_crear_post h1 {
+.encabezado_tu_perfil h1{
     font-size: 24px;
     color: var(--colorFondo);
 }

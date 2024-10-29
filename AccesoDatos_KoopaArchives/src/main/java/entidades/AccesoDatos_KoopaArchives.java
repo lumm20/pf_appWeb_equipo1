@@ -9,6 +9,7 @@ import conexion.IConexion;
 import daos.INoticiaDAO;
 import daos.IUsuarioDAO;
 import daos.NoticiaDAO;
+import daos.UsuarioDAO;
 import excepciones.PersistenciaException;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -40,9 +41,9 @@ public class AccesoDatos_KoopaArchives {
 //        Noticia noticia1 = new Noticia("Zelda", new Date());
 //        Noticia noticia2 = new Noticia("Mario", new Date());
 //        Noticia noticia3 = new Noticia("Metroid", new Date());
-//        
+////        
         INoticiaDAO noticiasDAO = new NoticiaDAO();
-//
+////
 //        noticiasDAO.publicarNuevaNoticia(noticia1, contenido1);
 //        noticiasDAO.publicarNuevaNoticia(noticia2, contenido2);
 //        noticiasDAO.publicarNuevaNoticia(noticia3, contenido3);
@@ -74,5 +75,19 @@ public class AccesoDatos_KoopaArchives {
         for (Noticia noticia : listaNoticias) {
             System.out.println(noticia);
         }
+        
+        
+       // Usuario admin1 = new Usuario("1234", "luisa", "morales", "noseTengoSuenio");
+        Usuario normal1 = new Usuario("0001233", "fernanda", "espinoza", "mequiero_Dormir");
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        
+        normal1= dao.buscarUsuario(normal1);
+        System.out.println(normal1);
+        normal1.printObjectId();
+//        admin1 = dao.agregarUsuario(admin1, true);
+//        System.out.println("admin agregado: "+admin1);
+//        normal1 = dao.agregarUsuario(normal1, false);
+//        System.out.println("normal agregado: "+normal1);
     }
 }

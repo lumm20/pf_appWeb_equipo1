@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Búsqueda</title>
+    <title>KoopaArchives</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
 </head>
 
 <body>
@@ -24,21 +25,22 @@
             </div>
         </a>
         <div class="iniciadoSesion">
-            <input type="button" class="btn_header" value="Registrarse">
-            <input type="button" class="btn_header" value="Iniciar Sesión">
+            <input type="button" class="btn_registro" value="Registrarse">
+            <input type="button" class="btn_login" value="Iniciar Sesión">
         </div>
     </header>
 
     <nav class="contenedor_nav">
         <div class="nav_links">
-            <a class="nav_link" href="#">Noticias</a>
-            <a class="nav_link" href="#">Buscar</a>
+            <a class="nav_link" href="indexLogged.html">Noticias</a>
+            <a class="nav_link" href="buscadorNoticias.html">Buscar</a>
+            <a class="nav_link" href="publicaciones.html">Publicaciones</a>
             <a class="nav_link" href="#">Nosotros</a>
-            <a class="nav_link" href="#">Crear</a>
+            <a class="nav_link" href="crearPost.html">Crear</a> 
         </div>
     </nav>
 
-    <main>
+    <main class="contenedor">
         <h1>Buscador de noticias</h1>
 
 
@@ -48,14 +50,14 @@
                     <label>Titular</label>
                     <input type="text">
                 </div>
-                <div id="categoria">
+                <div id="categorias">
                     <label for="categoria">Categoría</label>
                     <input type="text" id="categoria">
                 </div>
                 <div id="periodo">
                     <label>Periodo de fechas</label>
-                    <input type="date">
-                    <input type="date">
+                    <input type="date" id="date1">
+                    <input type="date" id="date2">
                 </div>
                 <div id="botones_form">
 
