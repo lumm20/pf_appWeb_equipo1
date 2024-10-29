@@ -5,21 +5,20 @@ import org.bson.types.ObjectId;
 
 /**
  *
- * @author karim
+ * @author
  */
-public class Noticia {
+public class Discusion {
     private ObjectId idNoticia;
     private String categoria;
     private Date fecha_publicacion;
     private Date ultima_modificacion;
-    private boolean anclada;
-    private ObjectId idContenido;
-    private Contenido contenido;
+    private String contenido;
+    private String url_img;
 
-    public Noticia() {
+    public Discusion() {
     }
     
-    public Noticia(String categoria, Date fecha_publicacion) {
+    public Discusion(String categoria, Date fecha_publicacion) {
         this.categoria = categoria;
         this.fecha_publicacion = fecha_publicacion;
     }
@@ -56,28 +55,20 @@ public class Noticia {
         this.ultima_modificacion = ultima_modificacion;
     }
 
-    public boolean isAnclada() {
-        return anclada;
-    }
-
-    public void setAnclada(boolean anclada) {
-        this.anclada = anclada;
-    }
-
-    public ObjectId getIdContenido() {
-        return idContenido;
-    }
-
-    public void setIdContenido(ObjectId idContenido) {
-        this.idContenido = idContenido;
-    }
-
-    public Contenido getContenido() {
+    public String getContenido() {
         return contenido;
     }
 
-    public void setContenido(Contenido contenido) {
+    public void setContenido(String contenido) {
         this.contenido = contenido;
+    }
+
+    public void setUrl_img(String url_img) {
+        this.url_img = url_img;
+    }
+
+    public String getUrl_img() {
+        return url_img;
     }
 
     @Override
