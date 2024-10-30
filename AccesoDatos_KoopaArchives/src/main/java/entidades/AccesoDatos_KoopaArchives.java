@@ -8,6 +8,7 @@ import conexion.Conexion;
 import conexion.IConexion;
 import daos.INoticiaDAO;
 import daos.NoticiaDAO;
+import daos.UsuarioNormalDAO;
 import excepciones.PersistenciaException;
 import fachadas.FacadePost;
 import fachadas.IFacadePost;
@@ -40,12 +41,12 @@ public class AccesoDatos_KoopaArchives {
 //        Contenido contenido2 = new Contenido("Texto 2", "Titulo 2", lista2, "Png 2");
 //        Contenido contenido3 = new Contenido("Texto 2", "Titulo 3", lista1, "Png 3");
 //        
-        Noticia noticia1 = new Noticia("Zelda", new Date());
-        Noticia noticia2 = new Noticia("Mario", new Date());
-        Noticia noticia3 = new Noticia("Metroid", new Date());
-//        
-//        INoticiaDAO noticiasDAO = new NoticiaDAO();
-//
+//        Noticia noticia1 = new Noticia("Zelda", new Date());
+//        Noticia noticia2 = new Noticia("Mario", new Date());
+//        Noticia noticia3 = new Noticia("Metroid", new Date());
+////        
+        INoticiaDAO noticiasDAO = new NoticiaDAO();
+////
 //        noticiasDAO.publicarNuevaNoticia(noticia1, contenido1);
 //        noticiasDAO.publicarNuevaNoticia(noticia2, contenido2);
 //        noticiasDAO.publicarNuevaNoticia(noticia3, contenido3);
@@ -93,37 +94,30 @@ public class AccesoDatos_KoopaArchives {
 //        post.actualizarNoticia(noticia);
 //        System.out.println(post.buscarNoticia(noticia));
 
-//            Publicacion publi1 = (Publicacion) FactoryPost.crearPost(FactoryPost.PUBLICACION);
-//            Publicacion publi2 = (Publicacion) FactoryPost.crearPost(FactoryPost.PUBLICACION);
-//            Publicacion publi3 = (Publicacion) FactoryPost.crearPost(FactoryPost.PUBLICACION);
-            
-//            publi1.setContenido("Aqui estuvo mario2");
-//            publi1.setFechaCreacion(new Date());
-//            publi1.setCategoria("Mario2");
-//            publi1.setUrlImg("Mario2.png");
-//            
-//            publi2.setContenido("Aqui estuvo kirby2");
-//            publi2.setFechaCreacion(new Date());
-//            publi2.setCategoria("Kirby2");
-//            publi2.setUrlImg("Kirby2.png");
-//            
-//            publi3.setContenido("Aqui estuvo link2");
-//            publi3.setFechaCreacion(new Date());
-//            publi3.setCategoria("Link2");
-//            publi3.setUrlImg("Link2.png");
-//            
-////            IFacadePost post = new FacadePost();
-//            post.registrarPublicacion(publi1);
-//            post.registrarPublicacion(publi2);
-//            post.registrarPublicacion(publi3);
-            Publicacion buscar = new Publicacion();
-            buscar.setNumPost("N961075187");
-//            post.actualizarPublicacion(publi3);
-//
-            System.out.println(post.buscarPublicacion(buscar));
-//            for(Publicacion publi : post.buscarPublicaciones()){
-//                System.out.println(publi);
-//            }
-//        }
+        // Obtener la fecha como un objeto Date
+        Date fecha2 = calendar2.getTime();
+
+        
+        FiltroNoticia filtro1 = new FiltroNoticia(fecha1, fecha2, null, null);
+
+        List<Noticia> listaNoticias = noticiasDAO.buscarNoticias(filtro1);
+        
+        for (Noticia noticia : listaNoticias) {
+            System.out.println(noticia);
+        }
+        
+        
+       // Usuario admin1 = new Usuario("1234", "luisa", "morales", "noseTengoSuenio");
+        Usuario normal1 = new Usuario("0001233", "fernanda", "espinoza", "mequiero_Dormir");
+        
+        UsuarioNormalDAO dao = new UsuarioNormalDAO();
+        
+        normal1= dao.buscarUsuario(normal1);
+        System.out.println(normal1);
+        normal1.printObjectId();
+//        admin1 = dao.agregarUsuario(admin1, true);
+//        System.out.println("admin agregado: "+admin1);
+//        normal1 = dao.agregarUsuario(normal1, false);
+//        System.out.println("normal agregado: "+normal1);
     }
 }
