@@ -33,6 +33,9 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 /**
+ * Clase de acceso a datos para la colección de Noticias de una base de datos de
+ * MongoDB que permite realizar consultas, inserciones, actualizaciones y borrar
+ * noticias
  *
  * @author karim
  */
@@ -42,6 +45,9 @@ public class NoticiaDAO implements INoticiaDAO {
     private MongoCollection<Noticia> noticias;
     private MongoCollection<Contenido> contenidos;
 
+    /**
+     * Constructor de la clase NoticiaDAO.
+     */
     public NoticiaDAO() {
         this.conexion = Conexion.getInstance();
         MongoDatabase baseDatos = this.conexion.obtenerBaseDatos();
@@ -49,6 +55,13 @@ public class NoticiaDAO implements INoticiaDAO {
         contenidos = baseDatos.getCollection("contenidos", Contenido.class);
     }
 
+    /**
+     * Publica una nueva noticia en la base de datos.
+     *
+     * @param noticia Noticia a publicar.
+     * @param contenido Contenido de la noticia.
+     * @throws PersistenciaException Si ocurre un error al guardar la noticia.
+     */
     @Override
     public void publicarNuevaNoticia(Noticia noticia, Contenido contenido) throws PersistenciaException {
         try {
@@ -63,14 +76,27 @@ public class NoticiaDAO implements INoticiaDAO {
 
     }
 
+    /**
+     * Ancla una noticia en la base de datos.
+     *
+     * @param noticia Noticia a anclar.
+     * @throws PersistenciaException Si ocurre un error al anclar la noticia.
+     */
     @Override
     public void anclarNoticia(Noticia noticia) throws PersistenciaException {
         Bson filtro = Filters.eq("numPost", noticia.getNumPost());
         Bson actualizar;
-        actualizar = Updates.set("anclada", noticia.isAnclada()); 
+        actualizar = Updates.set("anclada", noticia.isAnclada());
         noticias.updateOne(filtro, actualizar);
     }
 
+    /**
+     * Busca una noticia en la base de datos.
+     *
+     * @param noticia Noticia a buscar.
+     * @return La noticia encontrada o null si no se encuentra.
+     * @throws PersistenciaException Si ocurre un error al buscar la noticia.
+     */
     @Override
     public Noticia buscarNoticia(Noticia noticia) throws PersistenciaException {
         List<Bson> pipeline = new ArrayList<>();
@@ -81,7 +107,7 @@ public class NoticiaDAO implements INoticiaDAO {
 
         // Project stage
         pipeline.add(project(fields(
-                include("_id", "anclada", "categoria","numPost", "fechaCreacion", "ultimaModificacion", "contenido", "idContenido")
+                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "idContenido")
         )));
 
         return noticias
@@ -92,6 +118,13 @@ public class NoticiaDAO implements INoticiaDAO {
                 .orElse(null); // O lanzar una excepción si no se encuentra
     }
 
+    /**
+     * Busca noticias en la base de datos según los filtros proporcionados.
+     *
+     * @param filtros Filtros para la búsqueda.
+     * @return La lista de noticias encontradas.
+     * @throws PersistenciaException Si ocurre un error al buscar las noticias.
+     */
     @Override
     public List<Noticia> buscarNoticias(FiltroNoticia filtros) throws PersistenciaException {
         List<Bson> pipeline = new ArrayList<>();
@@ -135,7 +168,7 @@ public class NoticiaDAO implements INoticiaDAO {
 
         // Project stage
         pipeline.add(project(fields(
-                include("_id", "anclada", "categoria","numPost", "fechaCreacion", "ultimaModificacion", "contenido", "idContenido")
+                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "idContenido")
         )));
 
         return noticias
@@ -143,6 +176,15 @@ public class NoticiaDAO implements INoticiaDAO {
                 .into(new ArrayList<>());
     }
 
+    /**
+     * Actualiza una noticia existente en la colección de noticias con la
+     * información del objeto del parámetro.
+     *
+     * @param noticia Noticia con el número de post de la noticia a actualizar y
+     * la información actualizada.
+     * @throws PersistenciaException Si ocurre un error al hacer la
+     * actualización en la colección.
+     */
     @Override
     public void actualizarNoticia(Noticia noticia) throws PersistenciaException {
         Contenido contenido = noticia.getContenido();
@@ -157,18 +199,18 @@ public class NoticiaDAO implements INoticiaDAO {
                 Updates.set("subtemas", contenido.getSubtemas()),
                 Updates.set("urlImg", contenido.getUrlImg())
         );
-        actualizar= Updates.combine(
+        actualizar = Updates.combine(
                 Updates.set("ultimaModificacion", new Date()),
                 Updates.set("anclada", noticia.isAnclada())
-        ); 
-                
+        );
+
         contenidos.updateOne(filtro2, actualizar2);
         noticias.updateOne(filtro, actualizar);
     }
-    
-    
+
     /**
      * Método para ajustar la fecha de inicio a las 00:00:00
+     *
      * @param fecha Fecha a ajustar.
      * @return La fecha con el horario iniciando el dia.
      */
@@ -184,6 +226,7 @@ public class NoticiaDAO implements INoticiaDAO {
 
     /**
      * Método para ajustar la fecha de fin a las 23:59:59
+     *
      * @param fecha Fecha a ajustar.
      * @return La fecha con el horario terminado el dia.
      */
@@ -197,6 +240,11 @@ public class NoticiaDAO implements INoticiaDAO {
         return calendar.getTime();
     }
 
+    /**
+     * Busca todas las noticias en la colección de noticias.
+     *
+     * @return Una lista de noticias.
+     */
     @Override
     public List<Noticia> buscarNoticias() {
         List<Bson> pipeline = new ArrayList<>();
@@ -207,24 +255,28 @@ public class NoticiaDAO implements INoticiaDAO {
 
         // Project stage
         pipeline.add(project(fields(
-                include("_id", "anclada", "categoria","numPost", "fechaCreacion", "ultimaModificacion", "contenido", "idContenido")
+                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "idContenido")
         )));
 
         return noticias
                 .aggregate(pipeline, Noticia.class)
                 .into(new ArrayList<>());
     }
-    
-    
+
     private String generarNumeroAleatorio() {
         Random random = new Random();
 
-         long numero = random.nextLong() % 10000000000L; // Limita el rango a 10 cifras
+        long numero = random.nextLong() % 10000000000L; // Limita el rango a 10 cifras
 
         // Formatea el número a una cadena de 10 caracteres, rellenando con ceros a la izquierda
-        return "N"+String.format("%010d", Math.abs(numero)); // Usar Math.abs para evitar números negativos
+        return "N" + String.format("%010d", Math.abs(numero)); // Usar Math.abs para evitar números negativos
     }
 
+    /**
+     * Elimina una noticia de la colección de noticias.
+     *
+     * @param noticia Noticia con el número de post de la noticia a eliminar.
+     */
     @Override
     public void eliminarNoticia(Noticia noticia) {
         Bson filtro = Filters.eq("numPost", noticia.getNumPost());
