@@ -13,6 +13,7 @@ import conexion.Conexion;
 import conexion.IConexion;
 import entidades.Usuario;
 import excepciones.PersistenciaException;
+import java.util.Random;
 
 /**
  *
@@ -32,10 +33,10 @@ public class UsuarioAdminDAO implements IUsuarioDAO{
     @Override
     public Usuario registrarUsuario(Usuario usuario) throws PersistenciaException {
         try {
-            if(buscarUsuario(usuario) != null)
-                throw new PersistenciaException("ya hay un usuario registrado con ese Id");
-            usuariosAdmin.insertOne(usuario);
+            
             usuario.setAdmin(true);
+            usuario.setIdUsuario(generarNumeroAleatorio());
+            usuariosAdmin.insertOne(usuario);
             return usuario;
         } catch (MongoException e) {
             System.out.println(e.getMessage());
@@ -52,5 +53,14 @@ public class UsuarioAdminDAO implements IUsuarioDAO{
             System.out.println(e.getMessage());
             throw new PersistenciaException("error al buscar el usuario");
         }
+    }
+    
+      private String generarNumeroAleatorio() {
+        Random random = new Random();
+
+         long numero = random.nextLong() % 10000000000L; // Limita el rango a 10 cifras
+
+        // Formatea el número a una cadena de 10 caracteres, rellenando con ceros a la izquierda
+        return "N"+String.format("%010d", Math.abs(numero)); // Usar Math.abs para evitar números negativos
     }
 }
