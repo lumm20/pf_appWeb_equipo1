@@ -84,7 +84,12 @@ public class AccesoDatos_KoopaArchives {
         
         normal1= dao.buscarUsuario(normal1);
         System.out.println(normal1);
+        System.out.println("contra "+normal1.getContra());
         normal1.printObjectId();
+        
+        if(dao.iniciarSesion(normal1))
+            System.out.println("logged");
+        else System.out.println("not logged");
 //        admin1 = dao.agregarUsuario(admin1, true);
 //        System.out.println("admin agregado: "+admin1);
 //        normal1 = dao.agregarUsuario(normal1, false);

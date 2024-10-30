@@ -51,4 +51,17 @@ public class UsuarioNormalDAO implements IUsuarioDAO{
             throw new PersistenciaException("error al buscar el usuario");
         }
     }
+
+    @Override
+    public boolean iniciarSesion(Usuario usuario) throws PersistenciaException {
+        Usuario user = buscarUsuario(usuario);
+        if (user != null) {
+            String contra = usuario.getContra();
+            if (contra != null) {
+                return user.getContra().equals(contra);
+            }
+            throw new PersistenciaException("Debe ingresar una contraseña");
+        }
+        throw new PersistenciaException("El usuario que ingreso no esta registrado");
+    }
 }

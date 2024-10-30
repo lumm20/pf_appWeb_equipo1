@@ -40,4 +40,14 @@ public class FachadaUsuarios {
         }
         return user;
     }
+    
+    public boolean iniciarSesion(Usuario usuario) throws PersistenciaException{
+        boolean logged;
+        if(usuario.isAdmin()){
+            logged = usuarioAdminDAO.iniciarSesion(usuario);
+        }else{
+            logged = usuarioNormalDAO.iniciarSesion(usuario);
+        }
+        return logged;
+    }
 }
