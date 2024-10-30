@@ -1,18 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package daos;
 
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.InsertOneResult;
 import conexion.Conexion;
 import conexion.IConexion;
 import entidades.Usuario;
 import excepciones.PersistenciaException;
+import java.util.Random;
 
 /**
  *
@@ -31,8 +27,7 @@ public class UsuarioNormalDAO implements IUsuarioDAO{
     @Override
     public Usuario registrarUsuario(Usuario usuario) throws PersistenciaException{
         try {
-            if(buscarUsuario(usuario) != null)
-                throw new PersistenciaException("ya hay un usuario registrado con ese Id");
+            usuario.setIdUsuario(generarNumeroAleatorio());
             usuariosNormales.insertOne(usuario);
             return usuario;
         } catch (MongoException e) {
@@ -63,5 +58,14 @@ public class UsuarioNormalDAO implements IUsuarioDAO{
             throw new PersistenciaException("Debe ingresar una contraseña");
         }
         throw new PersistenciaException("El usuario que ingreso no esta registrado");
+    }
+    
+    private String generarNumeroAleatorio() {
+        Random random = new Random();
+
+         long numero = random.nextLong() % 10000000000L; // Limita el rango a 10 cifras
+
+        // Formatea el número a una cadena de 10 caracteres, rellenando con ceros a la izquierda
+        return "N"+String.format("%010d", Math.abs(numero)); // Usar Math.abs para evitar números negativos
     }
 }

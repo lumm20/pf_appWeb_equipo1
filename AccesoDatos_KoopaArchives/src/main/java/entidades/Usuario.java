@@ -22,6 +22,13 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(String nombre, String apellido, boolean admin) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.admin = admin;
+    }
+
+    
     public Usuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }

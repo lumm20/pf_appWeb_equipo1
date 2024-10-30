@@ -12,28 +12,45 @@ import org.bson.types.ObjectId;
 
 public class Comentario {
 
-    private ObjectId idComentario;
+    private ObjectId _id;
     private String contenido;
-    private Date fecha_comentario;
-    private ObjectId idNoticia;
+    private Date fechaPublicacion;
+    private Date fechaModificacion;
+    private String idNoticia;
     private Noticia noticia;
+    private String idUsuario;
+    private Usuario usuario;
+    private String idComentario;
     private boolean anclado;
 
     public Comentario() {
 
     }
 
-    public Comentario(String contenido, Date fechaComentario) {
-        this.contenido = contenido;
-        this.fecha_comentario = fechaComentario;
-    }
-
-    public ObjectId getIdComentario() {
-        return idComentario;
-    }
-
-    public void setIdComentario(ObjectId idComentario) {
+    public Comentario(String idComentario) {
         this.idComentario = idComentario;
+    }
+
+    public Comentario(String contenido, String idComentario) {
+        this.contenido = contenido;
+        this.idComentario = idComentario;
+    }
+
+    public Comentario(String contenido, Noticia noticia, Usuario usuario) {
+        this.contenido = contenido;
+        this.noticia = noticia;
+        this.usuario = usuario;
+        this.fechaPublicacion = new Date();
+    }
+
+    
+
+    public ObjectId getId() {
+        return _id;
+    }
+
+    public void setId(ObjectId _id) {
+        this._id = _id;
     }
 
     public String getContenido() {
@@ -44,19 +61,19 @@ public class Comentario {
         this.contenido = contenido;
     }
 
-    public Date getFecha_comentario() {
-        return fecha_comentario;
+    public Date getFechaPublicacion() {
+        return fechaPublicacion;
     }
 
-    public void setFecha_comentario(Date fecha_comentario) {
-        this.fecha_comentario = fecha_comentario;
+    public void setFechaPublicacion(Date fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
     }
 
-    public ObjectId getIdNoticia() {
+    public String getIdNoticia() {
         return idNoticia;
     }
 
-    public void setIdNoticia(ObjectId idNoticia) {
+    public void setIdNoticia(String idNoticia) {
         this.idNoticia = idNoticia;
     }
 
@@ -76,9 +93,41 @@ public class Comentario {
         this.anclado = anclado;
     }
 
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public String getIdComentario() {
+        return idComentario;
+    }
+
+    public void setIdComentario(String idComentario) {
+        this.idComentario = idComentario;
+    }
+    
     @Override
     public String toString() {
-        return "Comentario{" + "idComentario=" + idComentario + ", contenido=" + contenido + ", fecha_comentario=" + fecha_comentario + ", idNoticia=" + idNoticia + ", noticia=" + noticia + '}';
+        return "Comentario{" + "idComentario=" + _id + ", contenido=" + contenido + ", fecha_comentario=" + fechaPublicacion + ", idNoticia=" + idNoticia + ", noticia=" + noticia + ", idUsuario=" + noticia +  ", usuario=" + usuario +'}';
     }
 
 }
