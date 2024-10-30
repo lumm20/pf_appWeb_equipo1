@@ -18,32 +18,43 @@ import conexion.IConexion;
 import entidades.Publicacion;
 import excepciones.PersistenciaException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 
 /**
+ * Clase de objeto de acceso a datos que permite realizar consultas, escrituras,
+ * y modificaciones a la colección de publicaciones de usuarios en una base de
+ * datos MongoDB
  *
- * @author Juventino López García - 00000248547 - 28/10/2024
+ * @author Juventino López García - 00000248547
  */
 public class PublicacionDAO implements IPublicacionDAO {
 
     private IConexion conexion;
     private MongoCollection<Publicacion> publicaciones;
 
+    /**
+     * Constructor por defecto que establece la conexión a la colección de
+     * publicaciones
+     */
     public PublicacionDAO() {
         this.conexion = Conexion.getInstance();
         MongoDatabase baseDatos = this.conexion.obtenerBaseDatos();
         publicaciones = baseDatos.getCollection("publicaciones", Publicacion.class);
     }
 
+    /**
+     * Añade una nueva publicación a la colección de publicaciones
+     *
+     * @param publicacion Nueva publicación a añadir a la base de datos
+     * @throws PersistenciaException Si ocurre un error al insertar la
+     * publicación a la colección
+     */
     @Override
     public void publicarNuevaPublicacion(Publicacion publicacion) throws PersistenciaException {
         try {
-            ObjectId id = new ObjectId();
             publicacion.setNumPost(generarNumeroAleatorio());
             publicaciones.insertOne(publicacion);
         } catch (MongoException me) {
@@ -51,6 +62,16 @@ public class PublicacionDAO implements IPublicacionDAO {
         }
     }
 
+    /**
+     * Busca la publicación dada por el parametro en la colección de
+     * publicaciones
+     *
+     * @param publicacion Publicación con el número de post que se espera
+     * encontrar en la colección
+     * @return Publicación cuyo número de post coincide con el del parámetro
+     * @throws PersistenciaException Si ocurre un error al hacer la búsqueda en
+     * la colección
+     */
     @Override
     public Publicacion buscarPublicacion(Publicacion publicacion) throws PersistenciaException {
         List<Bson> pipeline = new ArrayList<>();
@@ -68,6 +89,16 @@ public class PublicacionDAO implements IPublicacionDAO {
                 .orElse(null); // O lanzar una excepción si no se encuentra
     }
 
+    /**
+     * Busca las publicaciones cuya categoria coincide con la categoria del
+     * objeto del parámtero
+     *
+     * @param publicacion Publicación con la categoría de publicaciones que se
+     * busca
+     * @return Lista con las publicaciones con la categoria coincidente
+     * @throws PersistenciaException Si ocurre un error al hacer la búsqueda en
+     * la colección
+     */
     @Override
     public List<Publicacion> buscarPublicaciones(Publicacion publicacion) throws PersistenciaException {
         List<Bson> pipeline = new ArrayList<>();
@@ -77,6 +108,15 @@ public class PublicacionDAO implements IPublicacionDAO {
                 .into(new ArrayList<>());
     }
 
+    /**
+     * Actualiza una publicación existente en la colección de publicaciones con
+     * la información del objeto del parámetro
+     *
+     * @param publicacion Publicación con el número de post de la publicación a
+     * actualizar y la información actualizada
+     * @throws PersistenciaException Si ocurre un error al hacer la
+     * actualización en la colección
+     */
     @Override
     public void actualizarPublicacion(Publicacion publicacion) throws PersistenciaException {
         Bson filtro = Filters.eq("numPost", publicacion.getNumPost());
@@ -91,6 +131,12 @@ public class PublicacionDAO implements IPublicacionDAO {
         publicaciones.updateOne(filtro, actualizar);
     }
 
+    /**
+     * Regresa todas las publicaciones contenidas en la colección de
+     * publicaciones
+     *
+     * @return Lista con las publicaciones de la colección
+     */
     @Override
     public List<Publicacion> buscarPublicaciones() {
         List<Bson> pipeline = new ArrayList<>();
@@ -107,6 +153,15 @@ public class PublicacionDAO implements IPublicacionDAO {
                 .into(new ArrayList<>());
     }
 
+    /**
+     * Genera un número aleatorio de 10 dígitos y lo retorna como una cadena de
+     * caracteres.
+     *
+     * El número generado es precedido por la letra "N" y se rellena con ceros a
+     * la izquierda si es necesario para completar los 10 dígitos.
+     *
+     * @return Cadena de caracteres que representa el número aleatorio generado.
+     */
     private String generarNumeroAleatorio() {
         Random random = new Random();
 
@@ -116,6 +171,11 @@ public class PublicacionDAO implements IPublicacionDAO {
         return "N" + String.format("%010d", Math.abs(numero)); // Usar Math.abs para evitar números negativos
     }
 
+    /**
+     * Elimina una publicación de la colección de publicaciones
+     *
+     * @param publicacion Publicación a eliminar de la colección
+     */
     @Override
     public void eliminarPublicacion(Publicacion publicacion) {
         Bson filtro = Filters.eq("numPost", publicacion.getNumPost());
