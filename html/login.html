@@ -1,38 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/login.css">
-    <link rel="icon" href="../img/logo.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
-    <title>KoopaArchives</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <script src="../js/nav.js" defer></script>
 </head>
-
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="../img/logo.png" alt="Koopa Archives" class="logo" />
-            <h1><span class="title-1">Koopa</span><br /><span class="title-2">Archives</span></h1>
-        </div>
-        <h2>¡Bienvenido!</h2>
-        <div class="box">
-            <form id="login" name="login" method="POST">
-                <div class="element">
-                    <label for="user">Username</label>
-                    <input type="text" id="username" required />
-                    <label for="pass">Contraseña</label>
-                    <input type="password" id="password" required />
+    <header>
+        <nav>
+            <ul class="menu">
+                <li class="logo"><a class="contenedor_logo" href="#">
+                        <img class="logo_img" src="../img/logo.png" alt="Logo de Koopa Archives">
+                        <div class="logo_texto">
+                            <h1>
+                                <span class="logo_koopas">Koopa</span><br>
+                                Archives
+                            </h1>
+                        </div>
+                    </a></li>
+                <li class="item especial"><a href="#">Home</a></li>
+                <li class="item especial"><a href="#">About</a></li>
+                <li class="item especial"><a href="#">Services</a></li>
+                <li class="item especial"><a href="#">Features</a></li>
+                <li class="item especial"><a href="#">Blog</a></li>
+                <li class="item especial"><a href="#">Contact</a></li>
+                <!-- <li class="item button especial2"><a class="perfil" href="#"><p><i class="fa-solid fa-user"></i></p><p>Perfil</p></a></li> -->
+                <li class="item button especial2"><a href="#">Registrarse</a></li>
+                <li class="item button secondary especial2"><a href="#">Iniciar Sesión</a></li>
+                <li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="login-form">
+            <h3>Iniciar sesión</h3>
+            <form>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
                 </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    <!-- <button type="button" class="btn btn-secondary">Registrarme</button> -->
+                </div>
+            </form>
+            <div class="register-prompt">
+                <p>¿Nuevo por aquí? <a href="#">te invitamos a registrarte</a></p>
+            </div>
         </div>
-        <div class="element">
-            <button type="button" onclick="window.location.href='indexLogged.html'">Iniciar sesión</button>
-            <button type="button" onclick="window.location.href='index.html'">Regresar</button>
-        </div>
-        </form>
-    </div>
-    </div>
-</body>
+    </main>
+    <footer class="footer">
+        <p>Hecho por Equipo: Batifamilia - &copy;Aplicaciones Web</p>
+    </footer>
 
+</body>
 </html>
+
+

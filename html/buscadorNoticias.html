@@ -1,76 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KoopaArchives</title>
+    <title>Buscador de noticias - Koopa Archives</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/buscarNoticia.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <script src="../js/nav.js" defer></script>
 </head>
-
 <body>
     <header>
-        <a href="" class="contenedor_logo">
-            <img class="logo" src="../img/logo.png" alt="Logo de Koopa Archives">
-            <div class="logo_texto">
-                <h1>
-                    <span class="logo_koopas">Koopa</span><br>
-                    Archives
-                </h1>
-            </div>
-        </a>
-        <div class="iniciadoSesion">
-            <input type="button" class="btn_registro" value="Registrarse">
-            <input type="button" class="btn_login" value="Iniciar Sesión">
-        </div>
+        <nav>
+            <ul class="menu">
+                <li class="logo"><a class="contenedor_logo" href="#">
+                        <img class="logo_img" src="../img/logo.png" alt="Logo de Koopa Archives">
+                        <div class="logo_texto">
+                            <h1>
+                                <span class="logo_koopas">Koopa</span><br>
+                                Archives
+                            </h1>
+                        </div>
+                    </a></li>
+                <li class="item especial"><a href="#">Home</a></li>
+                <li class="item especial"><a href="#">About</a></li>
+                <li class="item especial"><a href="#">Services</a></li>
+                <li class="item especial"><a href="#">Features</a></li>
+                <li class="item especial"><a href="#">Blog</a></li>
+                <li class="item especial"><a href="#">Contact</a></li>
+                <!-- <li class="item button especial2"><a class="perfil" href="#"><p><i class="fa-solid fa-user"></i></p><p>Perfil</p></a></li> -->
+                <li class="item button especial2"><a href="#">Registrarse</a></li>
+                <li class="item button secondary especial2"><a href="#">Iniciar Sesión</a></li>
+                <li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
+            </ul>
+        </nav>
     </header>
-
-    <nav class="contenedor_nav">
-        <div class="nav_links">
-            <a class="nav_link" href="indexLogged.html">Noticias</a>
-            <a class="nav_link" href="buscadorNoticias.html">Buscar</a>
-            <a class="nav_link" href="publicaciones.html">Publicaciones</a>
-            <a class="nav_link" href="#">Nosotros</a>
-            <a class="nav_link" href="crearPost.html">Crear</a> 
-        </div>
-    </nav>
-
-    <main class="contenedor">
-        <h1>Buscador de noticias</h1>
-
-
-        <form method="get">
-            <div id="grid_buscador">
-                <div id="titular">
-                    <label>Titular</label>
-                    <input type="text">
+    <main class="search-container">
+        <h3>Buscador de noticias</h3>
+        <section class="search-form">
+            <form id="newsSearchForm">
+                <div class="form-group">
+                    <label for="titulo">Titular</label>
+                    <input type="text" id="titulo" name="titulo">
                 </div>
-                <div id="categorias">
+
+                <div class="form-group">
                     <label for="categoria">Categoría</label>
-                    <input type="text" id="categoria">
+                    <select id="categoria" name="categoria">
+                        <option value="">Seleccionar categoría</option>
+                        <option value="The Legend of Zelda">The Legend of Zelda</option>
+                        <option value="Mario">Mario</option>
+                        <option value="Pokemon">Pokemon</option>
+                    </select>
                 </div>
-                <div id="periodo">
-                    <label>Periodo de fechas</label>
-                    <input type="date" id="date1">
-                    <input type="date" id="date2">
-                </div>
-                <div id="botones_form">
 
-                    <button class="btn_form">Limpiar</button>
-                    <button class="btn_form">Buscar</button>
+                <div class="form-group">
+                    <label>Periodo de fechas:</label>
+                    <div class="date-range">
+                        <input type="date" id="fechaInicio" name="fechaInicio">
+                        <input type="date" id="fechaFin" name="fechaFin">
+                    </div>
                 </div>
+
+                <div class="button-group">
+                    <button type="reset" class="btn btn-secondary">Limpiar</button>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="search-results">
+            <h2>Resultados <span id="resultCount">0</span></h2>
+            <div id="resultsContainer" class="results-container">
+                <!-- Los resultados se cargarán aquí dinámicamente -->
             </div>
-        </form>
-
-        <section>
-            <h2>Resultados 0</h2>
         </section>
     </main>
-</body>
+    <footer class="footer">
+        <p>Hecho por Equipo: Batifamilia - &copy;Aplicaciones Web</p>
+    </footer>
 
+    <script>
+        document.getElementById('newsSearchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const resultsContainer = document.getElementById('resultsContainer');
+            const resultCount = document.getElementById('resultCount');
+            
+            // Simulamos resultados de búsqueda
+            const results = [
+                {
+                    title: "El sorpresivo último baile de Hyrule en la Nintendo Switch...",
+                    description: "The Legend of Zelda: Echoes of Wisdom es el más reciente título de la saga más legendaria de Nintendo...",
+                    category: "The Legend of Zelda",
+                    image: "../img/noti_ejemplo.png"
+                },
+                {
+                    title: "El sorpresivo último baile de Hyrule en la Nintendo Switch...",
+                    description: "The Legend of Zelda: Echoes of Wisdom es el más reciente título de la saga más legendaria de Nintendo...",
+                    category: "The Legend of Zelda",
+                    image: "../img/noti_ejemplo.png"
+                }
+            ];
+
+            resultsContainer.innerHTML = '';
+            if (results.length > 0) {
+                resultCount.textContent = results.length;
+                results.forEach(result => {
+                    const card = document.createElement('article');
+                    card.className = 'result-card';
+                    card.innerHTML = `
+                        <img src="${result.image}" alt="${result.title}">
+                        <div class="result-content">
+                            <h3>${result.title}</h3>
+                            <p>${result.description}</p>
+                            <span class="result-category">${result.category}</span>
+                        </div>
+                    `;
+                    resultsContainer.appendChild(card);
+                });
+            } else {
+                resultCount.textContent = '0';
+                resultsContainer.innerHTML = '<div class="no-results"><p>No hubo resultados :(</p></div>';
+            }
+        });
+
+        // Simulamos una búsqueda sin resultados al cargar la página
+        window.addEventListener('load', function() {
+            const resultsContainer = document.getElementById('resultsContainer');
+            const resultCount = document.getElementById('resultCount');
+            resultCount.textContent = '0';
+            resultsContainer.innerHTML = '<div class="no-results"><p>No hubo resultados :(</p></div>';
+        });
+    </script>
+</body>
 </html>
