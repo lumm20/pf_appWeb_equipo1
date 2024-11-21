@@ -9,84 +9,157 @@
     --fuentePrincipal: 'Nunito', sans-serif;
 }
 
-body {
-    font-family: var(--fuentePrincipal);
-    background-color: var(--blanco);
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
-a,
-a:hover,
-input {
-    text-decoration: none;
-}
-
-.contenedor_logo {
+.profile-content {
     display: flex;
-    align-items: center;
+    gap: 4rem;
+    align-items: flex-start;
 }
 
-.contenedor {
-    max-width: 800px;
-    margin: 2rem auto;
-    background: var(--blanco);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px var(--gris);
-}
-
-.encabezado_tu_perfil {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.encabezado_tu_perfil h1{
-    font-size: 34px;
-    color: var(--colorFondo);
-}
-
-.grid_campos {
-    display: grid;
-    grid-template-areas:
-    'nombre imagen'
-    'apellido'
-    'email'
-    'pass'
-    'botones_form';
-    gap: 20px;
-}
-
-.grid_campos #img_perfil{
-    display: grid;
-    grid-template-areas: 
-    'imagen'
-    'btn_cambiar_img';
-    gap: 20px;
-}
-
-.grid_campos .btn_cambiar_img{
-    width: 150px;
-    height: 20px;
-}
-.campos {
-    margin-bottom: 20px;
-}
-
-.campos label {
-    display: block;
-    margin-bottom: 20px;
-    color: var(--grisOscuro);
-    font-weight: 500;
-    font-size: large;
-}
-
-.campos input[type="text"],
-.campos input[type="password"],
-.campos input[type="email"]{
+.profile-form {
+    flex: 1;
     width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+}
+
+h3 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+}
+
+input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--moradoClaro);
+    border-radius: 0.5rem;
+    background-color: white;
+    font-size: 1rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary {
+    background-color: #6c5ce7;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #5b4bc4;
+}
+
+.btn-secondary {
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+
+.btn-secondary:hover {
+    background-color: #cbd5e0;
+}
+
+
+.btn-purple {
+    background-color: var(--morado);
+    color: var(--blanco);
+    width: 100%;
+    margin-top: 1rem;
+    text-align: center;
+    display: inline-block;
+}
+
+.btn-purple:hover {
+    background-color: var(--moradoOscuro);
+}
+
+.profile-avatar {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar-circle {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 4px solid var(--morado);
+    overflow: hidden;
+    background-color: var(--gris);
+}
+
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .profile-content {
+        flex-direction: column-reverse;
+        gap: 2rem;
+    }
+
+    .profile-avatar {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    h3 {
+        font-size: 2rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-container {
+        padding: 1rem;
+    }
+
+    .avatar-circle {
+        width: 200px;
+        height: 200px;
+    }
 }
