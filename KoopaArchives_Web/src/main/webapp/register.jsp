@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,37 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/register.css">
-    <link rel="stylesheet" href="../css/nav.css">
-    <script src="../js/nav.js" defer></script>
-    <script src="../js/register.js" defer></script>
+    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <script src="js/nav.js" defer></script>
+    <script src="js/register.js" defer></script>
 </head>
 
 <body>
-    <header>
-        <nav>
-            <ul class="menu">
-                <li class="logo"><a class="contenedor_logo" href="#">
-                        <img class="logo_img" src="../img/logo.png" alt="Logo de Koopa Archives">
-                        <div class="logo_texto">
-                            <h1>
-                                <span class="logo_koopas">Koopa</span><br>
-                                Archives
-                            </h1>
-                        </div>
-                    </a></li>
-                <li class="item especial"><a href="#">Home</a></li>
-                <li class="item especial"><a href="#">About</a></li>
-                <li class="item especial"><a href="#">Services</a></li>
-                <li class="item especial"><a href="#">Features</a></li>
-                <li class="item especial"><a href="#">Blog</a></li>
-                <li class="item especial"><a href="#">Contact</a></li>
-                <li class="item button especial2"><a href="#">Registrarse</a></li>
-                <li class="item button secondary especial2"><a href="#">Iniciar Sesión</a></li>
-                <li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
-            </ul>
-        </nav>
-    </header>
+    <%@ include file="WEB-INF/jspf/nav.jspf" %>
     <main>
         <div class="form-container">
             <h2>¡Crea una cuenta!</h2>
@@ -48,7 +27,6 @@
             <div class="form-steps">
                 <!-- Step 1 -->
                 <form class="form-step active" id="step1">
-                    
                     <div class="input-group">
                         <label for="username" class="sr-only">Nombre de usuario</label>
                         <input type="text" id="username" placeholder="Nombre de usuario" required>
@@ -128,10 +106,8 @@
             </div>
         </div>
     </main>
-    <footer class="footer">
-        <p>Hecho por Equipo: Batifamilia - &copy;Aplicaciones Web</p>
-    </footer>
-
+    
+    <%@ include file="WEB-INF/jspf/footer.jspf" %>
     
 </body>
 </html>

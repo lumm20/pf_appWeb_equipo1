@@ -1,5 +1,3 @@
-/* Prueba esto no es el archivo web */
-
 :root {
     --colorFondo: #2B2C34;
     --rojoNintendo: #ff6b6b;
@@ -18,7 +16,7 @@ body {
     display: grid;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
-    background-color: var(--colorFondo);
+    background-color: #f1f1f1;
 }
 
 main {

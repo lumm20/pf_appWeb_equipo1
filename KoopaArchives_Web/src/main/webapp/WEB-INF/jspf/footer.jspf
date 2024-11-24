@@ -1,0 +1,5 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<footer class="footer">
+    <p>Hecho por Equipo: Mugiwara - &copy;Aplicaciones Web</p>
+</footer>
