@@ -27,3 +27,84 @@ function updateImagePreview(input) {
         placeholder.style.display = 'block';
     }
 }
+
+let timeOutId;
+
+function showErrorMessage(mensaje, mostrar) {
+    const errorMsj = document.getElementById('unmatched-pass-error');
+    if (errorMsj) {
+        errorMsj.textContent = mensaje;
+        errorMsj.style.display = mostrar ? 'block' : 'none';
+    }
+}
+
+function validateWhileTyping(){
+    clearTimeout(timeOutId);
+    
+    timeOutId  = setTimeout(() => {
+        const pass = document.getElementById('password').value;
+        const confirmPass = document.getElementById('confirm-password').value;
+        
+        if (pass.length > 0) {
+            if (confirmPass.length > 0 && pass !== confirmPass) {
+                showErrorMessage('Las contraseñas no coinciden',true);
+            }else
+                showErrorMessage('',false);
+        }
+    },1000);
+}
+
+function validateStep1(){
+    alert("en validate step1");
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const nombre = document.getElementById('nombre').value;
+    const genero = document.getElementById('genero').value;
+    const apellidoMaterno = document.getElementById('apellido-materno').value;
+    const apellidoPaterno = document.getElementById('apellido-paterno').value;
+    
+    if (!username || !email || !nombre || !genero || !apellidoMaterno || !apellidoPaterno) {
+        alert('ccompleta todos los campos');
+        return false;
+    }
+    
+    return true;
+}
+
+function validateSubmit(event){
+    if (event) {
+        event.preventDefault();
+    }
+    
+    if(!validateStep1()){
+        return false;
+    }
+    
+    const pass = document.getElementById('password').value;
+    const confirmPass = document.getElementById('confirm-password').value;
+    let valido = true;
+    
+    if (pass !== confirmPass) {
+        showErrorMessage('Las contraseñas no coinciden', true);
+        valido = false;
+    } else {
+        showErrorMessage('', false);
+    }
+    
+    return valido;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById('password');
+    const confirmPass = document.getElementById('confirm-password');
+    const btnRegistrar = document.getElementById('btn-registro');
+
+    if (confirmPass) {
+        confirmPass.addEventListener('input', validateWhileTyping);
+    }
+
+    if (btnRegistrar) {
+        btnRegistrar.addEventListener('onclick', validateSubmit);
+    }
+});
+

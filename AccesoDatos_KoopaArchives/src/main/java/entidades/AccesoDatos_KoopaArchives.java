@@ -4,6 +4,7 @@ import daos.IUsuarioDAO;
 import daos.UsuarioDAO;
 import excepciones.PersistenciaException;
 import factories.FactoryUser;
+import java.util.Date;
 
 /**
  *
@@ -16,8 +17,9 @@ public class AccesoDatos_KoopaArchives {
 //        usuario.acompletar("Victor", "Encinas", "Guzman", "luffy27", "luffy", "luffy@email.com", new Date(), "Hombre");
 //        usuario.acompletar("Victor", "Encinas", "Guzman", "toro4", "toro", "toro@email.com", new Date(), "Hombre");
         IUsuarioDAO dao = new UsuarioDAO();
+//        dao.registrarUsuario(usuario);
         Usuario usuarioBuscar = new Usuario();
-        usuarioBuscar.setEmail("luffy@emil.com");
+        usuarioBuscar.setEmail("toro@emil.com");
         usuarioBuscar.setUsername("toro4");
         Usuario inicio =dao.existeUsuario(usuarioBuscar);
         

@@ -18,12 +18,13 @@ public class FacadeUsuario implements IFacadeUsuario{
     }
 
     @Override
-    public void registrarUsuario(Usuario usuario) throws PersistenciaException {
+    public boolean registrarUsuario(Usuario usuario) throws PersistenciaException {
+        return usuarioDAO.registrarUsuario(usuario) != null;
     }
 
     @Override
     public Usuario buscarUsuario(Usuario usuario) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return usuarioDAO.buscarUsuario(usuario);
     }
 
     @Override

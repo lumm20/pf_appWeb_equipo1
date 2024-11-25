@@ -5,6 +5,7 @@
 package servlets;
 
 import entidades_beans.UsuarioBean;
+import entidades_beans.UsuarioRegistroBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -91,7 +92,47 @@ public class UsuarioServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void registrarUsuario(HttpServletRequest request, HttpServletResponse response) {
+    private void registrarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+        UsuarioRegistroBean aux = new UsuarioRegistroBean();
+        aux.setUsername(request.getParameter("username"));
+        
+        IUsuarioBO usuarioBO = new UsuarioBO();
+        UsuarioRegistroBean buscado = usuarioBO.buscarUsuario(aux);
+        
+        String msjError= "" ;
+        
+        if(buscado == null){
+            aux.setNombre(request.getParameter("nombre"));
+            aux.setGenero(request.getParameter("genero"));
+            aux.setEmail(request.getParameter("email"));
+            aux.setApellidoMaterno(request.getParameter("apellido-materno"));
+            aux.setApellidoPaterno(request.getParameter("apellido-paterno"));
+            aux.setPassword(request.getParameter("password"));
+            System.out.println("username capturado en servlet: "+aux.getUsername());
+            System.out.println("password capturado en servlet: "+aux.getPassword());
+//            if(true){
+            if(usuarioBO.registrarUsuario(aux)){
+                aux.setRol("Normal");
+                HttpSession sesion = request.getSession();
+                // Guardar datos en la sesión
+                sesion.setAttribute("usuario", aux);
+                // Opcional: establecer tiempo máximo de sesión (en segundos)
+                sesion.setMaxInactiveInterval(30 * 60); // 30 minutos
+
+                // Redirigir a página de inicio
+                response.sendRedirect(request.getContextPath() + "/inicio.jsp");
+            }else{
+                msjError = "Hubo un error al registrar el usuario. Intentelo de nuevo";
+            }
+        }else{
+            msjError = "Ya existe un usuario con ese username. Ingrese un username diferente";
+        }
+        //si hubo algun error, se mantiene en la pagina de registro y se envia el mensaje de error capturado
+        if(msjError.length() > 0){
+            request.setAttribute("error", msjError);
+            request.getRequestDispatcher("/register.jsp").forward(request, response);
+        }
+        
 
     }
     private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {

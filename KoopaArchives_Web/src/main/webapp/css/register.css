@@ -6,6 +6,7 @@
     --blanco: #FFFFFE;
     --gris: #D9D9D9;
     --grisOscuro: #666;
+    --rojoError: #E4080A
     --fuentePrincipal: 'Nunito', sans-serif;
 }
 
@@ -206,5 +207,11 @@ button:hover {
     button {
         width: 100%;
     }
+}
+
+.unmatch-error{
+    color: var(--rojoError);
+    display: none;
+    margin-top: 5px;
 }
 

@@ -26,19 +26,30 @@ public class UsuarioBO implements IUsuarioBO{
     }
 
     @Override
-    public void registrarUsuario(UsuarioRegistroBean usuarioBean) {
+    public boolean registrarUsuario(UsuarioRegistroBean usuarioBean) {
       Usuario usuario = convertirUsuarioDAO(usuarioBean);
+      boolean flag = false;
         try {
-            facadeUsuario.registrarUsuario(usuario);
+            flag = facadeUsuario.registrarUsuario(usuario);
         } catch (PersistenciaException ex) {
             Logger.getLogger(UsuarioBO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        return flag;
     }
 
     @Override
-    public UsuarioRegistroBean buscarUsuario(UsuarioRegistroBean usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public UsuarioRegistroBean buscarUsuario(UsuarioRegistroBean usuarioBean) {
+        Usuario usuario = FactoryUser.crearUsuario(FactoryUser.NORMAL);
+        usuario.setUsername(usuarioBean.getUsername());
+        try {
+            Usuario usuarioEncontrado = facadeUsuario.buscarUsuario(usuario);
+            if(usuarioEncontrado != null){
+                return usuarioBean;
+            }
+        } catch (PersistenciaException e) {
+            Logger.getLogger(UsuarioBO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
     }
 
     @Override
@@ -84,8 +95,7 @@ public class UsuarioBO implements IUsuarioBO{
        usuario.setEmail(bean.getEmail());
        usuario.setApellidoMaterno(bean.getApellidoMaterno());
        usuario.setApellidoPaterno(bean.getApellidoPaterno());
-       usuario.setPassword(bean.getPassword());
-       usuario.setCumpleanos(bean.getCumpleanos());
+       //usuario.setCumpleanos(bean.getCumpleanos());
        usuario.setGenero(bean.getGenero());
        
        //Convertir imagen
