@@ -30,28 +30,66 @@ function updateImagePreview(input) {
 
 let timeOutId;
 
-function showErrorMessage(mensaje, mostrar) {
-    const errorMsj = document.getElementById('unmatched-pass-error');
+function showErrorMessage(elementId,mensaje, mostrar) {
+    const errorMsj = document.getElementById(elementId);
     if (errorMsj) {
         errorMsj.textContent = mensaje;
         errorMsj.style.display = mostrar ? 'block' : 'none';
     }
 }
 
-function validateWhileTyping(){
+function validateCharacters(input){
+    const regex = /[<>\"'&]/g;
+    return regex.test(input);
+}
+
+function validateInput(elementId, msj){
+    const element = document.getElementById(elementId).value;
+    
+    if(element.length > 0){
+        if(validateCharacters(element)){
+            showErrorMessage('invalid-character-error',msj,true);
+        }else
+            showErrorMessage('invalid-character-error','',false);
+    }
+}
+
+function validatePassword(){
+    const pass = document.getElementById('password').value;
+    const confirmPass = document.getElementById('confirm-password').value;
+
+    if (pass.length > 0) {
+        if (confirmPass.length > 0 && pass !== confirmPass) {
+            showErrorMessage('unmatched-pass-error','Las contraseñas no coinciden', true);
+        } else
+            showErrorMessage('unmatched-pass-error','', false);
+    }
+}
+
+function validateWhileTyping(event){
     clearTimeout(timeOutId);
     
     timeOutId  = setTimeout(() => {
-        const pass = document.getElementById('password').value;
-        const confirmPass = document.getElementById('confirm-password').value;
+        const elementId = event.target.id;
         
-        if (pass.length > 0) {
-            if (confirmPass.length > 0 && pass !== confirmPass) {
-                showErrorMessage('Las contraseñas no coinciden',true);
-            }else
-                showErrorMessage('',false);
+        switch(elementId){
+            case "confirm-password":
+                validatePassword();
+            case "username":
+                validateInput('username','Se ingreso un caracter invalido en el username');
+            case "nombre":
+                validateInput('nombre','Se ingreso un caracter invalido en el nombre');
+            case "genero":
+                validateInput('genero','Se ingreso un caracter invalido en el genero');
+            case "email":
+                validateInput('email','Se ingreso un caracter invalido en el email');
+            case "apellido-paterno":
+                validateInput('apellido-paterno','Se ingreso un caracter invalido en el apellido paterno');
+            case "apellido-materno":
+                validateInput('apellido-materno','Se ingreso un caracter invalido en el apellido materno');
         }
-    },1000);
+        
+    },300);
 }
 
 function validateStep1(){
@@ -94,17 +132,52 @@ function validateSubmit(event){
     return valido;
 }
 
+function goToLogin(){
+    window.location.href = 'login.jsp';
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
     const confirmPass = document.getElementById('confirm-password');
     const btnRegistrar = document.getElementById('btn-registro');
-
+    const btnLogin = document.getElementById('btn-login');
+    const inputUsername = document.getElementById('username');
+    const inputName = document.getElementById('nombre');
+    const inputGender = document.getElementById('genero');
+    const inputEmail = document.getElementById('email');
+    const inputLastN = document.getElementById('apellido-paterno');
+    const inputLastN2 = document.getElementById('apellido-materno');
+    
     if (confirmPass) {
         confirmPass.addEventListener('input', validateWhileTyping);
     }
 
     if (btnRegistrar) {
         btnRegistrar.addEventListener('onclick', validateSubmit);
+    }
+    
+    if(btnLogin){
+        btnLogin.addEventListener('click', goToLogin);
+    }
+    
+    if(inputUsername){
+        inputUsername.addEventListener('input',validateWhileTyping);
+    }
+    
+    if(inputName){
+        inputName.addEventListener('input',validateWhileTyping);
+    }
+    if(inputGender){
+        inputGender.addEventListener('input',validateWhileTyping);
+    }
+    if(inputEmail){
+        inputEmail.addEventListener('input',validateWhileTyping);
+    }
+    if(inputLastN){
+        inputLastN.addEventListener('input',validateWhileTyping);
+    }
+    if(inputLastN2){
+        inputLastN2.addEventListener('input',validateWhileTyping);
     }
 });
 

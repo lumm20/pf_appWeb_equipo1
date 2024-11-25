@@ -38,13 +38,29 @@ public class UsuarioBO implements IUsuarioBO{
     }
 
     @Override
+    public UsuarioRegistroBean existeUsuario(UsuarioRegistroBean usuarioBean){
+        Usuario usuario = FactoryUser.crearUsuario(FactoryUser.NORMAL);
+        usuario.setUsername(usuarioBean.getUsername());
+        usuario.setEmail(usuarioBean.getEmail());
+        try {
+            Usuario usuarioEncontrado = facadeUsuario.existeUsuario(usuario);
+            if(usuarioEncontrado != null){
+                return convertirABeanRegistro(usuarioEncontrado);
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(UsuarioBO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @Override
     public UsuarioRegistroBean buscarUsuario(UsuarioRegistroBean usuarioBean) {
         Usuario usuario = FactoryUser.crearUsuario(FactoryUser.NORMAL);
         usuario.setUsername(usuarioBean.getUsername());
         try {
             Usuario usuarioEncontrado = facadeUsuario.buscarUsuario(usuario);
             if(usuarioEncontrado != null){
-                return usuarioBean;
+                return convertirABeanRegistro(usuarioEncontrado);
             }
         } catch (PersistenciaException e) {
             Logger.getLogger(UsuarioBO.class.getName()).log(Level.SEVERE, null, e);
@@ -113,6 +129,18 @@ public class UsuarioBO implements IUsuarioBO{
         UsuarioBean bean = new UsuarioBean();
         bean.setUsername(usuario.getUsername());
         bean.setRol(usuario.getRol());
+        return bean;
+    }
+    
+    private UsuarioRegistroBean convertirABeanRegistro(Usuario usuario){
+        UsuarioRegistroBean bean = new UsuarioRegistroBean();
+        bean.setUsername(usuario.getUsername());
+        bean.setNombre(usuario.getNombre());
+        bean.setGenero(usuario.getGenero());
+        bean.setEmail(usuario.getEmail());
+        bean.setApellidoMaterno(usuario.getApellidoMaterno());
+        bean.setApellidoPaterno(usuario.getApellidoPaterno());
+        
         return bean;
     }
 }

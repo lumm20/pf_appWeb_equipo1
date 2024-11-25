@@ -21,6 +21,11 @@ public class FacadeUsuario implements IFacadeUsuario{
     public boolean registrarUsuario(Usuario usuario) throws PersistenciaException {
         return usuarioDAO.registrarUsuario(usuario) != null;
     }
+    
+    @Override
+    public Usuario existeUsuario(Usuario usuario) throws PersistenciaException {
+        return usuarioDAO.existeUsuario(usuario);
+    }
 
     @Override
     public Usuario buscarUsuario(Usuario usuario) throws PersistenciaException {

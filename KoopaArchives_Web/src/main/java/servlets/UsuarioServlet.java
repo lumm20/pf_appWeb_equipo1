@@ -95,21 +95,21 @@ public class UsuarioServlet extends HttpServlet {
     private void registrarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         UsuarioRegistroBean aux = new UsuarioRegistroBean();
         aux.setUsername(request.getParameter("username"));
+        aux.setEmail(request.getParameter("email"));
         
         IUsuarioBO usuarioBO = new UsuarioBO();
-        UsuarioRegistroBean buscado = usuarioBO.buscarUsuario(aux);
         
         String msjError= "" ;
-        
-        if(buscado == null){
+        String errorUsername= "" ;
+        String errorEmail= "" ;
+        boolean flag = false;
+        UsuarioRegistroBean usuarioExistente = usuarioBO.existeUsuario(aux);
+        if(usuarioExistente == null){
             aux.setNombre(request.getParameter("nombre"));
             aux.setGenero(request.getParameter("genero"));
-            aux.setEmail(request.getParameter("email"));
             aux.setApellidoMaterno(request.getParameter("apellido-materno"));
             aux.setApellidoPaterno(request.getParameter("apellido-paterno"));
             aux.setPassword(request.getParameter("password"));
-            System.out.println("username capturado en servlet: "+aux.getUsername());
-            System.out.println("password capturado en servlet: "+aux.getPassword());
 //            if(true){
             if(usuarioBO.registrarUsuario(aux)){
                 aux.setRol("Normal");
@@ -123,18 +123,27 @@ public class UsuarioServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/inicio.jsp");
             }else{
                 msjError = "Hubo un error al registrar el usuario. Intentelo de nuevo";
+                request.setAttribute("error", msjError);
+                flag = true;
             }
         }else{
-            msjError = "Ya existe un usuario con ese username. Ingrese un username diferente";
+            flag = true;
+            if(usuarioExistente.getUsername().equals(aux.getUsername())){
+                errorUsername = "Ya existe un usuario con ese username. Ingrese un username diferente";
+                request.setAttribute("usernameExistente", errorUsername);
+            }
+            if(usuarioExistente.getEmail().equals(aux.getEmail())){
+                errorEmail = "Ya existe un usuario con ese email. Ingrese un email diferente";
+                request.setAttribute("emailExistente", errorEmail);
+            }
+            
         }
         //si hubo algun error, se mantiene en la pagina de registro y se envia el mensaje de error capturado
-        if(msjError.length() > 0){
-            request.setAttribute("error", msjError);
+        if(flag)
             request.getRequestDispatcher("/register.jsp").forward(request, response);
-        }
-        
 
     }
+    
     private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
 
@@ -143,7 +152,7 @@ public class UsuarioServlet extends HttpServlet {
         }
 
         session.invalidate();
-        response.sendRedirect(request.getContextPath() + "/inicio.jsp");
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
     
     }
 
