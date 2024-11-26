@@ -1,6 +1,7 @@
 package entidades;
 
 import java.util.Date;
+import org.bson.types.ObjectId;
 
 /**
  * Clase abstracta que representa un post en el sistema.
@@ -9,12 +10,12 @@ import java.util.Date;
  * @author karim
  */
 public abstract class Post {
-
+    private String usernamePublicador;
     protected String categoria;
     protected Date fechaCreacion;
     protected Date ultimaModificacion;
     protected String numPost;
-
+    
     /**
      * Constructor por defecto.
      */
@@ -30,6 +31,14 @@ public abstract class Post {
     public Post(String categoria, Date fechaPublicacion) {
         this.categoria = categoria;
         this.fechaCreacion = fechaPublicacion;
+    }
+
+    public String getUsernamePublicador() {
+        return usernamePublicador;
+    }
+
+    public void setUsernamePublicador(String username) {
+        this.usernamePublicador = username;
     }
 
     /**

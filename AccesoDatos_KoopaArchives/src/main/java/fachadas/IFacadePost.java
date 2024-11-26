@@ -3,6 +3,7 @@ package fachadas;
 import entidades.Contenido;
 import entidades.Noticia;
 import entidades.Publicacion;
+import excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public interface IFacadePost {
      * @param noticia Noticia a registrar.
      * @param contenido Contenido de la noticia.
      */
-    public void registrarNoticia(Noticia noticia, Contenido contenido);
+    public void registrarNoticia(Noticia noticia, Contenido contenido)throws PersistenciaException;
 
     /**
      * Busca una noticia en el sistema según los criterios de búsqueda
@@ -56,7 +57,7 @@ public interface IFacadePost {
      *
      * @param publicacion Publicación a registrar.
      */
-    public void registrarPublicacion(Publicacion publicacion);
+    public void registrarPublicacion(Publicacion publicacion)throws PersistenciaException;
 
     /**
      * Busca una publicación en el sistema según los criterios de búsqueda

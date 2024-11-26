@@ -39,11 +39,12 @@ public class FacadePost implements IFacadePost {
      * @param contenido Contenido de la noticia.
      */
     @Override
-    public void registrarNoticia(Noticia noticia, Contenido contenido) {
+    public void registrarNoticia(Noticia noticia, Contenido contenido) throws PersistenciaException{
         try {
             noticiaDAO.publicarNuevaNoticia(noticia, contenido);
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
         }
     }
 

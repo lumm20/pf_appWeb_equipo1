@@ -100,7 +100,7 @@ public class PublicacionDAO implements IPublicacionDAO {
      * la colección
      */
     @Override
-    public List<Publicacion> buscarPublicaciones(Publicacion publicacion) throws PersistenciaException {
+    public List<Publicacion> buscarPublicacionesPorCategoria(Publicacion publicacion) throws PersistenciaException {
         List<Bson> pipeline = new ArrayList<>();
         pipeline.add(match(eq("categoria", publicacion.getCategoria())));
         return publicaciones

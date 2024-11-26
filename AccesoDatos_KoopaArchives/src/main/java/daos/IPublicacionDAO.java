@@ -44,8 +44,8 @@ public interface IPublicacionDAO {
      * @throws PersistenciaException Si ocurre un error al interactuar con la
      * base de datos.
      */
-    public List<Publicacion> buscarPublicaciones(Publicacion publicacion) throws PersistenciaException;
-
+    public List<Publicacion> buscarPublicacionesPorCategoria(Publicacion publicacion) throws PersistenciaException;
+   
     /**
      * Busca todas las publicaciones en la base de datos.
      *

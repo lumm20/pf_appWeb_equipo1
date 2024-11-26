@@ -16,21 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    const profileButton = document.getElementById('profileButton');
-    const profileDropdown = document.getElementById('profileDropdown');
-    const profileItem = profileButton.parentElement;
-
-    profileButton.addEventListener('click', (event) => {
-        event.preventDefault(); // Evita que recargue la página
-        profileItem.classList.toggle('active'); // Alterna la clase 'active'
-    });
-
-    // Cierra el menú si se hace clic fuera de él
-    document.addEventListener('click', (event) => {
-        if (!profileItem.contains(event.target)) {
-            profileItem.classList.remove('active');
-        }
-    });
 });
 
 

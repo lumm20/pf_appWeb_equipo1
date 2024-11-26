@@ -1,0 +1,252 @@
+:root {
+    --colorFondo: #2B2C34;
+    --rojoNintendo: #ff6b6b;
+    --morado: #6246EA;
+    --moradoOscuro: #201364;
+    --moradoClaro: #D1D1E9;
+    --blanco: #FFFFFE;
+    --gris: #D9D9D9;
+    --grisOscuro: #666;
+    --fuentePrincipal: 'Nunito', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fuentePrincipal);
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h3 {
+    text-align: center;
+    color: #333;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.category-buttons {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+.category-button {
+    padding: 10px 20px;
+    background-color: #D1D1E9;
+    color: #2B2C34;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.category-button.active {
+    background-color: #6C63FF;
+    color: white;
+}
+
+.post-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.post-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #D1D1E9;
+    border-radius: 50%;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.post-tag {
+    background-color: #6C63FF;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.post-date {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.options-menu {
+    position: relative;
+    cursor: pointer;
+}
+
+.options-menu-dots {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px;
+}
+
+.options-menu-dot {
+    width: 4px;
+    height: 4px;
+    background-color: #757575;
+    border-radius: 50%;
+}
+
+.options-menu:hover .options-menu-content {
+    display: block;
+}
+
+.options-menu-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-width: 150px;
+    z-index: 1;
+}
+
+.options-menu-item {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.options-menu-item:hover {
+    background-color: #f5f5f5;
+}
+/* .options-menu {
+    position: relative;
+    cursor: pointer;
+}
+
+.options-menu-dots {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.options-menu-dot {
+    width: 4px;
+    height: 4px;
+    background-color: #666;
+    border-radius: 50%;
+}
+
+.options-menu-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 0;
+    z-index: 10;
+    min-width: 150px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.options-menu-item {
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.options-menu-item:hover {
+    background-color: #f0f0f0;
+} */
+
+.post-image {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.post-content {
+    color: #333;
+    line-height: 1.6;
+}
+
+.load-more {
+    display: block;
+    width: 200px;
+    margin: 30px auto;
+    padding: 12px 24px;
+    background-color: #6C63FF;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.load-more:hover {
+    background-color: #5753d9;
+}
+
+@media (max-width: 768px) {
+    .category-buttons {
+        justify-content: flex-start;
+    }
+
+    .post-header {
+        flex-direction: column;
+    }
+
+    .options-menu {
+        align-self: flex-end;
+        margin-top: -30px;
+    }
+}
