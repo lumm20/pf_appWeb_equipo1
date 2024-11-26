@@ -11,7 +11,7 @@
                         </h1>
                     </div>
                 </a></li>
-                <li class="item especial"><a href="login.jsp">Noticias</a></li>
+                <li class="item especial"><a href="#">Noticias</a></li>
             <c:choose>
                 <c:when test="${not empty sessionScope.usuario}">
                     <c:choose>
@@ -37,7 +37,7 @@
                                     <img class="imagen_perfil" src="/img/luffy_admin.jpg" alt="User Profile" />
                                     <p>Perfil</p>
                                 </a>
-                                <ul class="dropdown" id="profileDropdown">
+                                <ul class="logout active" id="profileDropdown">
                                     <li><a href="login.jsp">Cerrar sesión</a></li>
                                 </ul>
                             </li>

@@ -2,19 +2,3 @@
     --morado: #6246EA;
     --moradoClaro: #D1D1E9;
 }
-
-.logout {
-    position: fixed;
-    top: 80px;
-    right: 10px;
-    padding: 7.5px 15px;
-    background: var(--morado);
-    border-style: none;
-    border-radius: 10px;
-    color: white;
-    text-decoration: none;
-}
-
-.logout:hover {
-    background-color: var(--moradoClaro);
-}

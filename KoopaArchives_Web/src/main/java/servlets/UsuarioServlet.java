@@ -168,8 +168,11 @@ public class UsuarioServlet extends HttpServlet {
             // Crear sesión
             HttpSession sesion = request.getSession();
             
+            UsuarioRegistroBean usuarioCompleto = new UsuarioRegistroBean();
+            usuarioCompleto.setUsername(usuario.getUsername());
+            usuarioCompleto = usuarioBO.buscarUsuario(usuarioCompleto);
             // Guardar datos en la sesión
-            sesion.setAttribute("usuario", usuario);
+            sesion.setAttribute("usuario", usuarioCompleto);
             
             // Opcional: establecer tiempo máximo de sesión (en segundos)
             sesion.setMaxInactiveInterval(30*60); // 30 minutos

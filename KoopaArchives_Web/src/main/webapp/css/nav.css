@@ -255,6 +255,26 @@ h1 {
 
 }
 
+.logout {
+    display: none;
+}
+
+.logout.active{
+    display: block;
+    padding: 1px;
+    top: 80px;
+    right: 10px;
+    background-color: var(--morado);
+    border-style: none;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.logout.active:hover {
+    background-color: var(--moradoClaro);
+}
+
 .footer {
     background-color: var(--rojoNintendo);
 }

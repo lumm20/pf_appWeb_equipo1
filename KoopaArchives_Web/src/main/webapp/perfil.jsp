@@ -23,22 +23,22 @@
                     <form>
                         <div class="form-group">
                             <label for="usuario">Usuario</label>
-                            <input type="text" id="usuario" name="usuario" required>
+                            <input type="text" id="usuario" name="usuario" value="${sessionScope.usuario.username}" required>
                         </div>
 
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" required>
+                            <input type="text" id="nombre" name="nombre" value="${sessionScope.usuario.nombre}" required>
                         </div>
 
                         <div class="form-group">
                             <label for="apellido">Apellido</label>
-                            <input type="text" id="apellido" name="apellido" required>
+                            <input type="text" id="apellido" name="apellido" value="${sessionScope.usuario.apellidoPaterno}"required>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" value="${sessionScope.usuario.email}"required>
                         </div>
 
                         <div class="form-group">
