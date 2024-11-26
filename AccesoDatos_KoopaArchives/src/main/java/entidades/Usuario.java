@@ -14,7 +14,6 @@ public class Usuario {
     private String password;
     private String email;
     private String nombre;
-    private Date cumpleanos;
     private String username;
     private Image imagen;
     private String rol;
@@ -44,7 +43,6 @@ public class Usuario {
         this.password = password;
         this.email = email;
         this.nombre = nombre;
-        this.cumpleanos = cumpleanos;
         this.username = username;
         this.genero = genero;
     }
@@ -101,14 +99,6 @@ public class Usuario {
         this.email = email;
     }
 
-    public Date getCumpleanos() {
-        return cumpleanos;
-    }
-
-    public void setCumpleanos(Date cumpleanos) {
-        this.cumpleanos = cumpleanos;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -142,7 +132,6 @@ public class Usuario {
         sb.append(", password=").append(password);
         sb.append(", email=").append(email);
         sb.append(", nombre=").append(nombre);
-        sb.append(", cumpleanos=").append(cumpleanos);
         sb.append(", username=").append(username);
         sb.append(", rol=").append(rol);
         sb.append(", genero=").append(genero);

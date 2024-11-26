@@ -5,16 +5,18 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Publicaciones</title>
-        <link rel="icon" href="../img/logo.png" type="image/x-icon">
+        <link rel="icon" href="img/logo.png" type="image/x-icon">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
               rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-        <link rel="icon" href="../img/logo.png" type="image/x-icon">
-        <link rel="stylesheet" href="../css/publicaciones.css">
-        <link rel="stylesheet" href="../css/nav.css">
+        <link rel="icon" href="img/logo.png" type="image/x-icon">
+        <link rel="stylesheet" href="css/publicaciones.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <script src="js/publicaciones.js" defer></script>
+        <script src="js/nav.js" defer></script>
     </head>
     <body>
         <%@ include file="WEB-INF/jspf/nav.jspf" %>
@@ -118,7 +120,6 @@
             <button class="load-more" id="load-more-btn">Ver más</button>
         </main>
         <%@ include file="WEB-INF/jspf/footer.jspf" %>
-        <script src="../js/nav.js" defer></script>
-        <script src="../js/publicaciones.js" defer></script>
+        
     </body>
 </html>

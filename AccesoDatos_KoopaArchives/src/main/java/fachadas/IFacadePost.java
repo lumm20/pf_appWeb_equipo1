@@ -19,6 +19,7 @@ public interface IFacadePost {
      *
      * @param noticia Noticia a registrar.
      * @param contenido Contenido de la noticia.
+     * @throws excepciones.PersistenciaException
      */
     public void registrarNoticia(Noticia noticia, Contenido contenido)throws PersistenciaException;
 

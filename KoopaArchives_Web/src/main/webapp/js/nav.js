@@ -1,14 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.querySelector('.toggle');
-    const dropDown = document.querySelector('.profileDropdown');
     const items = document.querySelectorAll('.item');
-    
-    dropDown.addEventListener('click',() => {
-        if(dropDown.classList.contains('active')){
-            dropDown.classList.remove('active');
-        }
-    });
-    
+
     toggle.addEventListener('click', (event) => {
         event.preventDefault();
 
@@ -22,7 +15,4 @@ document.addEventListener('DOMContentLoaded', () => {
             toggle.querySelector('a').innerHTML = '<i class="fas fa-times"></i>';
         }
     });
-    
 });
-
-

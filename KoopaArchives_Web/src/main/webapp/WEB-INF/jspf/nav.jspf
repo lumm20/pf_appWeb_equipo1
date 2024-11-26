@@ -11,43 +11,41 @@
                         </h1>
                     </div>
                 </a></li>
-                <li class="item especial"><a href="#">Noticias</a></li>
-            <c:choose>
-                <c:when test="${not empty sessionScope.usuario}">
-                    <c:choose>
-                        <c:when test="${sessionScope.usuario.rol eq 'Admin'}">
-                            <li class="item especial"><a href="crearPost.jsp">Crear Noticia</a></li>
-                            <li class="item especial"><a href="buscadorNoticias.jsp">Buscar</a></li>
-                            <li class="item especial"><a href="publicaciones.jsp">Posts</a></li>
+            <li class="item especial"><a href="#">Noticias</a></li>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.usuario}">
+                        <c:choose>
+                            <c:when test="${sessionScope.usuario.rol eq 'Admin'}">
+                            <li class="item especial"><a href="#">Crear Noticia</a></li>
+                            <li class="item especial"><a href="#">Buscar</a></li>
+                            <li class="item especial"><a href="#">Posts</a></li>
                             <li class="item especial"><a href="#">Nosotros</a></li>
                             <li class="item button especial2 limitar">
-                                <a class="perfil" href="perfil.jsp">
+                                <a class="perfil" href="#">
                                     <img class="imagen_perfil" src="/img/luffy_admin.jpg" alt="User Profile" />
-                                    <p>Perfil</p>
+                                    <p>${usuario.username}</p>
                                 </a>
                             </li>
                         </c:when>
                         <c:otherwise>
-                            <li class="item especial"><a href="buscadorNoticias.jsp">Buscar</a></li>
-                            <li class="item especial"><a href="publicaciones.jsp">Posts</a></li>
-                            <li class="item especial"><a href="crearPublicacion.jsp">Crear Post</a></li>
+                            <li class="item especial"><a href="#">Buscar</a></li>
+                            <li class="item especial"><a href="#">Posts</a></li>
+                            <li class="item especial"><a href="#">Crear Post</a></li>
                             <li class="item especial"><a href="#">Nosotros</a></li>
-                            <li class="item button especial2 limitar profile">
-                                <a id="profileButton" class="perfil" href="perfil.jsp"">
-                                    <img class="imagen_perfil" src="/img/luffy_admin.jpg" alt="User Profile" />
-                                    <p>Perfil</p>
+                            <li class="item button especial2 limitar">
+                                <a class="perfil" href="#">
+                                    <img class="imagen_perfil" src="data:${tipoArchivo};base64,${imgPerfil}" 
+                                         alt="${nombreArchivo}" />
+                                    <p>${sessionScope.usuario.username}</p>
                                 </a>
-                                <ul class="logout active" id="profileDropdown">
-                                    <li><a href="login.jsp">Cerrar sesión</a></li>
-                                </ul>
                             </li>
                         </c:otherwise>
                     </c:choose>
                 </c:when>
                 <c:otherwise>
-                    
-                    <li class="item especial"><a href="buscadorNoticias.jsp">Buscar</a></li>
-                    <li class="item especial"><a href="publicaciones.jsp">Posts</a></li>
+
+                    <li class="item especial"><a href="#">Buscar</a></li>
+                    <li class="item especial"><a href="#">Posts</a></li>
                     <li class="item especial"><a href="#">Nosotros</a></li>
                     <li class="item button especial2"><a href="register.jsp">Registrarse</a></li>
                     <li class="item button secondary especial2"><a href="login.jsp">Iniciar Sesión</a></li>

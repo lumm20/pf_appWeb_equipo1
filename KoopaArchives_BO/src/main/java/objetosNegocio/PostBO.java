@@ -99,7 +99,7 @@ public class PostBO implements IPostBO {
         bean.setFechaCreacion(noticia.getFechaCreacion());
         bean.setNumPost(noticia.getNumPost());
         UsuarioBean publicador = new UsuarioBean();
-        publicador.setUsername(noticia.getUsernamePublicador());
+//        publicador.setUsername(noticia.getUsernamePublicador());
         bean.setPublicador(publicador);
         
         return bean;
@@ -126,8 +126,8 @@ public class PostBO implements IPostBO {
         Subtema subtema = new Subtema();
         subtema.setDescripcion(bean.getDescripcion());
         subtema.setSubtitulo(bean.getSubtitulo());
-        if(bean.getUrl_img() != null)
-            subtema.setUrl_img(bean.getUrl_img());
+//        if(bean.getUrl_img() != null)
+//            subtema.setUrl_img(bean.getUrl_img());
         return subtema;
     }
     
@@ -163,7 +163,7 @@ public class PostBO implements IPostBO {
             publicacion.setNumPost(bean.getNumPost());
         if(bean.getPublicador() != null){
             String username = obtenerUsernamePublicador(bean.getPublicador());
-            publicacion.setUsernamePublicador(username);
+//            publicacion.setUsernamePublicador(username);
         }
         publicacion.setFechaCreacion(bean.getFechaCreacion());
         publicacion.setContenido(bean.getContenido().getDescripcion());

@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="css/nav.css">
     <link rel="icon" href="/img/logo.png" type="image/x-icon">
     <script src="js/nav.js" defer></script>
-    <!--script src="js/register.js" defer></script-->
+    <script src="js/register.js" defer></script>
 </head>
 
 <body>
@@ -28,7 +28,7 @@
             <h2>¡Crea una cuenta!</h2>
             
             <div class="form-steps">
-                <form action="Usuario" method="post" id="form-registro">
+                <form action="Usuario" method="post" id="form-registro" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="registrar">
                     
                     <!-- Step 1 -->
@@ -41,6 +41,12 @@
                                 <!-- Código que se ejecuta si la condición es verdadera -->
                                 <div class="form-group">
                                     <label class="error" for="usernameExistente">${fn:escapeXml(usernameExistente)}</label>
+                                </div>
+                            </c:if>
+                            <c:if test="${not empty success}">
+                                <!-- Código que se ejecuta si la condición es verdadera -->
+                                <div class="form-group">
+                                    <label class="error" for="usernameExistente">${success}</label>
                                 </div>
                             </c:if>
                             <label for="username" class="sr-only">Nombre de usuario</label>
@@ -100,7 +106,7 @@
                             </div>
                             <div class="input-group" style="flex-grow: 1; margin-bottom: 0;">
                                 <label for="profile-image" class="sr-only">Seleccionar imagen de perfil</label>
-                                <input type="file" id="profile-image" accept="image/*" onchange="updateImagePreview(this)">
+                                <input type="file" id="profile-image" name="img-perfil" accept="image/*" onchange="updateImagePreview(this)" required>
                             </div>
                         </div>
 
@@ -133,7 +139,6 @@
     </main>
     
     <%@ include file="WEB-INF/jspf/footer.jspf" %>
-    <script src="js/register.js" defer></script>
 </body>
 </html>
 
