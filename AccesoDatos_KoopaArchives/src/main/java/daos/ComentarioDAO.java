@@ -42,7 +42,7 @@ public class ComentarioDAO implements IComentarioDAO {
         try {
             Comentario aux = new Comentario();
             aux.setContenido(comentario.getContenido());
-            aux.setIdNoticia(comentario.getNoticia().getNumPost());
+            aux.setIdNoticia(comentario.getNoticia().getCodigo());
             aux.setIdUsuario(comentario.getUsuario().getUsername());
             aux.setFechaPublicacion(new Date());
             aux.setIdComentario(generarNumeroAleatorio());
@@ -108,7 +108,7 @@ public class ComentarioDAO implements IComentarioDAO {
             List<Bson> pipeline = new ArrayList<>();
 
             // Stage 1: Match por idNoticia
-            pipeline.add(match(eq("idNoticia", noticia.getNumPost())));
+            pipeline.add(match(eq("idNoticia", noticia.getCodigo())));
 
             // Stage 2: Lookup para unir con UsuariosNormales
             pipeline.add(lookup("UsuariosNormales",

@@ -24,7 +24,7 @@
             <c:when test="${empty sessionScope.usuario}">
                 <h2>Bienvenido</h2>
                 <p>No hay usuario registrado. Por favor, inicie sesión.</p>
-                
+
             </c:when>
             <%-- Si existe un usuario en la sesión --%>
             <c:otherwise>
@@ -32,10 +32,21 @@
                     <input type="hidden" name="action" value="cerrarSesion">
                     <button class="item button especial2 logout" type="submit">Cerrar Sesión</button>
                 </form-->
-                
+
                 <main>
                     <h3 class="destacadas_titulo">Noticias destacadas</h3>
                     <section class="news-grid">
+                        <c:forEach items="${destacadas}" var="destacada">
+                            <article class="news-item">
+                                <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
+                                <div class="news-content">
+                                    <span class="news-category">The Legend of Zelda</span>
+                                    <h2 class="news-title">El sorpresivo último baile de Hyrule en la Nintendo Switch</h2>
+                                    <p class="news-description">The Legend of Zelda: Echoes of Wisdom es el más reciente título de la
+                                        saga más legendaria de Nintendo</p>
+                                </div>
+                            </article>
+                        </c:forEach>
                         <article class="news-item">
                             <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
                             <div class="news-content">
@@ -120,6 +131,16 @@
                         </div>
 
                         <div class="news-list">
+                            <c:forEach items="${noticias}" var="noticia">
+                                <article class="news-list-item">
+                                    <img src="data:${noticia.tipoArchivo};base64,${noticia.imgNoticia}" alt="${noticia.nombreArchivo}">
+                                    <div class="news-list-content">
+                                        <h3>${noticia.titulo}</h3>
+                                        <p>${noticia.contenido}</p>
+                                        <span class="category">${noticia.categoria}</span>
+                                    </div>
+                                </article>
+                            </c:forEach>
                             <article class="news-list-item">
                                 <img src="../img/noti_ejemplo.png" alt="Portada Juego The Legend Of Zelda: Echo of Wisdom">
                                 <div class="news-list-content">

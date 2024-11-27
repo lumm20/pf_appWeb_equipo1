@@ -1,14 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package objetosNegocio;
 
-import entidades.Contenido;
-import entidades.Image;
 import entidades.Noticia;
 import entidades.Publicacion;
-import entidades.Subtema;
 import entidades.Usuario;
 import entidades_beans.ContenidoBean;
 import entidades_beans.FiltroBusquedaBean;
@@ -40,19 +33,6 @@ public class PostBO implements IPostBO {
         this.facadePost = new FacadePost();
         this.facadeUsuario = new FacadeUsuario();
     }
-    
-    @Override
-    public boolean subirNoticia(PostBean post) {
-        try {
-            Contenido contenido = convertirBeanContenido(post.getContenido());
-            Noticia noticia = convertirBeanNoticia(post);
-            facadePost.registrarNoticia(noticia, contenido);
-            return true;
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(PostBO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-    }
 
     @Override
     public boolean subirPublicacion(PostBean post) {
@@ -65,25 +45,12 @@ public class PostBO implements IPostBO {
         }
     }
 
-    @Override
-    public boolean eliminarNoticia(PostBean post) {
-        return true;
-    }
 
     @Override
     public boolean eliminarPublicacion(PostBean post) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public PostBean buscarNoticia(PostBean post) {
-        Noticia noticia = facadePost.buscarNoticia(convertirBeanNoticia(post));
-        if(noticia != null){
-            PostBean bean = convertirNoticia(noticia);
-            return bean;
-        }
-        return null;
-    }
 
     private UsuarioBean buscarPublicador(String username){
         try {
@@ -142,23 +109,6 @@ public class PostBO implements IPostBO {
         return null;
     }
 
-    @Override
-    public List<PostBean> buscarNoticiasConFiltro(FiltroBusquedaBean filtro) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    private PostBean convertirNoticia(Noticia noticia ){
-        PostBean bean = new PostBean();
-        bean.setCategoria(noticia.getCategoria());
-        bean.setContenido(convertirContenido(noticia.getContenido()));
-        bean.setFechaCreacion(noticia.getFechaCreacion());
-        bean.setNumPost(noticia.getNumPost());
-        UsuarioBean publicador = new UsuarioBean();
-        publicador.setUsername(noticia.getUsernamePublicador());
-        bean.setPublicador(publicador);
-        
-        return bean;
-    }
     private PostBean convertirPublicacion(Publicacion publicacion ){
         PostBean bean = new PostBean();
         bean.setCategoria(publicacion.getCategoria());
@@ -177,62 +127,7 @@ public class PostBO implements IPostBO {
         
         return bean;
     }
-    private ContenidoBean convertirContenido(Contenido contenido){
-        ContenidoBean bean = new ContenidoBean();
-        bean.setDescripcion(contenido.getDescripcion());
-        bean.setTitulo(contenido.getTitulo());
-        if(contenido.getImagen() != null){
-            ImagenBean imagen = ConversorImagen.convertirAImagenBean(contenido.getImagen());
-            bean.setImagen(imagen);
-        }
-        return bean;
-    }
-    private Contenido convertirBeanContenido(ContenidoBean bean){
-        Contenido contenido = new Contenido();
-        contenido.setDescripcion(bean.getDescripcion());
-        contenido.setTitulo(bean.getTitulo());
-        if(bean.getImagen()!= null){
-            Image imagen = ConversorImagen.convertirAImagenDAO(bean.getImagen());
-            contenido.setImagen(imagen);
-        }
-        if(bean.getSubtemas() != null && !bean.getSubtemas().isEmpty())
-            contenido.setSubtemas(convertirBeansSubtema(bean.getSubtemas()));
-        return contenido;
-    }
-    
-    private Subtema convertirBeanSubtema(SubtemaBean bean){
-        Subtema subtema = new Subtema();
-        subtema.setDescripcion(bean.getDescripcion());
-        subtema.setSubtitulo(bean.getSubtitulo());
-        if(bean.getImagen() != null){
-            Image imagen = ConversorImagen.convertirAImagenDAO(bean.getImagen());
-            subtema.setImagen(imagen);
-        }
-        return subtema;
-    }
-    
-    private List<Subtema> convertirBeansSubtema(List<SubtemaBean> beans){
-        List<Subtema> subtemas = new ArrayList<>();
-        for (SubtemaBean bean : beans) {
-            subtemas.add(convertirBeanSubtema(bean));
-        }
-        return subtemas;
-    }
-    
-    private Noticia convertirBeanNoticia(PostBean bean){
-        Noticia noticia = (Noticia)FactoryPost.crearPost(FactoryPost.NOTICIA);
-        if(bean.getCategoria() != null)
-            noticia.setCategoria(bean.getCategoria());
-        if(bean.getFechaCreacion() != null)
-            noticia.setFechaCreacion(bean.getFechaCreacion());
-        if(bean.getUltimaModificacion()!= null)
-            noticia.setUltimaModificacion(bean.getUltimaModificacion());
-        noticia.setNumPost(bean.getNumPost());
-        noticia.setAnclada(bean.isAnclada());
-        return noticia;
-    }
-    
-    
+
     private Publicacion convertirBeanPublicacion(PostBean bean){
         Publicacion publicacion = (Publicacion)FactoryPost.crearPost(FactoryPost.PUBLICACION);
         if(bean.getCategoria() != null)
@@ -247,12 +142,7 @@ public class PostBO implements IPostBO {
         }
         
         publicacion.setFechaCreacion(bean.getFechaCreacion());
-        
-        ContenidoBean contenidoBean = bean.getContenido();
-        if(contenidoBean.getImagen() != null)
-            publicacion.setImagen(ConversorImagen.convertirAImagenDAO(contenidoBean.getImagen()));
-        publicacion.setContenido(bean.getContenido().getDescripcion());
-        
+//        publicacion.setContenido(bean.getContenido().getDescripcion());
         return publicacion;
     }
     

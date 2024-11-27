@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,20 +13,14 @@
               rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-        <link rel="icon" href="../img/logo.png" type="image/x-icon">
-        <link rel="stylesheet" href="../css/crearPublicacion.css">
-        <link rel="stylesheet" href="../css/nav.css">
+        <link rel="icon" href="img/logo.png" type="image/x-icon">
+        <link rel="stylesheet" href="css/crearPublicacion.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <script src="js/nav.js" defer></script>
+        <script src="js/crearPublicacion.js" defer></script>
     </head>
     <body>
         <%@ include file="WEB-INF/jspf/nav.jspf" %>
-        <c:choose>
-            <%-- Verifica si el usuario es nulo en la sesión --%>
-            <c:when test="${empty sessionScope.usuario}">
-                <p>No hay usuario registrado. Por favor, inicie sesión.</p>
-
-            </c:when>
-            <%-- Si existe un usuario en la sesión --%>
-            <c:otherwise>
                 <main>
                     <h3>Subir Nueva Publicación</h3>
                     <form class="upload-form" id="upload-form" action="/Publicacion" method="post" enctype="multipart/form-data">
@@ -55,10 +50,7 @@
                         <button type="submit" id="post-btn" class="submit-btn">Publicar</button>
                     </form>
                 </main>
-            </c:otherwise>
-        </c:choose>
         <%@ include file="WEB-INF/jspf/footer.jspf" %>
-        <script src="../js/nav.js" defer></script>
-        <script src="../js/crearPublicacion.js" defer></script>
+
     </body>
 </html>

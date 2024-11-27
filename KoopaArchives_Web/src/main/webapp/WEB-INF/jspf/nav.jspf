@@ -16,14 +16,15 @@
                     <c:when test="${not empty sessionScope.usuario}">
                         <c:choose>
                             <c:when test="${sessionScope.usuario.rol eq 'Admin'}">
-                            <li class="item especial"><a href="#">Crear Noticia</a></li>
+                            <li class="item especial"><a href="crearNoticia.jsp">Crear Noticia</a></li>
                             <li class="item especial"><a href="#">Buscar</a></li>
                             <li class="item especial"><a href="#">Posts</a></li>
                             <li class="item especial"><a href="#">Nosotros</a></li>
                             <li class="item button especial2 limitar">
                                 <a class="perfil" href="#">
-                                    <img class="imagen_perfil" src="/img/luffy_admin.jpg" alt="User Profile" />
-                                    <p>${usuario.username}</p>
+                                    <img class="imagen_perfil" src="data:${tipoArchivo};base64,${urlPerfil}" 
+                                         alt="${nombreArchivo}" />
+                                    <p>${sessionScope.usuario.username}</p>
                                 </a>
                             </li>
                         </c:when>
@@ -34,7 +35,7 @@
                             <li class="item especial"><a href="">Nosotros</a></li>
                             <li class="item button especial2 limitar">
                                 <a class="perfil" href="#">
-                                    <img class="imagen_perfil" src="data:${tipoArchivo};base64,${imgPerfil}" 
+                                    <img class="imagen_perfil" src="data:${tipoArchivo};base64,${urlPerfil}" 
                                          alt="${nombreArchivo}" />
                                     <p>${sessionScope.usuario.username}</p>
                                 </a>

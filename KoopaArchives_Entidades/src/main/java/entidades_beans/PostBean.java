@@ -13,8 +13,7 @@ import java.util.Date;
  */
 public class PostBean implements Serializable{
     private UsuarioBean publicador;
-    private String usernamePublicador;
-    private ContenidoBean contenido;
+//    private ContenidoBean contenido;
     private String categoria;
     private String numPost;
     private Date fechaCreacion;
@@ -48,13 +47,7 @@ public class PostBean implements Serializable{
         this.publicador = publicador;
     }
 
-    public ContenidoBean getContenido() {
-        return contenido;
-    }
-
-    public void setContenido(ContenidoBean contenido) {
-        this.contenido = contenido;
-    }
+    
 
     public String getCategoria() {
         return categoria;
@@ -88,5 +81,8 @@ public class PostBean implements Serializable{
         this.ultimaModificacion = ultimaModificacion;
     }
 
-    
+    @Override
+    public String toString() {
+        return "PostBean{" + "publicador=" + publicador + ", categoria=" + categoria + ", numPost=" + numPost + ", fechaCreacion=" + fechaCreacion + ", ultimaModificacion=" + ultimaModificacion + ", anclada=" + anclada + '}';
+    }
 }

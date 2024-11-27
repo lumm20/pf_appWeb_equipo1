@@ -11,9 +11,11 @@ import org.bson.types.ObjectId;
 public class Noticia extends Post {
 
     private ObjectId _id;
-    private boolean anclada;
-    private ObjectId idContenido;
-    private Contenido contenido;
+    private String titulo;
+    private boolean destacada;
+    private String contenido;
+    private Image imagen;
+    private String autor;
 
     /**
      * Constructor por defecto.
@@ -27,7 +29,7 @@ public class Noticia extends Post {
      * @param numPost Número de post.
      */
     public Noticia(String numPost) {
-        this.numPost = numPost;
+        this.codigo = numPost;
     }
 
     /**
@@ -60,66 +62,78 @@ public class Noticia extends Post {
     }
 
     /**
-     * Indica si la noticia está anclada.
+     * Indica si la noticia está destacada.
      *
-     * @return true si la noticia está anclada, false en caso contrario.
+     * @return true si la noticia está destacada, false en caso contrario.
      */
-    public boolean isAnclada() {
-        return anclada;
+    public boolean isDestacada() {
+        return destacada;
     }
 
     /**
-     * Establece si la noticia está anclada.
+     * Establece si la noticia está destacada.
      *
-     * @param anclada true si la noticia está anclada, false en caso contrario.
+     * @param destacada true si la noticia está destacada, false en caso contrario.
      */
-    public void setAnclada(boolean anclada) {
-        this.anclada = anclada;
+    public void setDestacada(boolean destacada) {
+        this.destacada = destacada;
     }
 
-    /**
-     * Obtiene el identificador del contenido asociado a la noticia.
-     *
-     * @return Identificador del contenido asociado a la noticia.
-     */
-    public ObjectId getIdContenido() {
-        return idContenido;
-    }
 
-    /**
-     * Establece el identificador del contenido asociado a la noticia.
-     *
-     * @param idContenido Identificador del contenido asociado a la noticia.
-     */
-    public void setIdContenido(ObjectId idContenido) {
-        this.idContenido = idContenido;
-    }
-
-    /**
-     * Obtiene el contenido asociado a la noticia.
-     *
-     * @return Contenido asociado a la noticia.
-     */
-    public Contenido getContenido() {
+    public String getContenido() {
         return contenido;
     }
 
-    /**
-     * Establece el contenido asociado a la noticia.
-     *
-     * @param contenido Contenido asociado a la noticia.
-     */
-    public void setContenido(Contenido contenido) {
+    public void setContenido(String contenido) {
         this.contenido = contenido;
     }
 
+    public Image getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Noticia{");
+        sb.append("_id=").append(_id);
+        sb.append(", numPost=").append(codigo);
+        sb.append(", descripcion=").append(contenido);
+        sb.append(", titulo=").append(titulo);
+        sb.append(", destacada=").append(destacada);
+        sb.append(", imagen=").append(imagen);
+        sb.append('}');
+        return sb.toString();
+    }
+    
+    
+    
     /**
      * Retorna una representación en cadena de la noticia.
      *
      * @return Representación en cadena de la noticia.
      */
-    @Override
-    public String toString() {
-        return "Noticia{" + "idNoticia=" + _id + ", numPost=" + numPost + ", categoria=" + categoria + ", fechaCreacion=" + fechaCreacion + ", ultimaModificacion=" + ultimaModificacion + ", anclada=" + anclada + ", idContenido=" + idContenido + ", contenido=" + contenido + '}';
-    }
+    
 }

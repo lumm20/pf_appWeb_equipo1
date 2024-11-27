@@ -1,23 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package servlets;
 
+import entidades_beans.ImagenBean;
+import entidades_beans.NoticiaBean;
+import entidades_beans.UsuarioBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.util.Base64;
+import java.util.Date;
+import java.util.List;
+import objetosNegocio.INoticiaBO;
+import objetosNegocio.NoticiaBO;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
  * @author karim
  */
+
 @WebServlet(name = "NoticiaServlet", urlPatterns = {"/Noticia"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 15 // 15 MB
+)
 public class NoticiaServlet extends HttpServlet {
+
+    private INoticiaBO noticiaBO = new NoticiaBO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,7 +48,28 @@ public class NoticiaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String action = request.getParameter("action");
+        System.out.println("Hola desde servlet noticia");
+        if (action == null) {
+            response.sendRedirect("error404.jsp");
+            return;
+        }
+
+        switch (action) {
+            case "publicarNoticia" ->
+                publicarNoticia(request, response);
+            case "actualizarNoticia" ->
+                actualizarNoticia(request, response);
+            case "destacarNoticia" ->
+                destacarNoticia(request, response);
+            case "agregarComentario" ->
+                agregarComentario(request, response);
+            case "destacarComentario" ->
+                destacarComentario(request, response);
+            case "borrarComentario" ->
+                borrarComentario(request, response);
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -45,7 +84,30 @@ public class NoticiaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String idNoticia = request.getParameter("id");
+        System.out.println(idNoticia);
+        NoticiaBean bean = new NoticiaBean();
+        bean.setCodigo(idNoticia);
+
+        NoticiaBean noticiaEncontrada = noticiaBO.buscarNoticia(bean);
+        
+        if(noticiaEncontrada != null){
+            String[] parrafos = noticiaEncontrada.getContenido().split("\n");
+            ImagenBean imagen = noticiaEncontrada.getImagen();
+            System.out.println("imagen en servlet" + imagen);
+            
+            request.setAttribute("noticia", noticiaEncontrada);
+            request.setAttribute("tipoArchivo", imagen.getTipoImagen());
+            request.setAttribute("nombreArchivo", imagen.getNombreArchivo());
+            request.setAttribute("url", imagen.getUrl());
+            
+            request.setAttribute("parrafos", parrafos);
+                request.getRequestDispatcher("noticia.jsp").forward(request, response);
+            } else {
+                // Handle case where no news article is found
+                
+                response.sendRedirect("error404");
+            }
     }
 
     /**
@@ -72,4 +134,85 @@ public class NoticiaServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void publicarNoticia(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        NoticiaBean aux = new NoticiaBean();
+        aux.setTitulo(request.getParameter("titulo"));
+        aux.setContenido(request.getParameter("contenido"));
+        aux.setCategoria(request.getParameter("categoria"));
+        String destacadoString = request.getParameter("destacado");
+        boolean destacado = (destacadoString != null);
+        aux.setFechaCreacion(new Date());
+//        HttpSession sesion = request.getSession(false);
+//        UsuarioBean usuario = (UsuarioBean) request.getAttribute("usuario");
+
+        
+        aux.setAutor("Monkey D. Luffy");
+        ImagenBean imagen = leerImagen(request);
+        aux.setDestacada(destacado);
+        aux.setImagen(imagen);
+
+        NoticiaBean noticiaPublicada = noticiaBO.publicarNoticia(aux);
+
+        if (noticiaPublicada != null) {
+
+            response.sendRedirect("inicio.jsp");
+        } else {
+            response.sendRedirect("error404.jsp");
+        }
+
+    }
+
+    private void actualizarNoticia(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void destacarNoticia(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void agregarComentario(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void destacarComentario(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void borrarComentario(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private ImagenBean leerImagen(HttpServletRequest request) throws IOException, ServletException {
+        Part filePart = request.getPart("imagenPrincipal");
+
+        if (filePart == null || filePart.getSubmittedFileName().isEmpty()) {
+            return null;
+        }
+
+        String contentType = filePart.getContentType();
+        if (!contentType.startsWith("image/")) {
+            return null;
+        }
+
+        InputStream fileContent = filePart.getInputStream();
+        byte[] imageBytes = IOUtils.toByteArray(fileContent);
+
+        ImagenBean imagenPerfil = new ImagenBean();
+        imagenPerfil.setImageBytes(imageBytes);
+        imagenPerfil.setNombreArchivo(extractFileName(filePart));
+        imagenPerfil.setTipoImagen(contentType);
+        imagenPerfil.setFechaSubida(new Date());
+        return imagenPerfil;
+    }
+
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] tokens = contentDisp.split(";");
+        for (String token : tokens) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf("=") + 2, token.length() - 1);
+            }
+        }
+        return "unknown_" + System.currentTimeMillis();
+    }
 }

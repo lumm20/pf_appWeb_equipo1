@@ -100,7 +100,7 @@ public class Publicacion extends Post {
      */
     @Override
     public String toString() {
-        return "Publicacion{" + "_id=" + _id + ", contenido=" + contenido + ", urlImg=" + urlImg + ", fechaCreacion=" + fechaCreacion + ", ultimaModificacion=" + ultimaModificacion + '}';
+        return "Publicacion{" + "_id=" + _id + ", contenido=" + contenido + ", urlImg=" + urlImg + ", fechaCreacion=" + fechaCreacion + '}';
     }
 
 }

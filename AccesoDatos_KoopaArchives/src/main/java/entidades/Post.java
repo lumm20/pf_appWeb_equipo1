@@ -13,8 +13,8 @@ public abstract class Post {
     private String usernamePublicador;
     protected String categoria;
     protected Date fechaCreacion;
+    protected String codigo;
     protected Date ultimaModificacion;
-    protected String numPost;
     
     /**
      * Constructor por defecto.
@@ -41,6 +41,16 @@ public abstract class Post {
         this.usernamePublicador = username;
     }
 
+    public Date getUltimaModificacion() {
+        return ultimaModificacion;
+    }
+
+    public void setUltimaModificacion(Date ultimaModificacion) {
+        this.ultimaModificacion = ultimaModificacion;
+    }
+
+    
+    
     /**
      * Obtiene la categoría del post.
      *
@@ -78,39 +88,20 @@ public abstract class Post {
     }
 
     /**
-     * Obtiene la fecha en que se modificó por última vez el post.
-     *
-     * @return Fecha en que se modificó por última vez el post.
-     */
-    public Date getUltimaModificacion() {
-        return ultimaModificacion;
-    }
-
-    /**
-     * Establece la fecha en que se modificó por última vez el post.
-     *
-     * @param ultimaModificacion Fecha en que se modificó por última vez el
-     * post.
-     */
-    public void setUltimaModificacion(Date ultimaModificacion) {
-        this.ultimaModificacion = ultimaModificacion;
-    }
-
-    /**
      * Obtiene el número de post.
      *
      * @return Número de post.
      */
-    public String getNumPost() {
-        return numPost;
+    public String getCodigo() {
+        return codigo;
     }
 
     /**
      * Establece el número de post.
      *
-     * @param numPost Número de post.
+     * @param codigo Número de post.
      */
-    public void setNumPost(String numPost) {
-        this.numPost = numPost;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 }

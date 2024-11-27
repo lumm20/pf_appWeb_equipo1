@@ -55,7 +55,7 @@ public class PublicacionDAO implements IPublicacionDAO {
     @Override
     public void publicarNuevaPublicacion(Publicacion publicacion) throws PersistenciaException {
         try {
-            publicacion.setNumPost(generarNumeroAleatorio());
+            publicacion.setCodigo(generarNumeroAleatorio());
             publicaciones.insertOne(publicacion);
         } catch (MongoException me) {
             throw new PersistenciaException("No se pudo guardar la noticia.");
@@ -75,7 +75,7 @@ public class PublicacionDAO implements IPublicacionDAO {
     @Override
     public Publicacion buscarPublicacion(Publicacion publicacion) throws PersistenciaException {
         List<Bson> pipeline = new ArrayList<>();
-        pipeline.add(match(eq("numPost", publicacion.getNumPost())));
+        pipeline.add(match(eq("numPost", publicacion.getCodigo())));
         // Lookup siempre presente
         pipeline.add(project(fields(
                 include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "imagen", "usernamePublicador")
@@ -119,7 +119,7 @@ public class PublicacionDAO implements IPublicacionDAO {
      */
     @Override
     public void actualizarPublicacion(Publicacion publicacion) throws PersistenciaException {
-        Bson filtro = Filters.eq("numPost", publicacion.getNumPost());
+        Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
         Bson actualizar;
 
         actualizar = Updates.combine(
@@ -178,8 +178,8 @@ public class PublicacionDAO implements IPublicacionDAO {
      */
     @Override
     public void eliminarPublicacion(Publicacion publicacion) {
-        Bson filtro = Filters.eq("numPost", publicacion.getNumPost());
-        System.out.println("Se elimino las publicaciones: " + publicacion.getNumPost());
+        Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
+        System.out.println("Se elimino las publicaciones: " + publicacion.getCodigo());
         publicaciones.deleteOne(filtro);
     }
 }
