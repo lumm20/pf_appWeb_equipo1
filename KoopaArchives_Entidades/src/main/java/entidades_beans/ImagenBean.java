@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class ImagenBean {
     private byte[] imageBytes;
+    private String url;
     private String tipoImagen;
     private Date fechaSubida;
     private String nombreArchivo;
@@ -47,5 +48,25 @@ public class ImagenBean {
         this.nombreArchivo = nombreArchivo;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
     
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ImagenBean{");
+        sb.append("imageBytes=").append(imageBytes);
+        sb.append(", tipoImagen=").append(tipoImagen);
+        sb.append(", fechaSubida=").append(fechaSubida);
+        sb.append(", nombreArchivo=").append(nombreArchivo);
+        sb.append(", url=").append(url);
+        sb.append('}');
+        return sb.toString();
+    }
 }

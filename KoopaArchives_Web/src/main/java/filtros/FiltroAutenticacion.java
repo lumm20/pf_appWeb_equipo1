@@ -21,8 +21,9 @@ import jakarta.servlet.http.HttpSession;
 public class FiltroAutenticacion implements Filter {
 
     private static final boolean debug = true;
-    private static final String[] urlPublicas = {"/Inicio","/Usuario","/Harcodeo", "inicio.jsp","register.jsp","login.jsp"};
-
+    private static final String[] urlPublicas = {"/Inicio","/Usuario","/Noticia","/Noticia/*","/Harcodeo", "inicio.jsp","register.jsp","login.jsp","crearNoticia.jsp"};
+    private static final String[] urlAdmin = {"crearPublicacion"};
+    
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured.

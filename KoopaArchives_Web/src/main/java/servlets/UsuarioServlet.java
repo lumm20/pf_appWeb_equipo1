@@ -130,12 +130,14 @@ public class UsuarioServlet extends HttpServlet {
             // Crear sesión
             HttpSession sesion = request.getSession();
 
-            String base64Image = Base64.getEncoder().encodeToString(usuario.getImagen().getImageBytes());
+//            String base64Image = Base64.getEncoder().encodeToString(usuario.getImagen().getImageBytes());
             // Guardar datos en la sesión
             sesion.setAttribute("usuario", usuario);
-            sesion.setAttribute("imgPerfil", base64Image);
+//            sesion.setAttribute("imgPerfil", base64Image);
+            sesion.setAttribute("urlPerfil", usuario.getImagen().getUrl());
             sesion.setAttribute("tipoArchivo", usuario.getImagen().getTipoImagen());
             sesion.setAttribute("nombreArchivo", usuario.getImagen().getNombreArchivo());
+            System.out.println(usuario.getImagen());
             
 
             // Opcional: establecer tiempo máximo de sesión (en segundos)

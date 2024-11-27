@@ -1,6 +1,5 @@
 package fachadas;
 
-import entidades.Contenido;
 import entidades.Noticia;
 import entidades.Publicacion;
 import excepciones.PersistenciaException;
@@ -18,10 +17,9 @@ public interface IFacadePost {
      * Registra una nueva noticia en el sistema.
      *
      * @param noticia Noticia a registrar.
-     * @param contenido Contenido de la noticia.
      * @throws excepciones.PersistenciaException
      */
-    public void registrarNoticia(Noticia noticia, Contenido contenido)throws PersistenciaException;
+    public Noticia registrarNoticia(Noticia noticia)throws PersistenciaException;
 
     /**
      * Busca una noticia en el sistema según los criterios de búsqueda

@@ -3,6 +3,7 @@ package daos;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Aggregates;
 import static com.mongodb.client.model.Aggregates.lookup;
 import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Aggregates.project;
@@ -13,13 +14,10 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.gte;
 import static com.mongodb.client.model.Filters.lte;
 import static com.mongodb.client.model.Filters.regex;
-import static com.mongodb.client.model.Projections.fields;
-import static com.mongodb.client.model.Projections.include;
+import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
-import com.mongodb.client.result.InsertOneResult;
 import conexion.Conexion;
 import conexion.IConexion;
-import entidades.Contenido;
 import entidades.FiltroNoticia;
 import entidades.Noticia;
 import excepciones.PersistenciaException;
@@ -30,7 +28,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 
 /**
  * Clase de acceso a datos para la colección de Noticias de una base de datos de
@@ -43,7 +40,6 @@ public class NoticiaDAO implements INoticiaDAO {
 
     private IConexion conexion;
     private MongoCollection<Noticia> noticias;
-    private MongoCollection<Contenido> contenidos;
 
     /**
      * Constructor de la clase NoticiaDAO.
@@ -52,25 +48,23 @@ public class NoticiaDAO implements INoticiaDAO {
         this.conexion = Conexion.getInstance();
         MongoDatabase baseDatos = this.conexion.obtenerBaseDatos();
         noticias = baseDatos.getCollection("noticias", Noticia.class);
-        contenidos = baseDatos.getCollection("contenidos", Contenido.class);
     }
 
     /**
      * Publica una nueva noticia en la base de datos.
      *
      * @param noticia Noticia a publicar.
-     * @param contenido Contenido de la noticia.
+     * @return 
      * @throws PersistenciaException Si ocurre un error al guardar la noticia.
      */
     @Override
-    public void publicarNuevaNoticia(Noticia noticia, Contenido contenido) throws PersistenciaException {
+    public Noticia registrarNoticia(Noticia noticia) throws PersistenciaException {
         try {
-            InsertOneResult resultado = contenidos.insertOne(contenido);
-            ObjectId id = resultado.getInsertedId().asObjectId().getValue();
-            noticia.setIdContenido(id);
-            noticia.setNumPost(generarNumeroAleatorio());
+            noticia.setCodigo(generarNumeroAleatorio());
             noticias.insertOne(noticia);
+            return noticia;
         } catch (MongoException me) {
+            noticia.setCodigo(null);
             throw new PersistenciaException("No se pudo guardar la noticia.");
         }
 
@@ -84,9 +78,9 @@ public class NoticiaDAO implements INoticiaDAO {
      */
     @Override
     public void anclarNoticia(Noticia noticia) throws PersistenciaException {
-        Bson filtro = Filters.eq("numPost", noticia.getNumPost());
+        Bson filtro = Filters.eq("codigo", noticia.getCodigo());
         Bson actualizar;
-        actualizar = Updates.set("anclada", noticia.isAnclada());
+        actualizar = Updates.set("destacada", noticia.isDestacada());
         noticias.updateOne(filtro, actualizar);
     }
 
@@ -99,23 +93,12 @@ public class NoticiaDAO implements INoticiaDAO {
      */
     @Override
     public Noticia buscarNoticia(Noticia noticia) throws PersistenciaException {
-        List<Bson> pipeline = new ArrayList<>();
-        pipeline.add(match(eq("numPost", noticia.getNumPost())));
-        // Lookup siempre presente
-        pipeline.add(lookup("contenidos", "idContenido", "_id", "contenido"));
-        pipeline.add(unwind("$contenido"));
-
-        // Project stage
-        pipeline.add(project(fields(
-                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "idContenido")
-        )));
-
-        return noticias
-                .aggregate(pipeline, Noticia.class)
-                .into(new ArrayList<>())
-                .stream()
-                .findFirst()
-                .orElse(null); // O lanzar una excepción si no se encuentra
+         try {
+            Noticia _noticia = noticias.find(Filters.eq("codigo", noticia.getCodigo())).first();
+            return _noticia;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar la noticia");
+        }
     }
 
     /**
@@ -130,9 +113,6 @@ public class NoticiaDAO implements INoticiaDAO {
         List<Bson> pipeline = new ArrayList<>();
 
         // Lookup siempre presente
-        pipeline.add(lookup("contenidos", "idContenido", "_id", "contenido"));
-        pipeline.add(unwind("$contenido"));
-
         List<Bson> condiciones = new ArrayList<>();
 
         // Filtro por descripción usando regex
@@ -147,7 +127,8 @@ public class NoticiaDAO implements INoticiaDAO {
         if (filtros.getCategoria() != null) {
             pipeline.add(match(eq("categoria", filtros.getCategoria())));
         }
-
+            pipeline.add(match(eq("destacada", filtros.isDestacada())));
+         
         // Filtro por rango de fechas
         if (filtros.getFechaDesde() != null && filtros.getFechaHasta() != null) {
             Date fechaDesde = ajustarFechaInicio(filtros.getFechaDesde());
@@ -167,9 +148,6 @@ public class NoticiaDAO implements INoticiaDAO {
         }
 
         // Project stage
-        pipeline.add(project(fields(
-                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "idContenido")
-        )));
 
         return noticias
                 .aggregate(pipeline, Noticia.class)
@@ -187,25 +165,25 @@ public class NoticiaDAO implements INoticiaDAO {
      */
     @Override
     public void actualizarNoticia(Noticia noticia) throws PersistenciaException {
-        Contenido contenido = noticia.getContenido();
-        Bson filtro = Filters.eq("numPost", noticia.getNumPost());
-        Bson filtro2 = Filters.eq("_id", noticia.getIdContenido());
-        Bson actualizar;
-        Bson actualizar2;
-
-        actualizar2 = Updates.combine(
-                Updates.set("titulo", contenido.getTitulo()),
-                Updates.set("descripcion", contenido.getDescripcion()),
-                Updates.set("subtemas", contenido.getSubtemas()),
-                Updates.set("urlImg", contenido.getUrlImg())
-        );
-        actualizar = Updates.combine(
-                Updates.set("ultimaModificacion", new Date()),
-                Updates.set("anclada", noticia.isAnclada())
-        );
-
-        contenidos.updateOne(filtro2, actualizar2);
-        noticias.updateOne(filtro, actualizar);
+////        Contenido contenido = noticia.getContenido();
+////        Bson filtro = Filters.eq("numPost", noticia.getNumPost());
+////        Bson filtro2 = Filters.eq("_id", noticia.getIdContenido());
+////        Bson actualizar;
+////        Bson actualizar2;
+////
+////        actualizar2 = Updates.combine(
+////                Updates.set("titulo", contenido.getTitulo()),
+////                Updates.set("descripcion", contenido.getDescripcion()),
+////                Updates.set("subtemas", contenido.getSubtemas()),
+////                Updates.set("urlImg", contenido.getUrlImg())
+////        );
+////        actualizar = Updates.combine(
+////                Updates.set("ultimaModificacion", new Date()),
+////                Updates.set("anclada", noticia.isDestacada())
+////        );
+////
+////        contenidos.updateOne(filtro2, actualizar2);
+////        noticias.updateOne(filtro, actualizar);
     }
 
     /**
@@ -249,14 +227,18 @@ public class NoticiaDAO implements INoticiaDAO {
     public List<Noticia> buscarNoticias() {
         List<Bson> pipeline = new ArrayList<>();
 
-        // Lookup siempre presente
-        pipeline.add(lookup("contenidos", "idContenido", "_id", "contenido"));
-        pipeline.add(unwind("$contenido"));
+        return noticias
+                .aggregate(pipeline, Noticia.class)
+                .into(new ArrayList<>());
+    }
+    
+    @Override
+    public List<Noticia> buscarNoticiasDestacadas() {
+        List<Bson> pipeline = new ArrayList<>();
 
-        // Project stage
-        pipeline.add(project(fields(
-                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "idContenido")
-        )));
+        pipeline.add(match(eq("destacada", true)));
+        
+        pipeline.add(Aggregates.sort(Sorts.descending("fechaPublicacion")));
 
         return noticias
                 .aggregate(pipeline, Noticia.class)
@@ -279,8 +261,9 @@ public class NoticiaDAO implements INoticiaDAO {
      */
     @Override
     public void eliminarNoticia(Noticia noticia) {
-        Bson filtro = Filters.eq("numPost", noticia.getNumPost());
-        System.out.println("Se elimino la noticia: " + noticia.getNumPost());
+        Bson filtro = Filters.eq("numPost", noticia.getCodigo());
+        System.out.println("Se elimino la noticia: " + noticia.getCodigo());
         noticias.deleteOne(filtro);
     }
+
 }

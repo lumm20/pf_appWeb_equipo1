@@ -74,7 +74,6 @@ public class UsuarioBO implements IUsuarioBO{
     @Override
     public UsuarioBean iniciarSesion(UsuarioBean usuario) {
         Usuario u = convertirUsuarioDAO(usuario);
-        System.out.println(u);
         Usuario encontrado;
         try {
             encontrado = facadeUsuario.iniciarSesion(u);
@@ -151,12 +150,7 @@ public class UsuarioBO implements IUsuarioBO{
         bean.setRol(usuario.getRol());
         System.out.println(usuario.getRol());
         
-//        ImagenBean imagen = new ImagenBean();
-        ImagenBean imagen = ConversorImagen.convertirAImagenBean(usuario.getImagen());
-//        imagen.setFechaSubida(usuario.getImagen().getFechaSubida());
-//        imagen.setNombreArchivo(usuario.getImagen().getNombreArchivo());
-//        imagen.setTipoImagen(usuario.getImagen().getTipoImagen());
-//        imagen.setImageBytes(usuario.getImagen().getContent().getData());
+        ImagenBean imagen = ConversorImagen.convertirAImagenBean2(usuario.getImagen());
         bean.setImagen(imagen);
         
         return bean;

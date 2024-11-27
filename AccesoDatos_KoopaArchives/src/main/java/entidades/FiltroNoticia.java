@@ -16,6 +16,7 @@ public class FiltroNoticia {
     private Date fechaHasta;
     private String categoria;
     private String titulo;
+    private boolean destacada;
 
     /**
      * Constructor que inicializa el filtro con una fecha de inicio, una fecha
@@ -111,4 +112,13 @@ public class FiltroNoticia {
         this.titulo = titulo;
     }
 
+    public boolean isDestacada() {
+        return destacada;
+    }
+
+    public void setDestacada(boolean destacada) {
+        this.destacada = destacada;
+    }
+
+    
 }

@@ -4,7 +4,6 @@ import daos.INoticiaDAO;
 import daos.IPublicacionDAO;
 import daos.NoticiaDAO;
 import daos.PublicacionDAO;
-import entidades.Contenido;
 import entidades.Noticia;
 import entidades.Publicacion;
 import excepciones.PersistenciaException;
@@ -39,9 +38,9 @@ public class FacadePost implements IFacadePost {
      * @param contenido Contenido de la noticia.
      */
     @Override
-    public void registrarNoticia(Noticia noticia, Contenido contenido) throws PersistenciaException{
+    public Noticia registrarNoticia(Noticia noticia) throws PersistenciaException{
         try {
-            noticiaDAO.publicarNuevaNoticia(noticia, contenido);
+            return noticiaDAO.registrarNoticia(noticia);
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
@@ -58,6 +57,7 @@ public class FacadePost implements IFacadePost {
     @Override
     public Noticia buscarNoticia(Noticia notica) {
         try {
+            
             return noticiaDAO.buscarNoticia(notica);
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);

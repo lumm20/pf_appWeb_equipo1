@@ -1,6 +1,5 @@
 package daos;
 
-import entidades.Contenido;
 import entidades.FiltroNoticia;
 import entidades.Noticia;
 import excepciones.PersistenciaException;
@@ -22,7 +21,7 @@ public interface INoticiaDAO {
      * @throws PersistenciaException Si ocurre un error al interactuar con la
      * base de datos.
      */
-    public void publicarNuevaNoticia(Noticia noticia, Contenido contenido) throws PersistenciaException;
+    public Noticia registrarNoticia(Noticia noticia) throws PersistenciaException;
 
     /**
      * Busca una noticia en la base de datos según los criterios de búsqueda
@@ -52,6 +51,8 @@ public interface INoticiaDAO {
      * @return Lista de noticias encontradas.
      */
     public List<Noticia> buscarNoticias();
+    
+    public List<Noticia> buscarNoticiasDestacadas();
 
     /**
      * Ancla una noticia en la base de datos.

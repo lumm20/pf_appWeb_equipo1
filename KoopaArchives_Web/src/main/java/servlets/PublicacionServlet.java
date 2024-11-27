@@ -105,7 +105,7 @@ public class PublicacionServlet extends HttpServlet {
 //            
 //            contenido.setUrlImg(fileName);
 //           
-            post.setContenido(contenido);
+//            post.setContenido(contenido);
 
             Date fechaCreacion = Calendar.getInstance().getTime();
             post.setFechaCreacion(fechaCreacion);
