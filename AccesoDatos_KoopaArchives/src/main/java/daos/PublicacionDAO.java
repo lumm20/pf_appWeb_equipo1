@@ -78,7 +78,7 @@ public class PublicacionDAO implements IPublicacionDAO {
         pipeline.add(match(eq("numPost", publicacion.getNumPost())));
         // Lookup siempre presente
         pipeline.add(project(fields(
-                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "urlImg")
+                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "imagen", "usernamePublicador")
         )));
 
         return publicaciones
@@ -144,7 +144,7 @@ public class PublicacionDAO implements IPublicacionDAO {
         // No hay lookup ni unwind ya que no se une a otra colección
         // Project stage para incluir solo los campos deseados
         pipeline.add(project(fields(
-                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "urlImg")
+                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido","imagen", "usernamePublicador")
         )));
 
         // Realizar la agregación

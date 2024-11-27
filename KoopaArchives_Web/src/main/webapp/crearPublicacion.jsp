@@ -32,7 +32,7 @@
                         <input type="hidden" name="username" value="${sessionScope.usuario.username}">
                                <div class="form-group">
                             <label for="image-upload">Imagen:</label>
-                            <input type="file" id="image-upload" name="image" accept="image/*" required>
+                            <input type="file" id="image-upload" name="image-post" accept="image/*" required>
                             <div class="image-preview" id="image-preview">
                                 <span>Vista previa de la imagen</span>
                             </div>

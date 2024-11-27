@@ -24,102 +24,57 @@
             <h3>Publicaciones</h3>
 
             <div class="category-buttons">
-                <button class="category-button active">Todos</button>
-                <button class="category-button">Mario Bros</button>
-                <button class="category-button">Pokemon</button>
-                <button class="category-button">Animal crossing</button>
-                <button class="category-button">Zelda</button>
+                <button id="todos-btn" class="category-button active" data-categoria="todos">Todos</button>
+                <button id="mario-btn" class="category-button" data-categoria="mario-bros" >Mario Bros</button>
+                <button id="pokemon-btn" class="category-button" data-categoria="pokemon">Pokemon</button>
+                <button id="animalx-btn" class="category-button" data-categoria="animal-crossing">Animal crossing</button>
+                <button id="zelda-btn" class="category-button" data-categoria="zelda">Zelda</button>
             </div>
 
             <div id="posts-container">
-                <!-- Post 1 -->
-                <div class="post-card">
-                    <div class="post-header">
-                        <div class="post-author">
-                            <div class="author-avatar"></div>
-                            <div class="author-info">
-                                <span class="author-name">Link</span>
-                                <span class="post-tag">Destacado</span>
-                                <div class="post-date">Hace 1 día</div>
+                <c:choose>
+                    <c:when test="${not empty listaPublicaciones}">
+                        <c:forEach items="${listaPublicaciones}" var="publicacion">
+                            <div class="post-card" data-categoria="${publicacion.post.categoria}">
+                                <div class="post-header">
+                                    <div class="post-author">
+                                        <div class="author-avatar">
+                                            <img src="data:${publicacion.tipoArchivoIcon};base64,${publicacion.iconoPublicador}" alt="${publicacion.nombreArchivoIcon}" alt="perfil">
+                                        </div>
+                                        <div class="author-info">
+                                            <span class="author-name">${publicacion.post.usernamePublicador}</span>
+                                            <span class="post-tag">Destacado</span>
+                                            <div class="post-date">Hace 1 día</div>
+                                        </div>
+                                    </div>
+                                    <div class="options-menu">
+                                        <div class="options-menu-dots">
+                                            <div class="options-menu-dot"></div>
+                                            <div class="options-menu-dot"></div>
+                                            <div class="options-menu-dot"></div>
+                                        </div>
+                                        <div class="options-menu-content">
+                                            <div class="options-menu-item">Destacar noticia</div>
+                                            <div class="options-menu-item">Editar</div>
+                                            <div class="options-menu-item">Eliminar</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <c:if test="${not empty publicacion.imagenPost}">
+                                    <img src="data:${publicacion.tipoArchivoPost};base64,${publicacion.imagenPost}" alt="${publicacion.nombreArchivoPost}" class="post-image">
+                                </c:if>
+                                <p class="post-content">${publicacion.post.contenido.descripcion}</p>
                             </div>
-                        </div>
-                        <div class="options-menu">
-                            <div class="options-menu-dots">
-                                <div class="options-menu-dot"></div>
-                                <div class="options-menu-dot"></div>
-                                <div class="options-menu-dot"></div>
-                            </div>
-                            <div class="options-menu-content">
-                                <div class="options-menu-item">Destacar noticia</div>
-                                <div class="options-menu-item">Editar</div>
-                                <div class="options-menu-item">Eliminar</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="../img/noti_ejemplo.png" alt="Imagen de Link" class="post-image">
-                    <p class="post-content">¡Increíble juego! Como fan de la saga Zelda, puedo decir que Echoes of Wisdom supera todas mis expectativas. La atención al detalle en el mundo de Hyrule es asombrosa, y las nuevas mecánicas de juego añaden una frescura que no sabía que necesitaba. Definitivamente, Nintendo ha demostrado una vez más por qué Zelda es una de las franquicias más queridas en la industria de los videojuegos.</p>
-                </div>
-
-                <!-- Post 2 -->
-                <div class="post-card">
-                    <div class="post-header">
-                        <div class="post-author">
-                            <div class="author-avatar"></div>
-                            <div class="author-info">
-                                <span class="author-name">Mario</span>
-                                <span class="post-tag">Destacado</span>
-                                <div class="post-date">Hace 1 día</div>
-                            </div>
-                        </div>
-                        <div class="options-menu">
-                            <div class="options-menu-dots">
-                                <div class="options-menu-dot"></div>
-                                <div class="options-menu-dot"></div>
-                                <div class="options-menu-dot"></div>
-                            </div>
-                            <div class="options-menu-content">
-                                <div class="options-menu-item">Destacar noticia</div>
-                                <div class="options-menu-item">Editar</div>
-                                <div class="options-menu-item">Eliminar</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="../img/noti_ejemplo.png" alt="Imagen de Mario" class="post-image">
-                    <p class="post-content">Super Mario Wonder es una explosión de creatividad. Cada nivel es una sorpresa, y las nuevas transformaciones son hilarantes. ¡No puedo dejar de sonreír mientras juego!</p>
-                </div>
-
-                <!-- Post 3 -->
-                <div class="post-card">
-                    <div class="post-header">
-                        <div class="post-author">
-                            <div class="author-avatar"></div>
-                            <div class="author-info">
-                                <span class="author-name">Isabelle</span>
-                                <span class="post-tag">Destacado</span>
-                                <div class="post-date">Hace 1 día</div>
-                            </div>
-                        </div>
-                        <div class="options-menu">
-                            <div class="options-menu-dots">
-                                <div class="options-menu-dot"></div>
-                                <div class="options-menu-dot"></div>
-                                <div class="options-menu-dot"></div>
-                            </div>
-                            <div class="options-menu-content">
-                                <div class="options-menu-item">Destacar noticia</div>
-                                <div class="options-menu-item">Editar</div>
-                                <div class="options-menu-item">Eliminar</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="../img/noti_ejemplo.png" alt="Imagen de Isabelle" class="post-image">
-                    <p class="post-content">La última actualización de Animal Crossing: New Horizons trae tantas cosas nuevas para hacer en la isla. ¡Estoy emocionada de poder cultivar más vegetales y tener nuevos vecinos!</p>
-                </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p>No hay publicaciones disponibles</p>
+                    </c:otherwise>
+                </c:choose>
             </div>
-
             <button class="load-more" id="load-more-btn">Ver más</button>
         </main>
         <%@ include file="WEB-INF/jspf/footer.jspf" %>
-        
+
     </body>
 </html>

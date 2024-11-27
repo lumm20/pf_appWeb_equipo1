@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
  * @author karim
  */
 public class Contenido {
-
+    private Image imagen;
     private ObjectId idContenido;
     private String descripcion;
     private String titulo;
@@ -36,6 +36,14 @@ public class Contenido {
         this.titulo = titulo;
         this.subtemas = subtemas;
         this.urlImg = urlImg;
+    }
+
+    public Image getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
     }
 
     /**

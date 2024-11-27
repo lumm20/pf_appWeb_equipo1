@@ -75,6 +75,12 @@ public interface IFacadePost {
      * @return Lista de publicaciones encontradas.
      */
     public List<Publicacion> buscarPublicaciones();
+    /**
+     * Busca todas las publicaciones en el sistema.
+     *
+     * @return Lista de publicaciones encontradas.
+     */
+    public List<Publicacion> buscarPublicacionesPorCategoria(Publicacion publicacion);
 
     /**
      * Actualiza una publicación existente en el sistema.

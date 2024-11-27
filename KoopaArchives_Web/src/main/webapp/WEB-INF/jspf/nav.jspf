@@ -29,9 +29,9 @@
                         </c:when>
                         <c:otherwise>
                             <li class="item especial"><a href="#">Buscar</a></li>
-                            <li class="item especial"><a href="#">Posts</a></li>
-                            <li class="item especial"><a href="#">Crear Post</a></li>
-                            <li class="item especial"><a href="#">Nosotros</a></li>
+                            <li class="item especial"><a href="Publicacion">Posts</a></li>
+                            <li class="item especial"><a href="crearPublicacion.jsp">Crear Post</a></li>
+                            <li class="item especial"><a href="">Nosotros</a></li>
                             <li class="item button especial2 limitar">
                                 <a class="perfil" href="#">
                                     <img class="imagen_perfil" src="data:${tipoArchivo};base64,${imgPerfil}" 

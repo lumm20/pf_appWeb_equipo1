@@ -11,9 +11,17 @@ public class ContenidoBean implements Serializable{
     private String descripcion;
     private String titulo;
     private List<SubtemaBean> subtemas;
-    private String urlImg;
+    private ImagenBean imagen;
 
     public ContenidoBean() {
+    }
+
+    public ImagenBean getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(ImagenBean imagen) {
+        this.imagen = imagen;
     }
 
     public String getDescripcion() {
@@ -40,13 +48,4 @@ public class ContenidoBean implements Serializable{
         this.subtemas = subtemas;
     }
 
-    public String getUrlImg() {
-        return urlImg;
-    }
-
-    public void setUrlImg(String urlImg) {
-        this.urlImg = urlImg;
-    }
-    
-    
 }

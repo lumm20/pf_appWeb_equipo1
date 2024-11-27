@@ -112,6 +112,21 @@ public class FacadePost implements IFacadePost {
     public List<Publicacion> buscarPublicaciones() {
         return publicacionDAO.buscarPublicaciones();
     }
+    /**
+     * Busca todas las publicaciones en el sistema.
+     *
+     * @param publicacion
+     * @return Lista de publicaciones encontradas.
+     */
+    @Override
+    public List<Publicacion> buscarPublicacionesPorCategoria(Publicacion publicacion) {
+        try {
+            return publicacionDAO.buscarPublicacionesPorCategoria(publicacion);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 
     /**
      * Actualiza una publicación existente en el sistema.

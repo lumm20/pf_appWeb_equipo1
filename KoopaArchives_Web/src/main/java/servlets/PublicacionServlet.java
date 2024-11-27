@@ -1,6 +1,7 @@
 package servlets;
 
 import entidades_beans.ContenidoBean;
+import entidades_beans.ImagenBean;
 import entidades_beans.PostBean;
 import entidades_beans.UsuarioBean;
 import java.io.IOException;
@@ -13,11 +14,20 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
+import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import objetosNegocio.IPostBO;
 import objetosNegocio.PostBO;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -42,9 +52,40 @@ public class PublicacionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
         
+        if(action == null || action.equals("todos")){
+            buscarPublicaciones(request, response);
+        }
     }
 
+    private void buscarPublicaciones(HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException{
+        IPostBO postBO = new PostBO();
+        boolean flag;
+        
+        List<PostBean> posts = postBO.buscarPublicaciones();
+
+        if (posts != null) {
+            try {
+                List<Map<String, Object>> mapeo = mapearPublicaciones(posts);
+
+                request.setAttribute("listaPublicaciones", mapeo);
+                System.out.println("se mando el post");
+                request.getRequestDispatcher("/publicaciones.jsp").forward(request, response);
+                flag = false;
+            } catch (Exception e) {
+                Logger.getLogger(PublicacionServlet.class.getName()).log(Level.SEVERE, null, e);
+                flag = true;
+            }
+        } else {
+            flag = true;
+        }
+        if (flag) {
+            request.setAttribute("error", "La pagina no se pudo cargar correctamente");
+            request.getRequestDispatcher("/errorConsulta.jsp").forward(request, response);
+        }
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -57,9 +98,71 @@ public class PublicacionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        System.out.println("accion: "+action);
+        IPostBO postBO = new PostBO();
+        boolean flag;
+        PostBean post = new PostBean();
+        post.setCategoria("todos");
+//        post.setNumPost("N9482213136");
+//        PostBean postEncontrado  = postBO.buscarPublicacion(post);
+        List<PostBean> posts = postBO.buscarPublicaciones();
+       
+        if(posts != null){
+            try {
+                List<Map<String, Object>> mapeo = mapearPublicaciones(posts);
+
+                request.setAttribute("listaPublicaciones", mapeo);
+                System.out.println("se mando el post");
+                request.getRequestDispatcher("/publicaciones.jsp").forward(request, response);
+                flag = false;
+            } catch (Exception e) {
+                Logger.getLogger(PublicacionServlet.class.getName()).log(Level.SEVERE, null, e);
+                flag = true;
+            }
+        }else{
+            flag = true;
+        }
+        if(flag){
+            request.setAttribute("error", "La pagina no se pudo cargar correctamente");
+            request.getRequestDispatcher("/errorConsulta.jsp").forward(request, response);
+        }
     }
 
+    private List<Map<String,Object>> mapearPublicaciones(List<PostBean> posts){
+        List<Map<String, Object>> publicaciones = new ArrayList<>();
+
+        Map<String, Object> mapeoPublicacion;
+        for (PostBean post : posts) {
+            System.out.println("post de: "+post.getCategoria());
+            System.out.println("publicador: "+post.getUsernamePublicador());
+            mapeoPublicacion = new HashMap<>();
+            mapeoPublicacion.put("post", post);
+            ImagenBean imagen = post.getContenido().getImagen();
+            ImagenBean iconoPublicador = post.getPublicador().getImagen();
+            
+            if (imagen != null) {
+                System.out.println("imagen encontrada: " + imagen.getNombreArchivo());
+                String base64Image = Base64.getEncoder().encodeToString(imagen.getImageBytes());
+                mapeoPublicacion.put("imagenPost", base64Image);
+                mapeoPublicacion.put("tipoArchivoPost", imagen.getTipoImagen());
+                mapeoPublicacion.put("nombreArchivoPost", imagen.getNombreArchivo());
+            }
+            
+            if (iconoPublicador != null) {
+                System.out.println("imagen de icono encontrada: " + iconoPublicador.getNombreArchivo());
+                String base64Image = Base64.getEncoder().encodeToString(iconoPublicador.getImageBytes());
+                mapeoPublicacion.put("iconoPublicador", base64Image);
+                mapeoPublicacion.put("tipoArchivoIcon", iconoPublicador.getTipoImagen());
+                mapeoPublicacion.put("nombreArchivoIcon", iconoPublicador.getNombreArchivo());
+            }
+            
+            publicaciones.add(mapeoPublicacion);
+        }
+        return publicaciones;
+        
+    }
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -78,10 +181,11 @@ public class PublicacionServlet extends HttpServlet {
         }else{
             PostBean post = new PostBean();
             
-            UsuarioBean usuario = new UsuarioBean();
-            usuario.setUsername(username);
-            post.setPublicador(usuario);
-            System.out.println("usuario bean : "+usuario);
+            HttpSession session = request.getSession(false);
+            UsuarioBean user = (UsuarioBean)session.getAttribute("usuario");
+            
+            post.setUsernamePublicador(user.getUsername());
+            System.out.println("usuario bean : "+user.getUsername());
             String cat = request.getParameter("category");
             post.setCategoria(cat);
             ContenidoBean contenido = new ContenidoBean();
@@ -92,19 +196,8 @@ public class PublicacionServlet extends HttpServlet {
                 contenido.setDescripcion(descripcion);
             }
             
-//            Part imgPost = request.getPart("image");
-//            String fileName = Paths.get(imgPost.getSubmittedFileName()).getFileName().toString();
-//            String dir = "C:/Users/luiis/Desktop/uploads";
-//            File uploadDir = new File(dir);
-//            if (!uploadDir.exists()) {
-//                uploadDir.mkdirs();
-//            }
-//            
-//            String filePath = dir+File.separator +fileName;
-//            imgPost.write(filePath);
-//            
-//            contenido.setUrlImg(fileName);
-//           
+            contenido.setImagen(leerImagen(request));
+            
             post.setContenido(contenido);
 
             Date fechaCreacion = Calendar.getInstance().getTime();
@@ -117,24 +210,64 @@ public class PublicacionServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/inicio.jsp");
             }
             
-//            // Procesa el archivo cargado
-//            for (Part part : request.getParts()) {
-//                // Obtén el nombre del archivo
-//                String fileName = extractFileName(part);
-//                if (fileName != null && !fileName.isEmpty()) {
-//                    // Guarda el archivo en la carpeta destino
-//                    String filePath = dir + File.separator + fileName;
-//                    part.write(filePath);
-//                    System.out.println("Archivo subido exitosamente: " + fileName);
-//                }
-//            }
-            
         }
     }
     
+    private void guardarImg(Part filePart){
+        try {
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            String dir = "C:/Users/luiis/Desktop/uploads";
+            File uploadDir = new File(dir);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            
+            String filePath = dir + File.separator + fileName;
+            filePart.write(filePath);
+            System.out.println("se guardo imagen en carpeta");
+        } catch (IOException ex) {
+            Logger.getLogger(PublicacionServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private ImagenBean leerImagen(HttpServletRequest request) throws IOException, ServletException {
+        Part filePart = request.getPart("image-post");
+
+        if (filePart == null || filePart.getSubmittedFileName().isEmpty()) {
+            return null;
+        }
+
+        String contentType = filePart.getContentType();
+        if (!contentType.startsWith("image/")) {
+            return null;
+        }
+        guardarImg(filePart);
+        
+        InputStream fileContent = filePart.getInputStream();
+        byte[] imageBytes = IOUtils.toByteArray(fileContent);
+
+        ImagenBean imagenPerfil = new ImagenBean();
+        imagenPerfil.setImageBytes(imageBytes);
+        imagenPerfil.setNombreArchivo(extractFileName(filePart));
+        imagenPerfil.setTipoImagen(contentType);
+        imagenPerfil.setFechaSubida(new Date());
+        System.out.println("Se cargo completa la imagen");
+        return imagenPerfil;
+    }
+
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] tokens = contentDisp.split(";");
+        for (String token : tokens) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf("=") + 2, token.length() - 1);
+            }
+        }
+        return "unknown_" + System.currentTimeMillis();
+    }
 
     // Método para extraer el nombre del archivo desde el encabezado Content-Disposition
-    private String extractFileName(Part part) {
+    private String extractFileName2(Part part) {
         String contentDisposition = part.getHeader("content-disposition");
         for (String content : contentDisposition.split(";")) {
             if (content.trim().startsWith("filename")) {

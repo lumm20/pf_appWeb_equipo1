@@ -9,7 +9,7 @@ package entidades;
  * @author karim
  */
 public class Subtema {
-
+    private Image imagen;
     private String subtitulo;
     private String descripcion;
     private String url_img;
@@ -32,6 +32,14 @@ public class Subtema {
         this.subtitulo = subtitulo;
         this.descripcion = descripcion;
         this.url_img = url_img;
+    }
+
+    public Image getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
     }
 
     /**

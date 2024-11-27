@@ -19,5 +19,7 @@ public interface IPostBO {
     public boolean eliminarPublicacion(PostBean post);
     public PostBean buscarNoticia(PostBean post);
     public PostBean buscarPublicacion(PostBean post);
+    public List<PostBean> buscarPublicacionesPorCategoria(PostBean post);
+    public List<PostBean> buscarPublicaciones();
     public List<PostBean> buscarNoticiasConFiltro(FiltroBusquedaBean filtro);
 }

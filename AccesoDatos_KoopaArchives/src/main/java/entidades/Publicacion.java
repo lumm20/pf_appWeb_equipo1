@@ -13,6 +13,7 @@ public class Publicacion extends Post {
     private ObjectId _id;
     private String contenido;
     private String urlImg;
+    private Image imagen;
 
     /**
      * Constructor por defecto.
@@ -28,6 +29,14 @@ public class Publicacion extends Post {
      */
     public Publicacion(String categoria, Date fechaPublicacion) {
         super(categoria, fechaPublicacion);
+    }
+
+    public Image getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
     }
 
     /**

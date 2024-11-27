@@ -13,6 +13,7 @@ import java.util.Date;
  */
 public class PostBean implements Serializable{
     private UsuarioBean publicador;
+    private String usernamePublicador;
     private ContenidoBean contenido;
     private String categoria;
     private String numPost;
@@ -21,6 +22,14 @@ public class PostBean implements Serializable{
     private boolean anclada;
     
     public PostBean() {
+    }
+
+    public String getUsernamePublicador() {
+        return usernamePublicador;
+    }
+
+    public void setUsernamePublicador(String usernamePublicador) {
+        this.usernamePublicador = usernamePublicador;
     }
 
     public boolean isAnclada() {
