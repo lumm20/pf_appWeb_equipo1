@@ -1,6 +1,7 @@
 package objetosNegocio;
 
 import entidades_beans.PostBean;
+import java.util.List;
 
 /**
  *
@@ -10,4 +11,5 @@ public interface IPostBO {
     public boolean subirPublicacion(PostBean post);
     public boolean eliminarPublicacion(PostBean post);
     public PostBean buscarPublicacion(PostBean post);
+    public List<PostBean> buscarPublicaciones();
 }

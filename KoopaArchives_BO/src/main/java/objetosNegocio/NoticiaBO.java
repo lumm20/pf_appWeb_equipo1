@@ -4,6 +4,7 @@ import entidades.Image;
 import entidades.Noticia;
 import entidades_beans.ImagenBean;
 import entidades_beans.NoticiaBean;
+import entidades_beans.UsuarioBean;
 import excepciones.PersistenciaException;
 import fachadas.FacadePost;
 import fachadas.IFacadePost;
@@ -29,9 +30,9 @@ public class NoticiaBO implements INoticiaBO {
         Noticia noticia = convertirANoticiaDAO(post);
         try {
             noticia = facadeNoticias.registrarNoticia(noticia);
+            
             return convertirBeanNoticia(noticia);
         } catch (PersistenciaException ex) {
-
             Logger.getLogger(NoticiaBO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
@@ -58,8 +59,8 @@ public class NoticiaBO implements INoticiaBO {
             noticia.setCodigo(bean.getCodigo());
         }
         noticia.setDestacada(bean.isDestacada());
-        noticia.setContenido(bean.getContenido());
-        noticia.setAutor(bean.getAutor());
+        noticia.setContenido(bean.getTexto());
+        noticia.setAutor(bean.getAutor().getUsername());
         Image imagen = ConversorImagen.convertirAImagenDAO(bean.getImagen());
         noticia.setImagen(imagen);
 
@@ -72,9 +73,11 @@ public class NoticiaBO implements INoticiaBO {
         bean.setDestacada(noticia.isDestacada());
         bean.setCategoria(noticia.getCategoria());
         bean.setCodigo(noticia.getCodigo());
-        bean.setContenido(noticia.getContenido());
+        bean.setTexto(noticia.getContenido());
         bean.setFechaCreacion(noticia.getFechaCreacion());
-        bean.setAutor(noticia.getAutor());
+        UsuarioBean usuario = new UsuarioBean();
+        usuario.setUsername(noticia.getAutor());
+        bean.setAutor(usuario);
         ImagenBean imagen = ConversorImagen.convertirAImagenBean2(noticia.getImagen());
         bean.setImagen(imagen);
 

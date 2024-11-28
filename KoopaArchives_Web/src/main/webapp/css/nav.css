@@ -255,10 +255,6 @@ h1 {
 
 }
 
-.logout {
-    display: none;
-}
-
 .logout.active{
     display: block;
     padding: 1px;

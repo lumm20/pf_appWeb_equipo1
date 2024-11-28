@@ -98,14 +98,8 @@ public class PublicacionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        System.out.println("accion: "+action);
         IPostBO postBO = new PostBO();
         boolean flag;
-        PostBean post = new PostBean();
-        post.setCategoria("todos");
-//        post.setNumPost("N9482213136");
-//        PostBean postEncontrado  = postBO.buscarPublicacion(post);
         List<PostBean> posts = postBO.buscarPublicaciones();
        
         if(posts != null){
@@ -135,11 +129,11 @@ public class PublicacionServlet extends HttpServlet {
         Map<String, Object> mapeoPublicacion;
         for (PostBean post : posts) {
             System.out.println("post de: "+post.getCategoria());
-            System.out.println("publicador: "+post.getUsernamePublicador());
+            System.out.println("publicador: "+post.getAutor());
             mapeoPublicacion = new HashMap<>();
             mapeoPublicacion.put("post", post);
-            ImagenBean imagen = post.getContenido().getImagen();
-            ImagenBean iconoPublicador = post.getPublicador().getImagen();
+            ImagenBean imagen = post.getImagen();
+            ImagenBean iconoPublicador = post.getAutor().getImagen();
             
             if (imagen != null) {
                 System.out.println("imagen encontrada: " + imagen.getNombreArchivo());
@@ -184,22 +178,19 @@ public class PublicacionServlet extends HttpServlet {
             HttpSession session = request.getSession(false);
             UsuarioBean user = (UsuarioBean)session.getAttribute("usuario");
             
-            post.setUsernamePublicador(user.getUsername());
+            post.setAutor(user);
             System.out.println("usuario bean : "+user.getUsername());
             String cat = request.getParameter("category");
             post.setCategoria(cat);
-            ContenidoBean contenido = new ContenidoBean();
             String descripcion = request.getParameter("description");
             
             System.out.println("categoria y descripcion: "+cat +", "+ descripcion);
             if (descripcion != null) {
-                contenido.setDescripcion(descripcion);
+                post.setTexto(descripcion);
             }
             
-            contenido.setImagen(leerImagen(request));
+            post.setImagen(leerImagen(request));
             
-            post.setContenido(contenido);
-
             Date fechaCreacion = Calendar.getInstance().getTime();
             post.setFechaCreacion(fechaCreacion);
             

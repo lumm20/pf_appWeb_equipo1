@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.querySelector('.toggle');
     const items = document.querySelectorAll('.item');
-
+    
     toggle.addEventListener('click', (event) => {
         event.preventDefault();
 

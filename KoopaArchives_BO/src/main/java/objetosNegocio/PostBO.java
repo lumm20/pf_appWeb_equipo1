@@ -67,32 +67,15 @@ public class PostBO implements IPostBO {
     @Override
     public PostBean buscarPublicacion(PostBean post) {
         Publicacion publicacion = new Publicacion();
-        publicacion.setNumPost(post.getNumPost());
+        publicacion.setCodigo(post.getCodigo());
         publicacion = facadePost.buscarPublicacion(publicacion);
         if(publicacion != null){
             PostBean postEncontrado = convertirPublicacion(publicacion);
-            postEncontrado.setPublicador(buscarPublicador(publicacion.getUsernamePublicador()));
+            postEncontrado.setAutor(buscarPublicador(publicacion.getUsernamePublicador()));
             return postEncontrado;
         }return null;
     }
 
-    @Override
-    public List<PostBean> buscarPublicacionesPorCategoria(PostBean post) {
-        Publicacion publicacion = new Publicacion();
-        publicacion.setCategoria(post.getCategoria());
-        List<Publicacion> publicaciones = facadePost.buscarPublicacionesPorCategoria(publicacion);
-        if(publicaciones != null){
-            List<PostBean> posts = new ArrayList<>();
-            PostBean postBean;
-            for (Publicacion publicacionEnc : publicaciones) {
-                postBean = convertirPublicacion(publicacionEnc);
-                postBean.setPublicador(buscarPublicador(publicacionEnc.getUsernamePublicador()));
-                posts.add(postBean);
-            }
-            return posts;
-        }
-        return null;
-    }
     @Override
     public List<PostBean> buscarPublicaciones() {
         List<Publicacion> publicaciones = facadePost.buscarPublicaciones();
@@ -101,7 +84,7 @@ public class PostBO implements IPostBO {
             PostBean postBean;
             for (Publicacion publicacionEnc : publicaciones) {
                 postBean = convertirPublicacion(publicacionEnc);
-                postBean.setPublicador(buscarPublicador(publicacionEnc.getUsernamePublicador()));
+                postBean.setAutor(buscarPublicador(publicacionEnc.getUsernamePublicador()));
                 posts.add(postBean);
             }
             return posts;
@@ -112,18 +95,14 @@ public class PostBO implements IPostBO {
     private PostBean convertirPublicacion(Publicacion publicacion ){
         PostBean bean = new PostBean();
         bean.setCategoria(publicacion.getCategoria());
-        ContenidoBean contenido = new ContenidoBean();
-        contenido.setDescripcion(publicacion.getContenido());
         
         if(publicacion.getImagen() != null){
             ImagenBean imagen = ConversorImagen.convertirAImagenBean(publicacion.getImagen());
-            contenido.setImagen(imagen);
+            bean.setImagen(imagen);
         }
         
-        bean.setContenido(contenido);
         bean.setFechaCreacion(publicacion.getFechaCreacion());
-        bean.setNumPost(publicacion.getNumPost());
-        bean.setUsernamePublicador(publicacion.getUsernamePublicador());
+        bean.setCodigo(publicacion.getCodigo());
         
         return bean;
     }
@@ -134,11 +113,11 @@ public class PostBO implements IPostBO {
             publicacion.setCategoria(bean.getCategoria());
         if(bean.getUltimaModificacion() != null)
             publicacion.setUltimaModificacion(bean.getUltimaModificacion());
-        if(bean.getNumPost() != null)
-            publicacion.setNumPost(bean.getNumPost());
-        if(bean.getUsernamePublicador()!= null){
+        if(bean.getCodigo() != null)
+            publicacion.setCodigo(bean.getCodigo());
+        if(bean.getAutor()!= null){
             //String username = obtenerUsernamePublicador(bean.getPublicador());
-            publicacion.setUsernamePublicador(bean.getUsernamePublicador());
+            publicacion.setUsernamePublicador(bean.getAutor().getUsername());
         }
         
         publicacion.setFechaCreacion(bean.getFechaCreacion());

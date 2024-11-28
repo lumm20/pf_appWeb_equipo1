@@ -17,7 +17,7 @@
                         <c:choose>
                             <c:when test="${sessionScope.usuario.rol eq 'Admin'}">
                             <li class="item especial"><a href="crearNoticia.jsp">Crear Noticia</a></li>
-                            <li class="item especial"><a href="#">Buscar</a></li>
+                            <li class="item especial"><a href="">Buscar</a></li>
                             <li class="item especial"><a href="#">Posts</a></li>
                             <li class="item especial"><a href="#">Nosotros</a></li>
                             <li class="item button especial2 limitar">

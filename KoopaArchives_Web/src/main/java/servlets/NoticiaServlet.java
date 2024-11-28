@@ -92,7 +92,7 @@ public class NoticiaServlet extends HttpServlet {
         NoticiaBean noticiaEncontrada = noticiaBO.buscarNoticia(bean);
         
         if(noticiaEncontrada != null){
-            String[] parrafos = noticiaEncontrada.getContenido().split("\n");
+            String[] parrafos = noticiaEncontrada.getTexto().split("\n");
             ImagenBean imagen = noticiaEncontrada.getImagen();
             System.out.println("imagen en servlet" + imagen);
             
@@ -137,7 +137,7 @@ public class NoticiaServlet extends HttpServlet {
     private void publicarNoticia(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         NoticiaBean aux = new NoticiaBean();
         aux.setTitulo(request.getParameter("titulo"));
-        aux.setContenido(request.getParameter("contenido"));
+        aux.setTexto(request.getParameter("contenido"));
         aux.setCategoria(request.getParameter("categoria"));
         String destacadoString = request.getParameter("destacado");
         boolean destacado = (destacadoString != null);
@@ -145,8 +145,9 @@ public class NoticiaServlet extends HttpServlet {
 //        HttpSession sesion = request.getSession(false);
 //        UsuarioBean usuario = (UsuarioBean) request.getAttribute("usuario");
 
-        
-        aux.setAutor("Monkey D. Luffy");
+        UsuarioBean usuario = new UsuarioBean();
+        usuario.setUsername("Monkey D. Luffy");
+        aux.setAutor(usuario);
         ImagenBean imagen = leerImagen(request);
         aux.setDestacada(destacado);
         aux.setImagen(imagen);

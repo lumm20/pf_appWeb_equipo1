@@ -30,7 +30,6 @@
                 <form action="Usuario" method="post">
                     <input type="hidden" name="action" value="iniciarSesion">
                     <c:if test="${not empty error}">
-                        <!-- Código que se ejecuta si la condición es verdadera -->
                         <div class="form-group">
                             <label class="error" for="error">Error: ${error}</label>
                         </div>

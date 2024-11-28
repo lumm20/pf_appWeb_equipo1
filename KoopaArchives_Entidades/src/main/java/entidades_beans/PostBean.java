@@ -12,10 +12,11 @@ import java.util.Date;
  * @author luisa M
  */
 public class PostBean implements Serializable{
-    private UsuarioBean publicador;
-//    private ContenidoBean contenido;
+    private ImagenBean imagen;
+    private UsuarioBean autor;
+    private String texto;
     private String categoria;
-    private String numPost;
+    private String codigo;
     private Date fechaCreacion;
     private Date ultimaModificacion;
     private boolean anclada;
@@ -23,12 +24,28 @@ public class PostBean implements Serializable{
     public PostBean() {
     }
 
-    public String getUsernamePublicador() {
-        return usernamePublicador;
+    public String getTexto() {
+        return texto;
     }
 
-    public void setUsernamePublicador(String usernamePublicador) {
-        this.usernamePublicador = usernamePublicador;
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public ImagenBean getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(ImagenBean imagen) {
+        this.imagen = imagen;
+    }
+
+    public UsuarioBean getAutor() {
+        return autor;
+    }
+
+    public void setAutor(UsuarioBean autor) {
+        this.autor = autor;
     }
 
     public boolean isAnclada() {
@@ -39,16 +56,6 @@ public class PostBean implements Serializable{
         this.anclada = anclada;
     }
 
-    public UsuarioBean getPublicador() {
-        return publicador;
-    }
-
-    public void setPublicador(UsuarioBean publicador) {
-        this.publicador = publicador;
-    }
-
-    
-
     public String getCategoria() {
         return categoria;
     }
@@ -57,12 +64,12 @@ public class PostBean implements Serializable{
         this.categoria = categoria;
     }
 
-    public String getNumPost() {
-        return numPost;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setNumPost(String numPost) {
-        this.numPost = numPost;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public Date getFechaCreacion() {
@@ -83,6 +90,6 @@ public class PostBean implements Serializable{
 
     @Override
     public String toString() {
-        return "PostBean{" + "publicador=" + publicador + ", categoria=" + categoria + ", numPost=" + numPost + ", fechaCreacion=" + fechaCreacion + ", ultimaModificacion=" + ultimaModificacion + ", anclada=" + anclada + '}';
+        return "PostBean{" + "autor= "+autor+ ", categoria=" + categoria + ", numPost=" + codigo + ", fechaCreacion=" + fechaCreacion + ", ultimaModificacion=" + ultimaModificacion + ", anclada=" + anclada + '}';
     }
 }

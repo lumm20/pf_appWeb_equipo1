@@ -42,7 +42,7 @@
                                             <img src="data:${publicacion.tipoArchivoIcon};base64,${publicacion.iconoPublicador}" alt="${publicacion.nombreArchivoIcon}" alt="perfil">
                                         </div>
                                         <div class="author-info">
-                                            <span class="author-name">${publicacion.post.usernamePublicador}</span>
+                                            <span class="author-name">${publicacion.post.autor.username}</span>
                                             <span class="post-tag">Destacado</span>
                                             <div class="post-date">Hace 1 día</div>
                                         </div>
@@ -63,7 +63,7 @@
                                 <c:if test="${not empty publicacion.imagenPost}">
                                     <img src="data:${publicacion.tipoArchivoPost};base64,${publicacion.imagenPost}" alt="${publicacion.nombreArchivoPost}" class="post-image">
                                 </c:if>
-                                <p class="post-content">${publicacion.post.contenido.descripcion}</p>
+                                <p class="post-content">${publicacion.post.texto}</p>
                             </div>
                         </c:forEach>
                     </c:when>

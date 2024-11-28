@@ -33,7 +33,7 @@
                     </div>
                     <div class="article-image-container">
                         <img src="data:${tipoArchivo};base64,${url}" alt="${nombreArchivo}" class="article-image">
-                        <p class="article-image-caption">Autor: ${noticia.autor}</p>
+                        <p class="article-image-caption">Autor: ${noticia.autor.username}</p>
                     </div>
                     <c:if test="${not empty sessionScope.usuario}">
                         <c:if test="${sessionScope.usuario.rol eq 'Admin'}">
