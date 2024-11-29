@@ -18,7 +18,10 @@ import java.util.logging.Logger;
  * @author karim
  */
 public class FacadePost implements IFacadePost {
-
+    public static final int LIKE = 1;
+    public static final int DISLIKE = 2;
+    public static final int NUEVO_COMENTARIO = 3;
+    public static final int QUITAR_COMENTARIO = 4;
     private INoticiaDAO noticiaDAO;
     private IPublicacionDAO publicacionDAO;
 
@@ -142,6 +145,11 @@ public class FacadePost implements IFacadePost {
         }
     }
 
+    @Override
+    public boolean actualizarInteraccionesPublicacion(Publicacion publicacion, int tipoInteraccion){
+        return publicacionDAO.actualizarLikesPublicacion(publicacion);
+    }
+    
     /**
      * Busca una publicación en el sistema según los criterios de búsqueda
      * proporcionados.

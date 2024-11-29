@@ -13,8 +13,10 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.UpdateResult;
 import conexion.Conexion;
 import conexion.IConexion;
+import entidades.Comentario;
 import entidades.Publicacion;
 import excepciones.PersistenciaException;
 import java.util.ArrayList;
@@ -130,7 +132,25 @@ public class PublicacionDAO implements IPublicacionDAO {
 
         publicaciones.updateOne(filtro, actualizar);
     }
+    
+    @Override
+    public boolean actualizarLikesPublicacion(Publicacion publicacion){
+        Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
+        Bson actualizar = Updates.set("likes", publicacion.getCantidadLikes());
+        UpdateResult result = publicaciones.updateOne(filtro, actualizar);
+        return result.getModifiedCount() >0;
+    }
+    
+    @Override
+    public boolean agregarComentarioPublicacion(Publicacion publicacion, Comentario comentario){
+        return true;
+    }
 
+    @Override
+    public boolean removerComentarioPublicacion(Publicacion publicacion, Comentario comentario){
+        return true;
+    }
+    
     /**
      * Regresa todas las publicaciones contenidas en la colección de
      * publicaciones

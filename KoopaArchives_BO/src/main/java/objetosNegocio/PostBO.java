@@ -33,6 +33,11 @@ public class PostBO implements IPostBO {
         this.facadePost = new FacadePost();
         this.facadeUsuario = new FacadeUsuario();
     }
+    
+    @Override
+    public boolean actualizarReacciones(PostBean post){
+        return true;
+    }
 
     @Override
     public boolean subirPublicacion(PostBean post) {

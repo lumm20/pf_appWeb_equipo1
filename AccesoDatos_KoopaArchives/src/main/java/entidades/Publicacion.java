@@ -14,7 +14,8 @@ public class Publicacion extends Post {
     private String contenido;
     private String urlImg;
     private Image imagen;
-
+    private int cantidadLikes;
+    
     /**
      * Constructor por defecto.
      */
@@ -29,6 +30,14 @@ public class Publicacion extends Post {
      */
     public Publicacion(String categoria, Date fechaPublicacion) {
         super(categoria, fechaPublicacion);
+    }
+
+    public int getCantidadLikes() {
+        return cantidadLikes;
+    }
+
+    public void setCantidadLikes(int cantidadLikes) {
+        this.cantidadLikes = cantidadLikes;
     }
 
     public Image getImagen() {
