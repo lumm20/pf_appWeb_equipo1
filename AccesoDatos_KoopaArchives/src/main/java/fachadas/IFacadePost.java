@@ -1,5 +1,6 @@
 package fachadas;
 
+import entidades.FiltroNoticia;
 import entidades.Noticia;
 import entidades.Publicacion;
 import excepciones.PersistenciaException;
@@ -35,7 +36,7 @@ public interface IFacadePost {
      *
      * @return Lista de noticias encontradas.
      */
-    public List<Noticia> buscarNoticias();
+    public List<Noticia> buscarNoticias(FiltroNoticia filtro) throws PersistenciaException;
 
     /**
      * Actualiza una noticia existente en el sistema.

@@ -1,6 +1,7 @@
 
 package servlets;
 
+import entidades_beans.FiltroBean;
 import entidades_beans.ImagenBean;
 import entidades_beans.NoticiaBean;
 import entidades_beans.UsuarioBean;
@@ -56,6 +57,8 @@ public class NoticiaServlet extends HttpServlet {
         }
 
         switch (action) {
+            case "cargarInicio" ->
+                cargarNoticia(request, response);
             case "publicarNoticia" ->
                 publicarNoticia(request, response);
             case "actualizarNoticia" ->
@@ -84,30 +87,9 @@ public class NoticiaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idNoticia = request.getParameter("id");
-        System.out.println(idNoticia);
-        NoticiaBean bean = new NoticiaBean();
-        bean.setCodigo(idNoticia);
-
-        NoticiaBean noticiaEncontrada = noticiaBO.buscarNoticia(bean);
         
-        if(noticiaEncontrada != null){
-            String[] parrafos = noticiaEncontrada.getTexto().split("\n");
-            ImagenBean imagen = noticiaEncontrada.getImagen();
-            System.out.println("imagen en servlet" + imagen);
-            
-            request.setAttribute("noticia", noticiaEncontrada);
-            request.setAttribute("tipoArchivo", imagen.getTipoImagen());
-            request.setAttribute("nombreArchivo", imagen.getNombreArchivo());
-            request.setAttribute("url", imagen.getUrl());
-            
-            request.setAttribute("parrafos", parrafos);
-                request.getRequestDispatcher("noticia.jsp").forward(request, response);
-            } else {
-                // Handle case where no news article is found
-                
-                response.sendRedirect("error404");
-            }
+        cargarNoticia(request, response);
+//       
     }
 
     /**
@@ -164,7 +146,9 @@ public class NoticiaServlet extends HttpServlet {
     }
 
     private void actualizarNoticia(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        
+//                response.sendRedirect("");
     }
 
     private void destacarNoticia(HttpServletRequest request, HttpServletResponse response) {
@@ -215,5 +199,30 @@ public class NoticiaServlet extends HttpServlet {
             }
         }
         return "unknown_" + System.currentTimeMillis();
+    }
+
+    private void cargarNoticia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        FiltroBean filtroNormal = new FiltroBean();
+        filtroNormal.setInicio(true);
+        filtroNormal.setDestacada(false);
+        
+        FiltroBean filtroDestacada = new FiltroBean();
+        filtroDestacada.setInicio(true);
+        filtroDestacada.setDestacada(true);
+        
+        List<NoticiaBean> noticiasNormales = noticiaBO.buscarNoticias(filtroNormal);
+        List<NoticiaBean> noticiasDestacadas = noticiaBO.buscarNoticias(filtroDestacada);
+        
+//            for (NoticiaBean noticia : noticiasDestacadas) {
+//        if (noticia.getImagen() != null) {
+//            System.out.println("Imagen: " + noticia.getImagen());
+//            System.out.println("Tipo de Archivo: " + noticia.getImagen().getTipoImagen());
+//            System.out.println("URL: " + noticia.getImagen().getUrl());
+//        }
+//    }
+        request.setAttribute("destacadas", noticiasDestacadas);
+        request.setAttribute("normales", noticiasNormales);
+            request.getRequestDispatcher("inicio.jsp")
+                .forward(request, response);
     }
 }

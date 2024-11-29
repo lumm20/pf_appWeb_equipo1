@@ -14,6 +14,7 @@ public class FiltroNoticia {
 
     private Date fechaDesde;
     private Date fechaHasta;
+    private boolean inicio;
     private String categoria;
     private String titulo;
     private boolean destacada;
@@ -120,5 +121,14 @@ public class FiltroNoticia {
         this.destacada = destacada;
     }
 
+    public boolean esPaginaInicio() {
+        return inicio;
+    }
+
+    public void setInicio(boolean inicio) {
+        this.inicio = inicio;
+    }
+
+    
     
 }

@@ -1,9 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package objetosNegocio;
 
+import daos.NoticiaDAO;
+import entidades.Noticia;
+import entidades_beans.FiltroBean;
 import entidades_beans.ImagenBean;
 import entidades_beans.NoticiaBean;
 
@@ -16,9 +15,14 @@ public class Prueba {
         NoticiaBO bo = new NoticiaBO();
         NoticiaBean bean = new NoticiaBean();
         bean.setCodigo("N6077345630");
-        NoticiaBean noticia = bo.buscarNoticia(bean);
+        NoticiaBean noticiaCambiar  = bo.buscarNoticia(bean);
+        System.out.println(noticiaCambiar);
         
-        System.out.println(noticia);
-        System.out.println(noticia.getImagen());
+        noticiaCambiar.setDestacada(false);
+        noticiaCambiar.setTexto("titulo cambiado tirisisisi");
+        bo.actualizarNoticia(noticiaCambiar);
+//        noticiaCambiar.setDestacada(false);
+//        dao.actualizarNoticia(noticiaCambiar);
+        System.out.println(bo.buscarNoticia(bean));
     }
 }

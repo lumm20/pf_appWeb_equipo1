@@ -81,14 +81,6 @@ body {
     color: #666;
 }
 
-.news-item:nth-child(1) {
-    grid-column: span 2;
-}
-
-.news-item:last-child:nth-child(odd) {
-    grid-column: span 2;
-}
-
 @media (max-width: 768px) {
     .news-grid {
         grid-template-columns: 1fr;

@@ -26,10 +26,10 @@ public class Noticia extends Post {
     /**
      * Constructor que inicializa la noticia con un número de post.
      *
-     * @param numPost Número de post.
+     * @param codigo Número de post.
      */
-    public Noticia(String numPost) {
-        this.codigo = numPost;
+    public Noticia(String codigo) {
+        this.codigo = codigo;
     }
 
     /**

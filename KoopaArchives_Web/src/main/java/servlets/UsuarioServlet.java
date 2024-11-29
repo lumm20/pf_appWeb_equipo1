@@ -1,16 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package servlets;
 
-import com.mongodb.client.MongoDatabase;
-import entidades.Image;
 import entidades_beans.ImagenBean;
 import entidades_beans.UsuarioBean;
 import entidades_beans.UsuarioRegistroBean;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
-import java.util.Base64;
 import java.util.Date;
 import objetosNegocio.IUsuarioBO;
 import objetosNegocio.UsuarioBO;
@@ -114,7 +106,7 @@ public class UsuarioServlet extends HttpServlet {
         }
 
         session.invalidate();
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/views/login.jsp");
 
     }
 
@@ -129,25 +121,22 @@ public class UsuarioServlet extends HttpServlet {
         if (usuario != null) {
             // Crear sesión
             HttpSession sesion = request.getSession();
-
-//            String base64Image = Base64.getEncoder().encodeToString(usuario.getImagen().getImageBytes());
-            // Guardar datos en la sesión
+            boolean esAdmin = usuario.getRol().equals("Admin");
+            System.out.println(esAdmin);
             sesion.setAttribute("usuario", usuario);
-//            sesion.setAttribute("imgPerfil", base64Image);
+            sesion.setAttribute("rol", usuario.getRol());
             sesion.setAttribute("urlPerfil", usuario.getImagen().getUrl());
             sesion.setAttribute("tipoArchivo", usuario.getImagen().getTipoImagen());
             sesion.setAttribute("nombreArchivo", usuario.getImagen().getNombreArchivo());
-            System.out.println(usuario.getImagen());
             
 
-            // Opcional: establecer tiempo máximo de sesión (en segundos)
             sesion.setMaxInactiveInterval(30 * 60); // 30 minutos
 
             // Redirigir a página de inicio
-            response.sendRedirect(request.getContextPath() + "/inicio.jsp");
+            response.sendRedirect(request.getContextPath() + "/views/inicio.jsp");
         } else {
             request.setAttribute("error", "Datos incorrector intentelo de nuevo");
-            request.getRequestDispatcher("/login.jsp")
+            request.getRequestDispatcher("Noticia?action=cargarInicio")
                     .forward(request, response);
         }
     }
@@ -191,7 +180,7 @@ public class UsuarioServlet extends HttpServlet {
 
         }
         //si hubo algun error, se mantiene en la pagina de registro y se envia el mensaje de error capturado
-        request.getRequestDispatcher("/register.jsp").forward(request, response);
+        request.getRequestDispatcher("register.jsp").forward(request, response);
 
     }
 
@@ -215,7 +204,6 @@ public class UsuarioServlet extends HttpServlet {
         imagenPerfil.setNombreArchivo(extractFileName(filePart));
         imagenPerfil.setTipoImagen(contentType);
         imagenPerfil.setFechaSubida(new Date());
-        System.out.println("Se cargo completa la imagen");
         return imagenPerfil;
     }
 

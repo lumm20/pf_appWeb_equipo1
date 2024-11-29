@@ -3,8 +3,6 @@ package entidades;
 /**
  * @author José Karim Franco Valencia - 00000245138
  * @author Luisa Fernanda Morales Espinoza - 000000233450
- * @author Juventino López García - 00000248547
- * @author Paul Alejandro Vazquez Cervantes - 00000241400
  */
 
 import java.util.Date;
@@ -16,7 +14,7 @@ public class Comentario {
     private String contenido;
     private Date fechaPublicacion;
     private Date fechaModificacion;
-    private String idNoticia;
+    private String codigoNoticia;
     private Noticia noticia;
     private String idUsuario;
     private Usuario usuario;
@@ -69,12 +67,12 @@ public class Comentario {
         this.fechaPublicacion = fechaPublicacion;
     }
 
-    public String getIdNoticia() {
-        return idNoticia;
+    public String getCodigoNoticia() {
+        return codigoNoticia;
     }
 
-    public void setIdNoticia(String idNoticia) {
-        this.idNoticia = idNoticia;
+    public void setCodigoNoticia(String codigoNoticia) {
+        this.codigoNoticia = codigoNoticia;
     }
 
     public Noticia getNoticia() {
@@ -127,7 +125,7 @@ public class Comentario {
     
     @Override
     public String toString() {
-        return "Comentario{" + "idComentario=" + _id + ", contenido=" + contenido + ", fecha_comentario=" + fechaPublicacion + ", idNoticia=" + idNoticia + ", noticia=" + noticia + ", idUsuario=" + noticia +  ", usuario=" + usuario +'}';
+        return "Comentario{" + "idComentario=" + _id + ", contenido=" + contenido + ", fecha_comentario=" + fechaPublicacion + ", idNoticia=" + codigoNoticia + ", noticia=" + noticia + ", idUsuario=" + noticia +  ", usuario=" + usuario +'}';
     }
 
 }

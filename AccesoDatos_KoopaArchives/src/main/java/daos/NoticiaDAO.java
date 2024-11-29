@@ -54,7 +54,7 @@ public class NoticiaDAO implements INoticiaDAO {
      * Publica una nueva noticia en la base de datos.
      *
      * @param noticia Noticia a publicar.
-     * @return 
+     * @return
      * @throws PersistenciaException Si ocurre un error al guardar la noticia.
      */
     @Override
@@ -93,7 +93,7 @@ public class NoticiaDAO implements INoticiaDAO {
      */
     @Override
     public Noticia buscarNoticia(Noticia noticia) throws PersistenciaException {
-         try {
+        try {
             Noticia _noticia = noticias.find(Filters.eq("codigo", noticia.getCodigo())).first();
             return _noticia;
         } catch (Exception e) {
@@ -123,12 +123,16 @@ public class NoticiaDAO implements INoticiaDAO {
                             "i")
             );
         }
-
+        System.out.println(filtros.getCategoria());
         if (filtros.getCategoria() != null) {
             pipeline.add(match(eq("categoria", filtros.getCategoria())));
         }
+
+        if (filtros.esPaginaInicio()) {
             pipeline.add(match(eq("destacada", filtros.isDestacada())));
-         
+            pipeline.add(Aggregates.sort(Sorts.descending("fechaCreacion")));
+        }
+
         // Filtro por rango de fechas
         if (filtros.getFechaDesde() != null && filtros.getFechaHasta() != null) {
             Date fechaDesde = ajustarFechaInicio(filtros.getFechaDesde());
@@ -148,7 +152,6 @@ public class NoticiaDAO implements INoticiaDAO {
         }
 
         // Project stage
-
         return noticias
                 .aggregate(pipeline, Noticia.class)
                 .into(new ArrayList<>());
@@ -165,25 +168,19 @@ public class NoticiaDAO implements INoticiaDAO {
      */
     @Override
     public void actualizarNoticia(Noticia noticia) throws PersistenciaException {
-////        Contenido contenido = noticia.getContenido();
-////        Bson filtro = Filters.eq("numPost", noticia.getNumPost());
-////        Bson filtro2 = Filters.eq("_id", noticia.getIdContenido());
-////        Bson actualizar;
-////        Bson actualizar2;
-////
-////        actualizar2 = Updates.combine(
-////                Updates.set("titulo", contenido.getTitulo()),
-////                Updates.set("descripcion", contenido.getDescripcion()),
-////                Updates.set("subtemas", contenido.getSubtemas()),
-////                Updates.set("urlImg", contenido.getUrlImg())
-////        );
-////        actualizar = Updates.combine(
-////                Updates.set("ultimaModificacion", new Date()),
-////                Updates.set("anclada", noticia.isDestacada())
-////        );
-////
-////        contenidos.updateOne(filtro2, actualizar2);
-////        noticias.updateOne(filtro, actualizar);
+        Bson filtro = Filters.eq("codigo", noticia.getCodigo());
+        Bson actualizar = null;
+
+        // Verificar si la imagen ha cambiado
+        actualizar = Updates.combine(
+                Updates.set("ultimaModificacion", new Date()),
+                Updates.set("destacada", noticia.isDestacada()),
+                Updates.set("contenido", noticia.getContenido()),
+                Updates.set("titulo", noticia.getTitulo()),
+                Updates.set("imagen", noticia.getImagen())
+        );
+
+        noticias.updateOne(filtro, actualizar);
     }
 
     /**
@@ -231,13 +228,13 @@ public class NoticiaDAO implements INoticiaDAO {
                 .aggregate(pipeline, Noticia.class)
                 .into(new ArrayList<>());
     }
-    
+
     @Override
     public List<Noticia> buscarNoticiasDestacadas() {
         List<Bson> pipeline = new ArrayList<>();
 
         pipeline.add(match(eq("destacada", true)));
-        
+
         pipeline.add(Aggregates.sort(Sorts.descending("fechaPublicacion")));
 
         return noticias
