@@ -1,43 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <!-- Configuración del servlet de inicio -->
-    <servlet>
-        <servlet-name>InicioServlet</servlet-name>
-        <servlet-class>servlets.InicioServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>InicioServlet</servlet-name>
-        <url-pattern>/Inicio</url-pattern>
-    </servlet-mapping>
-
     <!-- Página de inicio por defecto -->
     <welcome-file-list>
-        <welcome-file>Inicio</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
-
     <!-- Configuración del filtro -->
-    <filter>
+<!--    <filter>
         <filter-name>FiltroAutenticacion</filter-name>
         <filter-class>filtros.FiltroAutenticacion</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>FiltroAutenticacion</filter-name>
-        <url-pattern>/views/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>FiltroAutenticacion</filter-name>
-        <url-pattern>/servlets/*</url-pattern>
-    </filter-mapping>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
 
     <!-- Configuración de páginas de error -->
     <error-page>
         <error-code>404</error-code>
         <location>/error404.jsp</location>
     </error-page>
-
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/error404.jsp</location>

@@ -42,7 +42,7 @@ public class ComentarioDAO implements IComentarioDAO {
         try {
             Comentario aux = new Comentario();
             aux.setContenido(comentario.getContenido());
-            aux.setIdNoticia(comentario.getNoticia().getCodigo());
+            aux.setCodigoNoticia(comentario.getNoticia().getCodigo());
             aux.setIdUsuario(comentario.getUsuario().getUsername());
             aux.setFechaPublicacion(new Date());
             aux.setIdComentario(generarNumeroAleatorio());

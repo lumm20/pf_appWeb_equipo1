@@ -3,7 +3,7 @@
     <nav>
         <ul class="menu">
             <li class="logo"><a class="contenedor_logo" href="#">
-                    <img class="logo_img" src="/img/logo.png" alt="Logo de Koopa Archives">
+                    <img class="logo_img" src="img/logo.png" alt="Logo de Koopa Archives">
                     <div class="logo_texto">
                         <h1>
                             <span class="logo_koopas">Koopa</span><br>
@@ -11,7 +11,7 @@
                         </h1>
                     </div>
                 </a></li>
-            <li class="item especial"><a href="#">Noticias</a></li>
+            <li class="item especial"><a href="Noticia?action=cargarInicio">Noticias</a></li>
                 <c:choose>
                     <c:when test="${not empty sessionScope.usuario}">
                         <c:choose>

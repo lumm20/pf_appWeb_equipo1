@@ -4,6 +4,7 @@ import daos.INoticiaDAO;
 import daos.IPublicacionDAO;
 import daos.NoticiaDAO;
 import daos.PublicacionDAO;
+import entidades.FiltroNoticia;
 import entidades.Noticia;
 import entidades.Publicacion;
 import excepciones.PersistenciaException;
@@ -38,7 +39,7 @@ public class FacadePost implements IFacadePost {
      * @param contenido Contenido de la noticia.
      */
     @Override
-    public Noticia registrarNoticia(Noticia noticia) throws PersistenciaException{
+    public Noticia registrarNoticia(Noticia noticia) throws PersistenciaException {
         try {
             return noticiaDAO.registrarNoticia(noticia);
         } catch (PersistenciaException ex) {
@@ -57,7 +58,7 @@ public class FacadePost implements IFacadePost {
     @Override
     public Noticia buscarNoticia(Noticia notica) {
         try {
-            
+
             return noticiaDAO.buscarNoticia(notica);
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,16 +78,6 @@ public class FacadePost implements IFacadePost {
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    /**
-     * Busca todas las noticias en el sistema.
-     *
-     * @return Lista de noticias encontradas.
-     */
-    @Override
-    public List<Noticia> buscarNoticias() {
-        return noticiaDAO.buscarNoticias();
     }
 
     /**
@@ -112,6 +103,7 @@ public class FacadePost implements IFacadePost {
     public List<Publicacion> buscarPublicaciones() {
         return publicacionDAO.buscarPublicaciones();
     }
+
     /**
      * Busca todas las publicaciones en el sistema.
      *
@@ -177,5 +169,10 @@ public class FacadePost implements IFacadePost {
     @Override
     public void eliminarNoticia(Noticia noticia) {
         noticiaDAO.eliminarNoticia(noticia);
+    }
+
+    @Override
+    public List<Noticia> buscarNoticias(FiltroNoticia filtro) throws PersistenciaException {
+        return noticiaDAO.buscarNoticias(filtro);
     }
 }

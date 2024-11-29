@@ -34,7 +34,7 @@ public class NoticiaBean extends PostBean implements Serializable{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("NoticiaBean{");
-        sb.append("anclada=").append(destacada);
+        sb.append(super.toString());
         sb.append(", titulo=").append(titulo);
         sb.append('}');
         return sb.toString();

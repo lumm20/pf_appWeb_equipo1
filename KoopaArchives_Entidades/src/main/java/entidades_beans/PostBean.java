@@ -90,6 +90,15 @@ public class PostBean implements Serializable{
 
     @Override
     public String toString() {
-        return "PostBean{" + "autor= "+autor+ ", categoria=" + categoria + ", numPost=" + codigo + ", fechaCreacion=" + fechaCreacion + ", ultimaModificacion=" + ultimaModificacion + ", anclada=" + anclada + '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append(", autor=").append(autor);
+        sb.append(", texto=").append(texto);
+        sb.append(", categoria=").append(categoria);
+        sb.append(", codigo=").append(codigo);
+        sb.append(", fechaCreacion=").append(fechaCreacion);
+        sb.append(", anclada=").append(anclada);
+        sb.append(", imagen=").append(imagen);
+        return sb.toString();
     }
+
 }

@@ -26,8 +26,9 @@
                     <h4 class="article-title">${noticia.titulo}</h4>
                     <div class="article-meta">
                         <p class="upload-date">
+                            Fecha de publicación:
                             <fmt:formatDate value="${noticia.fechaCreacion}" 
-                                            pattern="dd/MM/yyyy HH:mm"/>
+                                            pattern="dd/MM/yyyy"/>
                         </p>
                         <span class="category">Categoría: ${noticia.categoria}</span>
                     </div>
@@ -44,7 +45,7 @@
                                     <div class="options-menu-dot"></div>
                                 </div>
                                 <div class="options-menu-content">
-                                    <div class="options-menu-item">Destacar noticia</div>
+                                    <a class="options-menu-item" href="/Noticia?id=${noticia.codigo}&action=actualizarNoticia">Destacar noticia</a>
                                     <div class="options-menu-item">Editar</div>
                                     <div class="options-menu-item">Eliminar</div>
                                 </div>

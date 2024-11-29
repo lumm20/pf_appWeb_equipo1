@@ -1,13 +1,7 @@
 package entidades;
 
-import daos.IUsuarioDAO;
 import daos.NoticiaDAO;
-import daos.UsuarioDAO;
 import excepciones.PersistenciaException;
-import fachadas.FacadePost;
-import fachadas.IFacadePost;
-import factories.FactoryUser;
-import java.util.Date;
 
 /**
  *
@@ -17,11 +11,13 @@ public class AccesoDatos_KoopaArchives {
 
     public static void main(String[] args) throws PersistenciaException {
       
-        IFacadePost post = new FacadePost();
-        
-        for(Noticia noticia : post.buscarNoticias()){
-            System.out.println(noticia);
-        }
+        NoticiaDAO dao = new NoticiaDAO();
+        Noticia noticiaCambiar  = dao.buscarNoticia(new Noticia("N6077345630"));
 
+        
+        noticiaCambiar.setDestacada(true);
+        noticiaCambiar.setTitulo("Titulo cambiado");
+        dao.actualizarNoticia(noticiaCambiar);
+        System.out.println(dao.buscarNoticia(new Noticia("N6077345630")));
     }
 }
