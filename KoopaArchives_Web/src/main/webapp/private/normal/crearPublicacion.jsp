@@ -13,17 +13,17 @@
               rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-        <link rel="icon" href="img/logo.png" type="image/x-icon">
-        <link rel="stylesheet" href="css/crearPublicacion.css">
-        <link rel="stylesheet" href="css/nav.css">
-        <script src="js/nav.js" defer></script>
-        <script src="js/crearPublicacion.js" defer></script>
+        <link rel="icon" href="/img/logo.png" type="image/x-icon">
+        <link rel="stylesheet" href="/private/cssPrivate/crearPublicacion.css">
+        <link rel="stylesheet" href="/css/nav.css">
+        <script src="/js/nav.js" defer></script>
+        <script src="/private/jsPrivate/crearPublicacion.js" defer></script>
     </head>
     <body>
-        <%@ include file="WEB-INF/jspf/nav.jspf" %>
+        <%@ include file="/WEB-INF/jspf/nav.jspf" %>
                 <main>
                     <h3>Subir Nueva Publicación</h3>
-                    <form class="upload-form" id="upload-form" action="/Publicacion" method="post" enctype="multipart/form-data">
+                    <form class="upload-form" id="upload-form" action="/private/Publicacion" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="username" value="${sessionScope.usuario.username}">
                                <div class="form-group">
                             <label for="image-upload">Imagen:</label>
@@ -50,7 +50,6 @@
                         <button type="submit" id="post-btn" class="submit-btn">Publicar</button>
                     </form>
                 </main>
-        <%@ include file="WEB-INF/jspf/footer.jspf" %>
-
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %>
     </body>
 </html>

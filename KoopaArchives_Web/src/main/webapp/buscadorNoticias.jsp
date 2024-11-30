@@ -17,6 +17,7 @@
         <script src="js/buscadorNoticias.js" defer></script>
     </head>
     <body>
+        <%@include file="WEB-INF/jspf/nav.jspf" %>
         <main class="search-container">
             <h3>Buscador de noticias</h3>
             <section class="search-form">
@@ -58,6 +59,6 @@
                 </div>
             </section>
         </main>
-
+        <%@include file="WEB-INF/jspf/footer.jspf" %>
     </body>
 </html>

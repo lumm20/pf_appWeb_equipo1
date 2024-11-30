@@ -12,10 +12,10 @@
               rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="css/crearPost.css">
-        <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="../css/nav.css">
     </head>
     <body>
-        <%@ include file="WEB-INF/jspf/nav.jspf" %>
+        <%@ include file="../WEB-INF/jspf/nav.jspf" %>
         <main>
             <h1 class="titulo_crear">Crear Post</h1>
             <form id="createPostForm">
@@ -65,7 +65,7 @@
                 <button type="submit" class="submit-button">Publicar post</button>
             </form>
         </main>
-        <%@ include file="WEB-INF/jspf/footer.jspf" %>
+        <%@ include file="../WEB-INF/jspf/footer.jspf" %>
         <script src="../js/nav.js" defer></script>
         <script src="../js/crearPost.js" defer></script>
     </body>

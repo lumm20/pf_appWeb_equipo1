@@ -27,7 +27,7 @@
         <main>
             <div class="login-form">
                 <h3>Iniciar sesión</h3>
-                <form action="Usuario" method="post">
+                <form action="${pageContext.request.contextPath}Usuario" method="post">
                     <input type="hidden" name="action" value="iniciarSesion">
                     <c:if test="${not empty error}">
                         <div class="form-group">
@@ -48,7 +48,7 @@
                     </div>
                 </form>
                 <div class="register-prompt">
-                    <p>¿Nuevo por aquí? <a href="register.jsp">te invitamos a registrarte</a></p>
+                    <p>¿Nuevo por aquí? <a href="${pageContext.request.contextPath}register.jsp">te invitamos a registrarte</a></p>
                 </div>
             </div>
         </main>

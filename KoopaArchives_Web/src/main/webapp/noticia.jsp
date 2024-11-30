@@ -69,7 +69,7 @@
 
                     <c:if test="${not empty sessionScope.usuario}">
                         <c:if test="${sessionScope.usuario.rol eq 'Normal'}">
-                            <form class="comment-form">
+                            <form class="comment-form" action="${pageContext.request.contextPath}/Noticia" method="post">
                                 <input type="hidden" name="action" value="subirComentario">
                                 <textarea placeholder="Escribe algo..." name="comentario"></textarea>
                                 <div class="button-group">

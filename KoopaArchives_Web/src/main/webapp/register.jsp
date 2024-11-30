@@ -1,3 +1,4 @@
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
@@ -16,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/register.css">
     <link rel="stylesheet" href="css/nav.css">
-    <link rel="icon" href="/img/logo.png" type="image/x-icon">
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
     <script src="js/nav.js" defer></script>
     <script src="js/register.js" defer></script>
 </head>
@@ -28,7 +29,7 @@
             <h2>¡Crea una cuenta!</h2>
             
             <div class="form-steps">
-                <form action="Usuario" method="post" id="form-registro" enctype="multipart/form-data">
+                <form action="${pageContext.request.contextPath}/Usuario" method="post" id="form-registro" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="registrar">
                     
                     <!-- Step 1 -->

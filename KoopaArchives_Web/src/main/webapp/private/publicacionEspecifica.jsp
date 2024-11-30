@@ -10,13 +10,13 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
               rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link rel="stylesheet" href="../css/publicacionEspecifica.css">
+        <link rel="stylesheet" href="cssPrivate/publicacionEspecifica.css">
         <link rel="stylesheet" href="../css/nav.css">
         <script src="../js/nav.js" defer></script>
-        <script src="../js/publicacionEspecifica.js" defer></script>
+        <script src="jsPrivate/publicacionEspecifica.js" defer></script>
     </head>
     <body>
-        <%@ include file="WEB-INF/jspf/nav.jspf" %>
+        <%@ include file="../WEB-INF/jspf/nav.jspf" %>
         <main>
             <article>
                 <section class="article-header">
@@ -65,7 +65,7 @@
                 <div class="interactions">
                     <div class="like-section">
                         <form action="Publicacion" method="post">
-                            <input type="hidden" name="action" value="like">
+                            <input type="hidden" id="like-action" name="action" value="like">
                             <button id="likeButton" type="submit" class="button">
                                 <img id="likeIcon" src="../img/mano.png" alt="Like" class="interaction-icon like-icon">
                             </button>
@@ -164,6 +164,6 @@
 
             </article>
         </main>
-        <%@ include file="WEB-INF/jspf/footer.jspf" %>
+        <%@ include file="../WEB-INF/jspf/footer.jspf" %>
     </body>
 </html>

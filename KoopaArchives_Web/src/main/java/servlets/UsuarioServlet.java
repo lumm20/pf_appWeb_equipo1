@@ -106,7 +106,7 @@ public class UsuarioServlet extends HttpServlet {
         }
 
         session.invalidate();
-        response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
 
     }
 
@@ -129,14 +129,21 @@ public class UsuarioServlet extends HttpServlet {
             sesion.setAttribute("tipoArchivo", usuario.getImagen().getTipoImagen());
             sesion.setAttribute("nombreArchivo", usuario.getImagen().getNombreArchivo());
             
-
             sesion.setMaxInactiveInterval(30 * 60); // 30 minutos
+            
+            String urlOriginal = (String)sesion.getAttribute("urlOriginal");
+            if(urlOriginal != null){
+                sesion.removeAttribute("urlOriginal");
+                response.sendRedirect(urlOriginal);
+            }else{
+                response.sendRedirect(request.getContextPath()+"inicio");
+            }
 
             // Redirigir a página de inicio
-            response.sendRedirect(request.getContextPath() + "/views/inicio.jsp");
+            //response.sendRedirect(request.getContextPath() + "/views/inicio.jsp");
         } else {
-            request.setAttribute("error", "Datos incorrector intentelo de nuevo");
-            request.getRequestDispatcher("Noticia?action=cargarInicio")
+            request.setAttribute("error", "Datos incorrectos intentelo de nuevo");
+            request.getRequestDispatcher("/login.jsp")
                     .forward(request, response);
         }
     }
@@ -180,7 +187,7 @@ public class UsuarioServlet extends HttpServlet {
 
         }
         //si hubo algun error, se mantiene en la pagina de registro y se envia el mensaje de error capturado
-        request.getRequestDispatcher("register.jsp").forward(request, response);
+        request.getRequestDispatcher("/register.jsp").forward(request, response);
 
     }
 

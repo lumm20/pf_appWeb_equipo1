@@ -17,17 +17,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/crearNoticia.css">
-    <link rel="stylesheet" href="css/nav.css">
-    <script src="js/nav.js" defer></script>
-    <script src="js/crearNoticia.js" defer></script>
+    <link rel="stylesheet" href="cssPrivate/crearNoticia.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <script src="/js/nav.js" defer></script>
+    <script src="jsPrivate/crearNoticia.js" defer></script>
    
 </head>
 <body>
-    <%@ include file="WEB-INF/jspf/nav.jspf" %>
+    <%@ include file="/WEB-INF/jspf/nav.jspf" %>
     <main>
         <h1 class="titulo_crear">Crear Noticia</h1>
-        <form id="createPostForm" action="/Noticia" method="post" enctype="multipart/form-data">
+        <form id="createPostForm" action="${pageContext.request.contextPath}/Noticia" method="post" enctype="multipart/form-data">
             <input type="hidden" name="action" value="publicarNoticia">
             <div class="form-group">
                 <label for="titulo">Título:</label>
@@ -77,6 +77,6 @@
            
         </form>
     </main>
-    <%@ include file="WEB-INF/jspf/footer.jspf" %>
+    <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </body>
 </html>

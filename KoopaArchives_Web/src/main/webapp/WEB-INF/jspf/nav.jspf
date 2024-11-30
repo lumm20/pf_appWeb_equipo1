@@ -11,14 +11,15 @@
                         </h1>
                     </div>
                 </a></li>
-            <li class="item especial"><a href="Noticia?action=cargarInicio">Noticias</a></li>
+                <li class="item especial"><a id="inicio" href="/inicio">Noticias</a></li>
+                <li class="item especial"><a id="buscar" href="/buscadorNoticias.jsp">Buscar</a></li>
                 <c:choose>
                     <c:when test="${not empty sessionScope.usuario}">
                         <c:choose>
                             <c:when test="${sessionScope.usuario.rol eq 'Admin'}">
-                            <li class="item especial"><a href="crearNoticia.jsp">Crear Noticia</a></li>
-                            <li class="item especial"><a href="">Buscar</a></li>
-                            <li class="item especial"><a href="#">Posts</a></li>
+                            <li class="item especial"><a id="crearNoticia" class="nav" href="/private/admin/crearNoticia.jsp">Crear Noticia</a></li>
+                            <!--li class="item especial"><a href="/private/buscadorNoticias.jsp">Buscar</a></li>
+                            <!--li class="item especial"><a href="/private/inicio.jsp">Posts</a></li-->
                             <li class="item especial"><a href="#">Nosotros</a></li>
                             <li class="item button especial2 limitar">
                                 <a class="perfil" href="#">
@@ -29,12 +30,11 @@
                             </li>
                         </c:when>
                         <c:otherwise>
-                            <li class="item especial"><a href="#">Buscar</a></li>
-                            <li class="item especial"><a href="Publicacion">Posts</a></li>
-                            <li class="item especial"><a href="crearPublicacion.jsp">Crear Post</a></li>
-                            <li class="item especial"><a href="">Nosotros</a></li>
+                            <!--li class="item especial"><a href="/private/buscadorNoticias.jsp">Buscar</a></li-->
+                            <li class="item especial"><a id="posts" class="nav" href="/private/Publicacion">Posts</a></li>
+                            <li class="item especial"><a id="crearPost" class="nav" href="/private/normal/crearPublicacion.jsp">Crear Post</a></li>
                             <li class="item button especial2 limitar">
-                                <a class="perfil" href="#">
+                                <a class="perfil" href="/private/normal/perfil.jsp">
                                     <img class="imagen_perfil" src="data:${tipoArchivo};base64,${urlPerfil}" 
                                          alt="${nombreArchivo}" />
                                     <p>${sessionScope.usuario.username}</p>
@@ -45,11 +45,10 @@
                 </c:when>
                 <c:otherwise>
 
-                    <li class="item especial"><a href="#">Buscar</a></li>
-                    <li class="item especial"><a href="#">Posts</a></li>
+                    <li class="item especial"><a href="/login.jsp">Posts</a></li>
                     <li class="item especial"><a href="#">Nosotros</a></li>
-                    <li class="item button especial2"><a href="register.jsp">Registrarse</a></li>
-                    <li class="item button secondary especial2"><a href="login.jsp">Iniciar Sesión</a></li>
+                    <li class="item button especial2"><a href="/register.jsp">Registrarse</a></li>
+                    <li class="item button secondary especial2"><a href="/login.jsp">Iniciar Sesión</a></li>
                     </c:otherwise>
                 </c:choose>    
 

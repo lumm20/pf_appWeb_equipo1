@@ -27,17 +27,24 @@
         <main>
             <h3 class="destacadas_titulo">Noticias destacadas</h3>
             <section class="news-grid">
-                <c:forEach items="${destacadas}" var="destacada">
-                    <a class="news-item" href="/CargarNoticia?id=${destacada.codigo}">
+                <c:choose>
+                    <c:when test="${not empty destacadas}">
+                        <c:forEach items="${destacadas}" var="destacada">
+                            <a class="news-item" href="${pageContext.request.contextPath}CargarNoticia?id=${destacada.noticia.codigo}">
 
-                        <img src="data:${destacada.imagen.tipoImagen};base64,${destacada.imagen.url}" alt="${destacada.imagen.nombreArchivo}">
-                        <div class="news-content">
-                            <span class="news-category">${destacada.categoria}</span>
-                            <h2 class="news-title">destacada.titulo</h2>
-                            <p class="news-description">${destacada.texto}</p>
-                        </div>
-                    </a>
-                </c:forEach>
+                                <img src="data:${destacada.tipoArchivo};base64,${destacada.url}" alt="${destacada.nombreArchivo}">
+                                <div class="news-content">
+                                    <span class="news-category">${destacada.noticia.categoria}</span>
+                                    <h2 class="news-title">destacada.titulo</h2>
+                                    <p class="news-description">${destacada.noticia.texto}</p>
+                                </div>
+                            </a>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p>No hay noticias destacadas disponibles</p>
+                    </c:otherwise>
+                </c:choose>
 
                 </section>
                 <!-- Añadir esto después de la sección del grid anterior -->
@@ -58,17 +65,23 @@
                         </div>
                     </div>
                 <div class="news-list">
-                    <c:forEach items="${normales}" var="noticia">
-                        <a class="news-list-item" href="/CargarNoticia?id=${noticia.codigo}">
-                            <img src="data:${noticia.imagen.tipoImagen};base64,${noticia.imagen.url}" alt="${noticia.imagen.nombreArchivo}">
-                            <div class="news-list-content">
-                                <h3>${noticia.titulo}</h3>
-                                <p>${noticia.texto}</p>
-                                <span class="category">${noticia.categoria}</span>
-                            </div>
-                        </a>
-                    </c:forEach>
-
+                    <c:choose>
+                        <c:when test="${not empty normales}">
+                            <c:forEach items="${normales}" var="normal">
+                                <a class="news-list-item" href="${pageContext.request.contextPath}CargarNoticia?id=${normal.noticia.codigo}">
+                                    <img src="data:${normal.tipoArchivo};base64,${normal.url}" alt="${normal.nombreArchivo}">
+                                    <div class="news-list-content">
+                                        <h3>${normal.noticia.titulo}</h3>
+                                        <p>${normal.parrafos}</p>
+                                        <span class="category">${normal.noticia.categoria}</span>
+                                    </div>
+                                </a>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <p>No hay noticias disponibles</p>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <button class="load-more">Ver más...</button>
             </section>
