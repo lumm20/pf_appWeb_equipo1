@@ -61,7 +61,7 @@ public interface IPublicacionDAO {
      * @throws PersistenciaException Si ocurre un error al interactuar con la
      * base de datos.
      */
-    public void actualizarPublicacion(Publicacion publicacion) throws PersistenciaException;
+    public boolean actualizarPublicacion(Publicacion publicacion) throws PersistenciaException;
 
     /**
      * Actualiza los likes  que tiene una publicacion.
@@ -78,5 +78,5 @@ public interface IPublicacionDAO {
      *
      * @param publicacion Publicación a eliminar.
      */
-    public void eliminarPublicacion(Publicacion publicacion);
+    public boolean eliminarPublicacion(Publicacion publicacion);
 }

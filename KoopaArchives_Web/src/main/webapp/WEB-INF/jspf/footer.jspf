@@ -2,9 +2,9 @@
 <%@ page pageEncoding="UTF-8" %>
 <footer class="footer">
         <c:if test="${not empty sessionScope.usuario}">
-                <form action="${pageContext.request.contextPath}Usuario" method="get">
+                <form action="/Usuario" method="get">
                     <input type="hidden" name="action" value="cerrarSesion">
-                    <button class="logout" type="submit">Cerrar Sesión</button>
+                    <button class="button logout" type="submit">Cerrar Sesión</button>
                 </form>
         </c:if>
     <p>Hecho por Equipo: Mugiwara - &copy;Aplicaciones Web</p>

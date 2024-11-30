@@ -9,7 +9,6 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 
 public class Comentario {
-
     private ObjectId _id;
     private String contenido;
     private Date fechaPublicacion;

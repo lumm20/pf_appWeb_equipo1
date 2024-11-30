@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 600);
 
 
-        const iconBlack = '../img/mano.png';  
-        const iconPink = '../img/mano-rosa.png';
+        const iconBlack = '/imgPrivate/mano.png';  
+        const iconPink = '/imgPrivate/mano-rosa.png';
 
         // alternar likes
         if (!isLiked) {

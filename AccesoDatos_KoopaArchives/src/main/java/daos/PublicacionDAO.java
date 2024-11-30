@@ -36,7 +36,7 @@ public class PublicacionDAO implements IPublicacionDAO {
 
     private IConexion conexion;
     private MongoCollection<Publicacion> publicaciones;
-
+    private ComentarioDAO comentarioDAO;
     /**
      * Constructor por defecto que establece la conexión a la colección de
      * publicaciones
@@ -45,6 +45,7 @@ public class PublicacionDAO implements IPublicacionDAO {
         this.conexion = Conexion.getInstance();
         MongoDatabase baseDatos = this.conexion.obtenerBaseDatos();
         publicaciones = baseDatos.getCollection("publicaciones", Publicacion.class);
+        comentarioDAO = new ComentarioDAO();
     }
 
     /**
@@ -77,10 +78,11 @@ public class PublicacionDAO implements IPublicacionDAO {
     @Override
     public Publicacion buscarPublicacion(Publicacion publicacion) throws PersistenciaException {
         List<Bson> pipeline = new ArrayList<>();
-        pipeline.add(match(eq("numPost", publicacion.getCodigo())));
+        pipeline.add(match(eq("codigo", publicacion.getCodigo())));
         // Lookup siempre presente
         pipeline.add(project(fields(
-                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido", "imagen", "usernamePublicador")
+                include( "categoria", "codigo", "fechaCreacion", "ultimaModificacion", 
+                        "contenido", "imagen", "usernamePublicador","comentarios","cantidadLikes")
         )));
 
         return publicaciones
@@ -120,7 +122,7 @@ public class PublicacionDAO implements IPublicacionDAO {
      * actualización en la colección
      */
     @Override
-    public void actualizarPublicacion(Publicacion publicacion) throws PersistenciaException {
+    public boolean actualizarPublicacion(Publicacion publicacion) throws PersistenciaException {
         Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
         Bson actualizar;
 
@@ -130,7 +132,7 @@ public class PublicacionDAO implements IPublicacionDAO {
                 Updates.set("contenido", publicacion.getContenido())
         );
 
-        publicaciones.updateOne(filtro, actualizar);
+        return publicaciones.updateOne(filtro, actualizar).getModifiedCount()>0;
     }
     
     @Override
@@ -143,12 +145,18 @@ public class PublicacionDAO implements IPublicacionDAO {
     
     @Override
     public boolean agregarComentarioPublicacion(Publicacion publicacion, Comentario comentario){
-        return true;
+        Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
+        Bson actualizar = Updates.addToSet("comentarios", comentario.getIdComentario());
+        UpdateResult result = publicaciones.updateOne(filtro, actualizar);
+        return result.getModifiedCount() >0;
     }
 
     @Override
     public boolean removerComentarioPublicacion(Publicacion publicacion, Comentario comentario){
-        return true;
+        Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
+        Bson actualizar = Updates.pull("comentarios", comentario.getIdComentario());
+        UpdateResult result = publicaciones.updateOne(filtro, actualizar);
+        return result.getModifiedCount() > 0;
     }
     
     /**
@@ -164,7 +172,8 @@ public class PublicacionDAO implements IPublicacionDAO {
         // No hay lookup ni unwind ya que no se une a otra colección
         // Project stage para incluir solo los campos deseados
         pipeline.add(project(fields(
-                include("_id", "anclada", "categoria", "numPost", "fechaCreacion", "ultimaModificacion", "contenido","imagen", "usernamePublicador")
+                include("categoria", "codigo", "fechaCreacion",
+                        "contenido","imagen", "usernamePublicador")
         )));
 
         // Realizar la agregación
@@ -197,9 +206,9 @@ public class PublicacionDAO implements IPublicacionDAO {
      * @param publicacion Publicación a eliminar de la colección
      */
     @Override
-    public void eliminarPublicacion(Publicacion publicacion) {
+    public boolean eliminarPublicacion(Publicacion publicacion) {
         Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
         System.out.println("Se elimino las publicaciones: " + publicacion.getCodigo());
-        publicaciones.deleteOne(filtro);
+        return publicaciones.deleteOne(filtro).getDeletedCount()>0;
     }
 }

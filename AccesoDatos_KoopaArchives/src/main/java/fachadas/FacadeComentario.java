@@ -31,6 +31,16 @@ public class FacadeComentario implements IFacadeComentario{
     }
 
     @Override
+    public Comentario registrarComentarioPublicacion(Comentario comentario) {
+        try {
+            return comentarioDAO.agregarComentarioPublicacion(comentario);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(FacadeComentario.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    @Override
     public Comentario buscarComentario(Comentario Comentario) {
         try {
             return comentarioDAO.buscarComentario(Comentario);
@@ -41,11 +51,12 @@ public class FacadeComentario implements IFacadeComentario{
     }
 
     @Override
-    public void eliminarComentario(Comentario comentario) {
+    public boolean eliminarComentario(Comentario comentario) {
         try {
-            comentarioDAO.eliminarComentario(comentario);
+            return comentarioDAO.eliminarComentario(comentario);
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadeComentario.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 
@@ -71,6 +82,16 @@ public class FacadeComentario implements IFacadeComentario{
     public List<Comentario> obtenerComentariosPorNoticia(Noticia noticia) {
         try {
             return comentarioDAO.obtenerComentariosPorNoticia(noticia);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(FacadeComentario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @Override
+    public List<Comentario> obtenerComentarios(List<String> id) {
+        try {
+            return comentarioDAO.obtenerComentarios(id);
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadeComentario.class.getName()).log(Level.SEVERE, null, ex);
         }

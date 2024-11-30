@@ -24,7 +24,7 @@
                 <main>
                     <h3>Subir Nueva Publicación</h3>
                     <form class="upload-form" id="upload-form" action="/private/Publicacion" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="username" value="${sessionScope.usuario.username}">
+                        <input type="hidden" name="action" value="publicar">
                                <div class="form-group">
                             <label for="image-upload">Imagen:</label>
                             <input type="file" id="image-upload" name="image-post" accept="image/*" required>

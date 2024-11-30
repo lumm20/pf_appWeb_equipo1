@@ -1,17 +1,18 @@
 package objetosNegocio;
 
-import entidades.Noticia;
+import entidades.Comentario;
+import entidades.Image;
 import entidades.Publicacion;
 import entidades.Usuario;
-import entidades_beans.ContenidoBean;
-import entidades_beans.FiltroBusquedaBean;
+import entidades_beans.ComentarioBean;
 import entidades_beans.ImagenBean;
 import entidades_beans.PostBean;
-import entidades_beans.SubtemaBean;
 import entidades_beans.UsuarioBean;
 import excepciones.PersistenciaException;
+import fachadas.FacadeComentario;
 import fachadas.FacadePost;
 import fachadas.FacadeUsuario;
+import fachadas.IFacadeComentario;
 import fachadas.IFacadePost;
 import fachadas.IFacadeUsuario;
 import factories.FactoryPost;
@@ -29,14 +30,81 @@ import utilities.ConversorImagen;
 public class PostBO implements IPostBO {
     private IFacadePost facadePost;
     private IFacadeUsuario facadeUsuario;
+    private IFacadeComentario facadeComentario;
+    public static final int REMOVER_COMENTARIO = 1;
+    public static final int AGREGAR_COMENTARIO = 2;
+    public static final int ACTUALIZAR_CONTENIDO = 3;
+    public static final int ACTUALIZAR_IMAGEN = 4;
+    public static final int ACTUALIZAR_AMBOS = 5;
+    
     public PostBO(){
         this.facadePost = new FacadePost();
         this.facadeUsuario = new FacadeUsuario();
+        this.facadeComentario = new FacadeComentario();
+    }
+    
+    @Override
+    public boolean actualizarPublicacion(PostBean bean, int tipoActualizacion){
+        Publicacion publicacion = new Publicacion();
+        boolean flag=true;
+        switch (tipoActualizacion) {
+            case ACTUALIZAR_CONTENIDO->publicacion.setContenido(bean.getTexto());
+            case ACTUALIZAR_IMAGEN->{
+                Image imagen = ConversorImagen.convertirAImagenDAO(bean.getImagen());
+                publicacion.setImagen(imagen);
+            }
+            case ACTUALIZAR_AMBOS->{
+                publicacion.setContenido(bean.getTexto());
+                Image imagen = ConversorImagen.convertirAImagenDAO(bean.getImagen());
+                publicacion.setImagen(imagen);
+            }//si eligen una opcion invalida
+            default ->flag = false;
+        }
+        //solo se actualiza si tipoActualizacion fue una opcion valida
+        if(flag){
+            //devuelve el resultado de la actualizacion
+            return facadePost.actualizarPublicacion(publicacion);
+        }
+        return flag;
     }
     
     @Override
     public boolean actualizarReacciones(PostBean post){
-        return true;
+        Publicacion publicacion = new Publicacion();
+        publicacion.setCodigo(post.getCodigo());
+        publicacion.setCantidadLikes(post.getLikes());
+        return facadePost.actualizarInteraccionesPublicacion(publicacion);
+    }
+
+    private boolean agregarComentario(Publicacion publicacion, ComentarioBean bean){
+        Comentario comentario = new Comentario();
+        comentario.setContenido(bean.getContenido());
+        comentario.setIdUsuario(bean.getAutor());
+        comentario = facadeComentario.registrarComentarioPublicacion(comentario);
+        if (comentario != null) {
+            return facadePost.actualizarComentariosPublicacion(publicacion, comentario, FacadePost.NUEVO_COMENTARIO);
+        }
+        return false;
+    }
+    
+    private boolean removerComentario(Publicacion publicacion, ComentarioBean bean){
+        Comentario comentario = new Comentario();
+        comentario.setIdComentario(bean.getIdComentario());
+        if (facadeComentario.eliminarComentario(comentario)) {
+            return facadePost.actualizarComentariosPublicacion(publicacion, comentario, FacadePost.QUITAR_COMENTARIO);
+        }return false;
+    }
+    
+    @Override
+    public boolean actualizarComentarios(PostBean post, ComentarioBean comentarioBean, int tipoActualizacion){
+        Publicacion publicacion = new Publicacion();
+        publicacion.setCodigo(post.getCodigo());
+        if(tipoActualizacion == AGREGAR_COMENTARIO){
+            return agregarComentario(publicacion, comentarioBean);
+        }else if(tipoActualizacion == REMOVER_COMENTARIO){
+            return removerComentario(publicacion, comentarioBean);
+        }
+        return false;
     }
 
     @Override
@@ -53,7 +121,9 @@ public class PostBO implements IPostBO {
 
     @Override
     public boolean eliminarPublicacion(PostBean post) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Publicacion publicacion = new Publicacion();
+        publicacion.setCodigo(post.getCodigo());
+        return facadePost.eliminarPublicacion(publicacion);
     }
 
 
@@ -69,15 +139,28 @@ public class PostBO implements IPostBO {
         }
     }
     
+    private PostBean setInfoPost(Publicacion publicacion){
+        PostBean postEncontrado = convertirPublicacion(publicacion);
+        postEncontrado.setLikes(publicacion.getCantidadLikes());
+        postEncontrado.setAutor(buscarPublicador(publicacion.getUsernamePublicador()));
+        if(publicacion.getComentarios() != null && !publicacion.getComentarios().isEmpty()){
+            List<ComentarioBean> comentarios = buscarComentarios(publicacion);
+            if (comentarios != null)
+                postEncontrado.setComentarios(comentarios);
+            else
+                postEncontrado.setComentarios(new ArrayList<>());
+        }else
+            postEncontrado.setComentarios(new ArrayList<>());
+        return postEncontrado;
+    }
+    
     @Override
     public PostBean buscarPublicacion(PostBean post) {
         Publicacion publicacion = new Publicacion();
         publicacion.setCodigo(post.getCodigo());
         publicacion = facadePost.buscarPublicacion(publicacion);
         if(publicacion != null){
-            PostBean postEncontrado = convertirPublicacion(publicacion);
-            postEncontrado.setAutor(buscarPublicador(publicacion.getUsernamePublicador()));
-            return postEncontrado;
+            return setInfoPost(publicacion);
         }return null;
     }
 
@@ -102,16 +185,43 @@ public class PostBO implements IPostBO {
         bean.setCategoria(publicacion.getCategoria());
         
         if(publicacion.getImagen() != null){
-            ImagenBean imagen = ConversorImagen.convertirAImagenBean(publicacion.getImagen());
+            ImagenBean imagen = ConversorImagen.convertirAImagenBean2(publicacion.getImagen());
             bean.setImagen(imagen);
         }
-        
+        bean.setTexto(publicacion.getContenido());
         bean.setFechaCreacion(publicacion.getFechaCreacion());
         bean.setCodigo(publicacion.getCodigo());
         
         return bean;
     }
 
+    private List<ComentarioBean> buscarComentarios(Publicacion post){
+        List<Comentario> comentarios = facadeComentario.obtenerComentarios(post.getComentarios());
+        if(comentarios != null){
+            List<ComentarioBean> beans = new ArrayList<>();
+            ComentarioBean bean;
+            for (Comentario comentario : comentarios) {
+                bean = convertirComentario(comentario);
+                bean.setIdPost(post.getCodigo());
+                beans.add(bean);
+            }
+            
+            return beans;
+        }
+        return null;
+    }
+    
+    private ComentarioBean convertirComentario(Comentario comentario){
+        ComentarioBean bean = new ComentarioBean();
+        bean.setAutor(comentario.getIdUsuario());
+        Image imagen = comentario.getUsuario().getImagen();
+        bean.setImagenAutor(ConversorImagen.convertirAImagenBean2(imagen));
+        bean.setContenido(comentario.getContenido());
+        bean.setFechaCreacion(comentario.getFechaPublicacion());
+        bean.setIdComentario(comentario.getIdComentario());
+        return bean;
+    }
+    
     private Publicacion convertirBeanPublicacion(PostBean bean){
         Publicacion publicacion = (Publicacion)FactoryPost.crearPost(FactoryPost.PUBLICACION);
         if(bean.getCategoria() != null)
@@ -124,7 +234,7 @@ public class PostBO implements IPostBO {
             //String username = obtenerUsernamePublicador(bean.getPublicador());
             publicacion.setUsernamePublicador(bean.getAutor().getUsername());
         }
-        
+        publicacion.setImagen(ConversorImagen.convertirAImagenDAO(bean.getImagen()));
         publicacion.setFechaCreacion(bean.getFechaCreacion());
 //        publicacion.setContenido(bean.getContenido().getDescripcion());
         return publicacion;
@@ -144,7 +254,7 @@ public class PostBO implements IPostBO {
     
     private UsuarioBean convertirUsuario(Usuario usuario){
         UsuarioBean bean = new UsuarioBean();
-        bean.setImagen(ConversorImagen.convertirAImagenBean(usuario.getImagen()));
+        bean.setImagen(ConversorImagen.convertirAImagenBean2(usuario.getImagen()));
         bean.setUsername(usuario.getUsername());
         return bean;
     }

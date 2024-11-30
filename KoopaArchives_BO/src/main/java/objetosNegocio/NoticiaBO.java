@@ -79,7 +79,7 @@ public class NoticiaBO implements INoticiaBO {
         return noticia;
     }
 
-    private NoticiaBean convertirBeanNoticia(Noticia noticia) {
+        private NoticiaBean convertirBeanNoticia(Noticia noticia) {
         NoticiaBean bean = new NoticiaBean();
         bean.setTitulo(noticia.getTitulo());
         bean.setDestacada(noticia.isDestacada());
@@ -98,13 +98,16 @@ public class NoticiaBO implements INoticiaBO {
 
     private FiltroNoticia convertirFiltro(FiltroBean bean) {
         FiltroNoticia filtro = new FiltroNoticia();
-
-        filtro.setCategoria(bean.getCategoria());
-        filtro.setTitulo(bean.getTitulo());
+        if(bean.getCategoria() != null)
+            filtro.setCategoria(bean.getCategoria());
+        if(bean.getTitulo()!= null)
+            filtro.setTitulo(bean.getTitulo());
         filtro.setDestacada(bean.isDestacada());
         filtro.setInicio(bean.isInicio());
-        filtro.setFechaDesde(bean.getFechaDesde());
-        filtro.setFechaHasta(bean.getFechaHasta());
+        if(bean.getFechaDesde() != null)
+            filtro.setFechaDesde(bean.getFechaDesde());
+        if(bean.getFechaHasta() != null)
+            filtro.setFechaHasta(bean.getFechaHasta());
 
         return filtro;
     }
@@ -120,6 +123,23 @@ public class NoticiaBO implements INoticiaBO {
 
         try {
             List<Noticia> noticias = facadeNoticias.buscarNoticias(convertirFiltro(filtro));
+            for (Noticia noticia : noticias) {
+                NoticiaBean bean = convertirBeanNoticia(noticia);
+                beans.add(bean);
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(NoticiaBO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return beans;
+
+    }
+
+    @Override
+    public List<NoticiaBean> buscarNoticias() {
+        List<NoticiaBean> beans = new ArrayList<>();
+
+        try {
+            List<Noticia> noticias = facadeNoticias.buscarNoticias();
             for (Noticia noticia : noticias) {
                 NoticiaBean bean = convertirBeanNoticia(noticia);
                 beans.add(bean);

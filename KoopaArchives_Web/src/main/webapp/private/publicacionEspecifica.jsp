@@ -11,58 +11,70 @@
               rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="cssPrivate/publicacionEspecifica.css">
-        <link rel="stylesheet" href="../css/nav.css">
-        <script src="../js/nav.js" defer></script>
+        <link rel="stylesheet" href="/css/nav.css">
+        <script src="/js/nav.js" defer></script>
         <script src="jsPrivate/publicacionEspecifica.js" defer></script>
     </head>
     <body>
-        <%@ include file="../WEB-INF/jspf/nav.jspf" %>
+        <%@ include file="/WEB-INF/jspf/nav.jspf" %>
         <main>
             <article>
                 <section class="article-header">
                     <div class="autor-header">
-                        <img src="../img/sanji_cartel.jpg" alt="perfil">
-                        <h4 class="autor-name">"${sessionScope.post.usernamePublicador}"</h4>
+                        <img src="data:${iconoAutor.tipoImagen};base64,${iconoAutor.url}" alt="${iconoAutor.nombreArchivo}">
+                        <h4 class="autor-name">${post.autor.username}</h4>
                     </div>
 
                     <div class="article-meta">
-                        <time datetime="2024-03-27">Fecha: 27/03/2024</time>
-                        <span class="category">Categoría: The Legend Zelda</span>
-                    </div>
-
-                    <div class="article-content">
-                        <p class="article-text">
-                            The Legend of Zelda: Echoes of Wisdom es el más reciente título de la 'saga más legendaria de
-                            Nintendo', que plantea muchos cambios con relación a lo que popularmente es conocido como la
-                            'línea
-                            2D' y cuyo anuncio nos tomó a todos por sorpresa a mitad de año.
-                        </p>
-                        <p class="article-text">
-                            Parecía que Nintendo ya había cerrado las filas para la Switch, y que las grandes novedades
-                            llegarían para la nueva consola. Pero no podíamos estar más equivocados; como siempre, la 'Gran
-                            N'
-                            dio con el factor sorpresa para, no sólo lanzar un título como pensamos que ya lo veríamos sino
-                            que
-                            también por hacerlo acompañado por una revolución.
-                        </p>
-                    </div>
-                    <img src="../img/noti_ejemplo.png" alt="The Legend of Zelda: Echoes of Wisdom - Imagen del juego"
-                         class="featured-image">
-                    <div class="options-menu">
-                        <div class="options-menu-dots">
-                            <div class="options-menu-dot"></div>
-                            <div class="options-menu-dot"></div>
-                            <div class="options-menu-dot"></div>
-                        </div>
-                        <div class="options-menu-content">
-                            <div class="options-menu-item">Destacar noticia</div>
-                            <div class="options-menu-item">Editar</div>
-                            <div class="options-menu-item">Eliminar</div>
-                        </div>
+                        <time datetime="${fechaPost}"></time>
+                        <span class="category">${post.categoria}</span>
                     </div>
                 </section>
+                <section class="article-main">
+                    <div class="article-content">
+                        <c:if test="${not empty parrafos}">
+                            <c:forEach items="${parrafos}" var="parrafo">
+                                <p class="article-text">${parrafo}</p>
+                            </c:forEach>
+                        </c:if>
+                    </div>
+                    <c:if test="${not empty imagenPost}">
+                        <img src="data:${imagenPost.tipoImagen};base64,${imagenPost.url}" alt="${imagenPost.nombreArchivo}"
+                             class="featured-image">
+                    </c:if>
+                    <c:if test="${post.autor.username eq sessionScope.usuario.username}">
+                        <div class="options-menu">
+                            <div class="options-menu-dots">
+                                <div class="options-menu-dot"></div>
+                                <div class="options-menu-dot"></div>
+                                <div class="options-menu-dot"></div>
+                            </div>
+                            <div class="options-menu-content">
+                                <div class="options-menu-item">Editar</div>
+                                <div class="options-menu-item">Eliminar</div>
+                            </div>
+                        </div>
+                    </c:if> 
+                </section>
+                    <section class="interactions">
+                        <div class="like-section">
+                            <form action="Publicacion" method="post">
+                                <input type="hidden" id="like-action" name="action" value="like">
+                                <button id="likeButton" type="submit" class="button">
+                                    <img id="likeIcon" src="imgPrivate/mano.png" alt="Like" class="interaction-icon like-icon">
+                                </button>
+                                <p id="cant-likes" class="interaction-count">${post.likes}<span class="interaction-label">likes</span></p>
+                            </form>
 
-                <div class="interactions">
+                        </div>
+                        <div class="comment-section">
+                            <img id="comment-icon" src="imgPrivate/comentario.png" alt="Comentarios"
+                                 class="interaction-icon comment-icon">
+                            <p id="cant-comments" class="interaction-count">${cantComentarios}<span class="interaction-label">comentarios</span>
+                            </p>
+                        </div>
+                    </section>
+                <!--div class="interactions">
                     <div class="like-section">
                         <form action="Publicacion" method="post">
                             <input type="hidden" id="like-action" name="action" value="like">
@@ -79,84 +91,46 @@
                         <p id="cant-comments" class="interaction-count">10<span class="interaction-label">comentarios</span>
                         </p>
                     </div>
-                </div>
+                </div-->
                 <section class="comments-section">
                     <div class="comments-header">
-                        <h2>Comentarios <span>10</span></h2>
+                        <h2>Comentarios</h2>
                     </div>
 
-                    <form class="comment-form">
-                        <textarea placeholder="Escribe algo..."></textarea>
+                    <form class="comment-form" action="/private/Publicacion" method="post">
+                        <input type="hidden" name="action" value="comentario">
+                        <textarea name="texto" maxlength="300" placeholder="Escribe algo..." required></textarea>
+                        <button type="submit" class="">Publicar comentario</button>
                     </form>
 
                     <div id="comments-div" class="comments-list">
-                        <article class="comment comment-featured">
-                            <div class="comment-avatar"></div>
-                            <div class="comment-content">
-                                <h3 class="comment-author">Link <span class="featured-label">Destacado</span></h3>
-                                <time class="comment-date" datetime="2024-03-27">Hace 1 día</time>
-                                <p>¡Increíble juego! Como fan de la saga Zelda, puedo decir que Echoes of Wisdom supera
-                                    todas mis expectativas. La atención al detalle en el mundo de Hyrule es asombrosa, y las
-                                    nuevas mecánicas de juego añaden una frescura que no sabía que necesitaba.
-                                    Definitivamente, Nintendo ha demostrado una vez más por qué Zelda es una de las
-                                    franquicias más queridas en la industria de los videojuegos.</p>
-                            </div>
-                            <div class="options-menu">
-                                <div class="options-menu-dots">
-                                    <div class="options-menu-dot"></div>
-                                    <div class="options-menu-dot"></div>
-                                    <div class="options-menu-dot"></div>
-                                </div>
-                                <div class="options-menu-content">
-                                    <div class="options-menu-item">Editar</div>
-                                    <div class="options-menu-item">Eliminar</div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="comment">
-                            <div class="comment-avatar"></div>
-                            <div class="comment-content">
-                                <h3 class="comment-author">John Lennon</h3>
-                                <time class="comment-date" datetime="2024-03-27">Hace 2 horas</time>
-                                <p>Todo tiene un lado 'B'. Y aunque como fan de la saga es complicado admitir las
-                                    imperfecciones, también son parte de, aunque a mi parecer, son casi insignificantes al
-                                    lado de lo bueno que hay para.</p>
-                            </div>
-                            <div class="options-menu">
-                                <div class="options-menu-dots">
-                                    <div class="options-menu-dot"></div>
-                                    <div class="options-menu-dot"></div>
-                                    <div class="options-menu-dot"></div>
-                                </div>
-                                <div class="options-menu-content">
-                                    <div class="options-menu-item">Editar</div>
-                                    <div class="options-menu-item">Eliminar</div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="comment">
-                            <div class="comment-avatar"></div>
-                            <div class="comment-content">
-                                <h3 class="comment-author">John Lennon</h3>
-                                <time class="comment-date" datetime="2024-03-27">Hace 3 horas</time>
-                                <p>Todo tiene un lado 'B'. Y aunque como fan de la saga es complicado admitir las
-                                    imperfecciones, también son parte de, aunque a mi parecer, son casi insignificantes al
-                                    lado de lo bueno que hay para.</p>
-                            </div>
-                            <div class="options-menu">
-                                <div class="options-menu-dots">
-                                    <div class="options-menu-dot"></div>
-                                    <div class="options-menu-dot"></div>
-                                    <div class="options-menu-dot"></div>
-                                </div>
-                                <div class="options-menu-content">
-                                    <div class="options-menu-item">Editar</div>
-                                    <div class="options-menu-item">Eliminar</div>
-                                </div>
-                            </div>
-                        </article>
+                        <c:if test="${not empty post.comentarios}">
+                            <c:forEach items="${post.comentarios}" var="comentario">
+                                <article class="comment comment-featured">
+                                    <div class="comment-avatar">
+                                        <img src="data:${comentario.imagenAutor.tipoImagen};base64,${comentario.imagenAutor.url}" alt="${comentario.imagenAutor.nombreArchivo}"/>
+                                    </div>
+                                    <div class="comment-content">
+                                        <h3 class="comment-author">${comentario.autor}</h3>
+                                        <time class="comment-date" datetime="${comentario.fechaCreacion}"></time>
+                                        <p>${comentario.contenido}</p>
+                                    </div>
+                                        <c:if test="${comentario.autor.username eq sessionScope.usuario.username}">
+                                            <div class="options-menu">
+                                                <div class="options-menu-dots">
+                                                    <div class="options-menu-dot"></div>
+                                                    <div class="options-menu-dot"></div>
+                                                    <div class="options-menu-dot"></div>
+                                                </div>
+                                                <div class="options-menu-content">
+                                                    <div class="options-menu-item">Editar</div>
+                                                    <div class="options-menu-item">Eliminar</div>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                </article>
+                            </c:forEach>
+                        </c:if>
                     </div>
 
                     <button class="load-more">Ver más comentarios</button>
@@ -164,6 +138,6 @@
 
             </article>
         </main>
-        <%@ include file="../WEB-INF/jspf/footer.jspf" %>
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %>
     </body>
 </html>

@@ -64,9 +64,9 @@ private INoticiaBO noticiaBO = new NoticiaBO();
          String idNoticia = request.getParameter("id");
         NoticiaBean bean = new NoticiaBean();
         bean.setCodigo(idNoticia);
-        System.out.println("codigo noticia: "+bean);
+        
         NoticiaBean noticiaEncontrada = noticiaBO.buscarNoticia(bean);
-        System.out.println("noticia encontrada: "+noticiaEncontrada.getTitulo());
+        
         if (noticiaEncontrada != null) {
             String[] parrafos = noticiaEncontrada.getTexto().split("\n");
             ImagenBean imagen = noticiaEncontrada.getImagen();

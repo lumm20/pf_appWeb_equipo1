@@ -6,6 +6,7 @@ package entidades_beans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -20,10 +21,29 @@ public class PostBean implements Serializable{
     private Date fechaCreacion;
     private Date ultimaModificacion;
     private boolean anclada;
+    private int likes;
+    private List<ComentarioBean> comentarios;
     
     public PostBean() {
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public List<ComentarioBean> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<ComentarioBean> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    
     public String getTexto() {
         return texto;
     }

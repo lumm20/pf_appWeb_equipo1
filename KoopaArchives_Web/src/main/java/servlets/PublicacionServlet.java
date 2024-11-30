@@ -1,6 +1,8 @@
 package servlets;
 
-import entidades_beans.ContenidoBean;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import entidades_beans.ImagenBean;
 import entidades_beans.PostBean;
 import entidades_beans.UsuarioBean;
@@ -18,6 +20,7 @@ import java.io.InputStream;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import objetosNegocio.IPostBO;
 import objetosNegocio.PostBO;
 import org.apache.commons.io.IOUtils;
@@ -80,25 +84,62 @@ public class PublicacionServlet extends HttpServlet {
     private void buscarPublicaciones(HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException{
         IPostBO postBO = new PostBO();
         boolean flag;
-        
         List<PostBean> posts = postBO.buscarPublicaciones();
-
+        HttpSession session = request.getSession(false);
         if (posts != null) {
-            try {
-                List<Map<String, Object>> mapeo = mapearPublicaciones(posts);
-
-                request.setAttribute("listaPublicaciones", mapeo);
-                System.out.println("se mando el post");
-                request.getRequestDispatcher("/private/publicaciones.jsp").forward(request, response);
-                flag = false;
-            } catch (Exception e) {
-                Logger.getLogger(PublicacionServlet.class.getName()).log(Level.SEVERE, null, e);
+            if (session != null && session.getAttribute("usuario") != null) {
+                try {
+                    List<Map<String, Object>> mapeo = mapearPublicaciones(posts);
+                    session.setAttribute("listaPublicaciones", mapeo);
+                    //request.setAttribute("listaPublicaciones", mapeo);
+                    System.out.println("se mando el post");
+                    response.sendRedirect("/private/publicaciones.jsp");
+//                    request.getRequestDispatcher("/private/publicaciones.jsp").forward(request, response);
+                    flag = false;
+                } catch (Exception e) {
+                    Logger.getLogger(PublicacionServlet.class.getName()).log(Level.SEVERE, null, e);
+                    flag = true;
+                }
+            } else {
                 flag = true;
             }
+
         } else {
             flag = true;
         }
         if (flag) {
+            request.setAttribute("error", "La pagina no se pudo cargar correctamente");
+            request.getRequestDispatcher("/errorConsulta.jsp").forward(request, response);
+        }
+    }
+    
+    private void buscarPublicacion(HttpServletRequest request, HttpServletResponse response, String postId )throws ServletException, IOException{
+        IPostBO postBO = new PostBO();
+        PostBean bean = new PostBean();
+        bean.setCodigo(postId);
+        PostBean publicacion = postBO.buscarPublicacion(bean);
+        
+        if(publicacion != null){
+            String date = dateToString(publicacion.getFechaCreacion());
+            
+            System.out.println("post completo: "+publicacion);
+            
+            ImagenBean imagen = publicacion.getImagen();
+            ImagenBean iconoPublicador = publicacion.getAutor().getImagen();
+            request.setAttribute("iconoAutor", iconoPublicador);
+            request.setAttribute("imagenPost", imagen);
+            request.setAttribute("fechaPost", date);
+            request.setAttribute("cantComentarios", publicacion.getComentarios().size());
+            
+            String txt[] = publicacion.getTexto().split("\n");
+            List parrafos = Arrays.asList(txt);
+            
+            
+            request.setAttribute("parrafos", parrafos);
+            request.setAttribute("post", publicacion);
+
+            request.getRequestDispatcher("/private/publicacionEspecifica.jsp").forward(request, response);
+        }else{
             request.setAttribute("error", "La pagina no se pudo cargar correctamente");
             request.getRequestDispatcher("/errorConsulta.jsp").forward(request, response);
         }
@@ -116,38 +157,12 @@ public class PublicacionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        String action = request.getParameter("action");
-//        if(action != null && action.equals("nuevo")){
-//            
-//        }
-//        
-        IPostBO postBO = new PostBO();
-        boolean flag;
-        List<PostBean> posts = postBO.buscarPublicaciones();
-       HttpSession session = request.getSession(false);
-        if(posts != null){
-            if(session!= null && session.getAttribute("usuario") != null){
-                try {
-                    List<Map<String, Object>> mapeo = mapearPublicaciones(posts);
-                    session.setAttribute("listaPublicaciones", mapeo);
-                    //request.setAttribute("listaPublicaciones", mapeo);
-                    System.out.println("se mando el post");
-                    response.sendRedirect("/private/publicaciones.jsp");
-//                    request.getRequestDispatcher("/private/publicaciones.jsp").forward(request, response);
-                    flag = false;
-                } catch (Exception e) {
-                    Logger.getLogger(PublicacionServlet.class.getName()).log(Level.SEVERE, null, e);
-                    flag = true;
-                }
-            }else
-                flag = true;
-            
+        String action = request.getParameter("post");
+        
+        if(action == null){
+            buscarPublicaciones(request, response);
         }else{
-            flag = true;
-        }
-        if(flag){
-            request.setAttribute("error", "La pagina no se pudo cargar correctamente");
-            request.getRequestDispatcher("/errorConsulta.jsp").forward(request, response);
+            buscarPublicacion(request, response, action);
         }
     }
 
@@ -156,6 +171,7 @@ public class PublicacionServlet extends HttpServlet {
 
         Map<String, Object> mapeoPublicacion;
         for (PostBean post : posts) {
+            System.out.println("codigo post: "+post.getCodigo());
             System.out.println("post de: "+post.getCategoria());
             System.out.println("publicador: "+post.getAutor());
             mapeoPublicacion = new HashMap<>();
@@ -203,39 +219,45 @@ public class PublicacionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String action = request.getParameter("action");
         
-        if(username == null){
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
-        }else{
-            PostBean post = new PostBean();
-            
-            HttpSession session = request.getSession(false);
-            UsuarioBean user = (UsuarioBean)session.getAttribute("usuario");
-            
-            post.setAutor(user);
-            System.out.println("usuario bean : "+user.getUsername());
-            String cat = request.getParameter("category");
-            post.setCategoria(cat);
-            String descripcion = request.getParameter("description");
-            
-            System.out.println("categoria y descripcion: "+cat +", "+ descripcion);
-            if (descripcion != null) {
-                post.setTexto(descripcion);
+        if(action != null){
+            switch(action){
+                case "comentario"-> actualizarComentarios(request, response);
+                case "publicar"-> nuevoPost(request, response);
+                case "reaccion"-> actualizarLikes(request, response);
             }
-            
-            post.setImagen(leerImagen(request));
-            
-            Date fechaCreacion = Calendar.getInstance().getTime();
-            post.setFechaCreacion(fechaCreacion);
-            
-            IPostBO postBO = new PostBO();
-            if (postBO.subirPublicacion(post)) {
-                session.setAttribute("resultado", "Publicacion realizada con exito");
-                
-                response.sendRedirect("/private/publicaciones.jsp");
-            }
-            
+        }
+    }
+    
+    private void nuevoPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+        PostBean post = new PostBean();
+
+        HttpSession session = request.getSession(false);
+        UsuarioBean user = (UsuarioBean) session.getAttribute("usuario");
+
+        post.setAutor(user);
+        System.out.println("usuario bean : " + user.getUsername());
+        String cat = request.getParameter("category");
+        post.setCategoria(cat);
+        String descripcion = request.getParameter("description");
+
+        System.out.println("categoria y descripcion: " + cat + ", " + descripcion);
+        if (descripcion != null) {
+            post.setTexto(descripcion);
+        }
+
+        post.setImagen(leerImagen(request));
+
+        Date fechaCreacion = Calendar.getInstance().getTime();
+        post.setFechaCreacion(fechaCreacion);
+
+        IPostBO postBO = new PostBO();
+        if (postBO.subirPublicacion(post)) {
+            session.setAttribute("resultado", "Publicacion realizada con exito");
+
+            response.sendRedirect("/private/publicaciones.jsp");
         }
     }
     

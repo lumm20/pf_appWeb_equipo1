@@ -14,6 +14,8 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.gte;
 import static com.mongodb.client.model.Filters.lte;
 import static com.mongodb.client.model.Filters.regex;
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Projections.include;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
 import conexion.Conexion;
@@ -224,6 +226,11 @@ public class NoticiaDAO implements INoticiaDAO {
     public List<Noticia> buscarNoticias() {
         List<Bson> pipeline = new ArrayList<>();
 
+        pipeline.add(project(fields(
+                include( "autor","destacada" ,"categoria", "codigo", "fechaCreacion",
+                        "contenido", "imagen", "titulo")
+        )));
+        
         return noticias
                 .aggregate(pipeline, Noticia.class)
                 .into(new ArrayList<>());

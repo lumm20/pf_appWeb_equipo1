@@ -36,7 +36,7 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.listaPublicaciones}">
                         <c:forEach items="${listaPublicaciones}" var="publicacion">
-                            <div class="post-card" data-categoria="${publicacion.post.categoria}">
+                            <div id="${publicacion.post.codigo}" class="post-card" data-categoria="${publicacion.post.categoria}">
                                 <div class="post-header">
                                     <div class="post-author">
                                         <div class="author-avatar">

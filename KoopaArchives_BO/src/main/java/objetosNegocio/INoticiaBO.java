@@ -13,4 +13,5 @@ public interface INoticiaBO {
     public void actualizarNoticia(NoticiaBean noticia);
     public NoticiaBean buscarNoticia(NoticiaBean noticiaBuscar);
     public List<NoticiaBean> buscarNoticias(FiltroBean filtro);
+    public List<NoticiaBean> buscarNoticias();
 }
