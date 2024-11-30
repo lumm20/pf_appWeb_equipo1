@@ -137,7 +137,7 @@ public class PublicacionDAO implements IPublicacionDAO {
     
     @Override
     public boolean actualizarLikesPublicacion(Publicacion publicacion){
-        Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
+        Bson filtro = Filters.eq("codigo", publicacion.getCodigo());
         Bson actualizar = Updates.set("likes", publicacion.getCantidadLikes());
         UpdateResult result = publicaciones.updateOne(filtro, actualizar);
         return result.getModifiedCount() >0;

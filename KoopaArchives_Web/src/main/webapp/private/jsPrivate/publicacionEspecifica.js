@@ -13,11 +13,41 @@ function createLikeHandler() {
         
         timeoutId = setTimeout(() => {
             lastLikeState = currentLikeState;
-            if(currentLikeState){
-                document.getElementById('like-action').value = 'dislike';
-            }else{
-                document.getElementById('like-action').value = 'like';
-            }
+            const likesCounter = document.getElementById('cant-likes');
+            let cantLikes = likesCounter.firstChild.textContent;
+            const codigo = document.getElementById('codigoPost').value;
+            console.log(codigo);
+//            if(currentLikeState){
+//                cantLikes= cantLikes+1;
+//            }else
+//                cantLikes= cantLikes-1;
+            console.log("cantidad likes "+cantLikes);
+            const params = new URLSearchParams({
+                action: 'reaccion',
+                likes: cantLikes,
+                codigoPost: codigo
+            });
+            
+            fetch('/private/Publicacion',{
+               method: 'post',
+               headers: {'Content-Type':'application/x-www-form-urlencoded'},
+               body: params.toString()
+            }).then(response =>{
+                console.log('info sent');
+                
+                if(response.ok){
+                    console.log(response);
+//                    if (currentLikeState) {
+//                        document.getElementById('like-action').value = 'dislike';
+//                    } else {
+//                        document.getElementById('like-action').value = 'like';
+//                    }
+//                    likesCounter.firstChild.textContent = cantLikes;
+                }
+            }).catch(error => {
+                console.error('Error:',error);
+            });
+            
             console.log("cambio el estado de like");
             return true;
         }, 7000); // Espera de 7 segundos antes de enviar

@@ -19,7 +19,8 @@
         <%@ include file="/WEB-INF/jspf/nav.jspf" %>
         <main>
             <article>
-                <section class="article-header">
+                <section class="article-header" >
+                    <input type="hidden" id="codigoPost" name="codigoPost" value="${post.codigo}">
                     <div class="autor-header">
                         <img src="data:${iconoAutor.tipoImagen};base64,${iconoAutor.url}" alt="${iconoAutor.nombreArchivo}">
                         <h4 class="autor-name">${post.autor.username}</h4>
@@ -58,13 +59,19 @@
                 </section>
                     <section class="interactions">
                         <div class="like-section">
-                            <form action="Publicacion" method="post">
+                            <button id="likeButton" type="button" class="button">
+                                <img id="likeIcon" src="imgPrivate/mano.png" alt="Like" class="interaction-icon like-icon">
+                            </button>
+                            <p id="cant-likes" class="interaction-count">${post.likes}<span class="interaction-label">likes</span></p>
+                            
+                            <!--form action="Publicacion" method="post">
                                 <input type="hidden" id="like-action" name="action" value="like">
+                                <input type="hidden" name="codigoPost" value="${post.codigo}">
                                 <button id="likeButton" type="submit" class="button">
                                     <img id="likeIcon" src="imgPrivate/mano.png" alt="Like" class="interaction-icon like-icon">
                                 </button>
                                 <p id="cant-likes" class="interaction-count">${post.likes}<span class="interaction-label">likes</span></p>
-                            </form>
+                            </form-->
 
                         </div>
                         <div class="comment-section">
@@ -99,6 +106,7 @@
 
                     <form class="comment-form" action="/private/Publicacion" method="post">
                         <input type="hidden" name="action" value="comentario">
+                        <input type="hidden" name="codigoPost" value="${post.codigo}">
                         <textarea name="texto" maxlength="300" placeholder="Escribe algo..." required></textarea>
                         <button type="submit" class="">Publicar comentario</button>
                     </form>

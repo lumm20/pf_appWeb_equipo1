@@ -3,6 +3,7 @@ package servlets;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import entidades_beans.ComentarioBean;
 import entidades_beans.ImagenBean;
 import entidades_beans.PostBean;
 import entidades_beans.UsuarioBean;
@@ -74,10 +75,43 @@ public class PublicacionServlet extends HttpServlet {
     }
 
     private void actualizarLikes(HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException{
-        
+        String codigoPost = request.getParameter("codigoPost");
+        if (codigoPost != null) {
+            IPostBO postBO = new PostBO();
+            PostBean post = new PostBean();
+            post.setCodigo(codigoPost);
+            String likes = request.getParameter("likes");
+            post.setLikes(Integer.parseInt(likes));
+            postBO.actualizarReacciones(post);
+        }
+       
     }
     
     private void actualizarComentarios(HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException{
+        String codigoPost = request.getParameter("codigoPost");
+        if(codigoPost != null){
+            IPostBO postBO = new PostBO();
+            PostBean post = new PostBean();
+            post.setCodigo(codigoPost);
+            
+            String texto = request.getParameter("texto");
+            HttpSession session = request.getSession(false);
+            UsuarioBean autor = (UsuarioBean)session.getAttribute("usuario");
+            ComentarioBean comentario = new ComentarioBean();
+            comentario.setContenido(texto);
+            comentario.setAutor(autor.getUsername());
+            
+            if(postBO.actualizarComentarios(post, comentario, PostBO.AGREGAR_COMENTARIO)){
+                request.setAttribute("fechaPublicacion", dateToString(new Date()));
+                request.setAttribute("comentario", comentario);
+                
+                request.getRequestDispatcher("/private/publicacionEspecifica.jsp").forward(request, response);
+                
+            }else{
+                request.setAttribute("error", "Hubo un error al subir el comentario");
+                request.getRequestDispatcher("/private/publicacionEspecifica.jsp").forward(request, response);
+            }
+        }
         
     }
     
@@ -122,8 +156,7 @@ public class PublicacionServlet extends HttpServlet {
         if(publicacion != null){
             String date = dateToString(publicacion.getFechaCreacion());
             
-            System.out.println("post completo: "+publicacion);
-            
+            System.out.println("likes: "+publicacion.getLikes());
             ImagenBean imagen = publicacion.getImagen();
             ImagenBean iconoPublicador = publicacion.getAutor().getImagen();
             request.setAttribute("iconoAutor", iconoPublicador);
