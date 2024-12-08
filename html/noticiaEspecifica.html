@@ -13,6 +13,90 @@
     <link rel="stylesheet" href="../css/noticiaEspecifica.css">
     <link rel="stylesheet" href="../css/nav.css">
     <script src="../js/nav.js" defer></script>
+    <style>
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+    
+        .modal {
+            background-color: #E86D6D;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    
+        .modal h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Nunito', sans-serif;
+        }
+    
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+    
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            font-family: 'Nunito', sans-serif;
+        }
+    
+        .btn:active {
+            transform: scale(0.98);
+        }
+    
+        .btn-no {
+            background-color: #E2E2E2;
+            color: #333;
+        }
+    
+        .btn-no:hover {
+            background-color: #d0d0d0;
+        }
+    
+        .btn-si {
+            background-color: #4A47FF;
+            color: white;
+        }
+    
+        .btn-si:hover {
+            background-color: #3936cc;
+        }
+    
+        @media (max-width: 480px) {
+            .modal {
+                padding: 1.5rem;
+            }
+    
+            .modal h2 {
+                font-size: 1.2rem;
+            }
+    
+            .btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -40,7 +124,9 @@
                 <li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
             </ul>
         </nav>
+    
     </header>
+
     <main>
         <article>
             <section class="article-header">
@@ -84,9 +170,10 @@
                     <h2>Comentarios <span>10</span></h2>
                 </div>
 
-                <form class="comment-form">
-                    <textarea placeholder="Escribe algo..."></textarea>
-                </form>
+                <div class="comment-form">
+                    <textarea placeholder="Escribe algo..." id="txtComentario"></textarea>
+                    <button id="enviar-comentario" class="load-more">Ver más comentarios</button>
+                </div>
 
                 <div class="comments-list">
                     <article class="comment comment-featured">
@@ -130,7 +217,9 @@
                     </article>
 
                     <article class="comment">
-                        <div class="comment-avatar"></div>
+                        <div class="comment-avatar">
+                            <img class="comment-img" src="../img/noticia1.jpg" alt="">
+                        </div>
                         <div class="comment-content">
                             <h3 class="comment-author">John Lennon</h3>
                             <time class="comment-date" datetime="2024-03-27">Hace 3 horas</time>
@@ -186,6 +275,46 @@
     <footer class="footer">
         <p>Hecho por Equipo: Batifamilia - &copy;Aplicaciones Web</p>
     </footer>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2>¿Seguro de querer borrar la noticia?</h2>
+            <div class="button-container">
+                <button class="btn btn-no" onclick="closeModal()">No</button>
+                <button class="btn btn-si" onclick="confirmAction()">Si</button>
+            </div>
+        </div>
+    </div>
+    ```html
+<div class="options-menu-item" onclick="openModal()">Eliminar</div>
+```
 </body>
+<script>
+    function openModal() {
+        document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+    }
+
+    function confirmAction() {
+        // Aquí puedes agregar la lógica para borrar la noticia
+        alert('Noticia borrada');
+        closeModal();
+    }
+
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    // Modificar el evento de eliminación en el menú de opciones
+    document.querySelectorAll('.options-menu-item').forEach(item => {
+        if (item.textContent === 'Eliminar') {
+            item.addEventListener('click', openModal);
+        }
+    });
+</script>
 
 </html>

@@ -110,7 +110,9 @@ public class NoticiaBO implements INoticiaBO {
     }
 
     private Noticia convertiANoticiaDAOSoloCodigo(NoticiaBean bean) {
-        Noticia noticia = new Noticia(bean.getCodigo());
+        
+        Noticia noticia = new Noticia();
+        noticia.setCodigo(bean.getCodigo());
         return noticia;
     }
 
@@ -129,6 +131,24 @@ public class NoticiaBO implements INoticiaBO {
         }
         return beans;
 
+    }
+
+    @Override
+    public boolean eliminarNoticia(NoticiaBean beanEliminar) {
+        Noticia noticia = convertiANoticiaDAOSoloCodigo(beanEliminar);
+        return facadeNoticias.eliminarNoticia(noticia);
+    }
+
+    @Override
+    public boolean anclar(NoticiaBean bean) {
+        Noticia noticia = convertiANoticiaDAOSoloCodigo(bean);
+        return facadeNoticias.anclarNoticia(noticia);
+    }
+
+    @Override
+    public boolean desanclar(NoticiaBean bean) {
+        Noticia noticia = convertiANoticiaDAOSoloCodigo(bean);
+        return facadeNoticias.desanclarNoticia(noticia);
     }
 
 }

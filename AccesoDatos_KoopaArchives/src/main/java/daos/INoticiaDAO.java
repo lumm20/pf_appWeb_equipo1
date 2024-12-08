@@ -61,7 +61,8 @@ public interface INoticiaDAO {
      * @throws PersistenciaException Si ocurre un error al interactuar con la
      * base de datos.
      */
-    public void anclarNoticia(Noticia noticia) throws PersistenciaException;
+    public boolean anclarNoticia(Noticia noticia) throws PersistenciaException;
+    public boolean desanclarNoticia(Noticia noticia) throws PersistenciaException;
 
     /**
      * Actualiza una noticia existente en la base de datos.
@@ -77,5 +78,5 @@ public interface INoticiaDAO {
      *
      * @param noticia Noticia a eliminar.
      */
-    public void eliminarNoticia(Noticia noticia);
+    public boolean eliminarNoticia(Noticia noticia);
 }

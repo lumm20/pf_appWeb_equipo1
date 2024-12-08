@@ -2,7 +2,7 @@
 <header>
     <nav>
         <ul class="menu">
-            <li class="logo"><a class="contenedor_logo" href="#">
+            <li class="logo"><div class="contenedor_logo" >
                     <img class="logo_img" src="img/logo.png" alt="Logo de Koopa Archives">
                     <div class="logo_texto">
                         <h1>
@@ -10,29 +10,29 @@
                             Archives
                         </h1>
                     </div>
-                </a></li>
-            <li class="item especial"><a href="Noticia?action=cargarInicio">Noticias</a></li>
+                </div></li>
+           
                 <c:choose>
                     <c:when test="${not empty sessionScope.usuario}">
                         <c:choose>
                             <c:when test="${sessionScope.usuario.rol eq 'Admin'}">
+                                 <li class="item especial"><a href="Noticia?action=cargarInicio">Noticias</a></li>
                             <li class="item especial"><a href="crearNoticia.jsp">Crear Noticia</a></li>
-                            <li class="item especial"><a href="">Buscar</a></li>
                             <li class="item especial"><a href="#">Posts</a></li>
-                            <li class="item especial"><a href="#">Nosotros</a></li>
+                            <li class="item especial"><a href="/Usuario?action=cerrarSesion">Cerrar sesión</a></li>
                             <li class="item button especial2 limitar">
-                                <a class="perfil" href="#">
+                                <div class="perfil">
                                     <img class="imagen_perfil" src="data:${tipoArchivo};base64,${urlPerfil}" 
                                          alt="${nombreArchivo}" />
                                     <p>${sessionScope.usuario.username}</p>
-                                </a>
+                                </div>
                             </li>
                         </c:when>
                         <c:otherwise>
-                            <li class="item especial"><a href="#">Buscar</a></li>
+                             <li class="item especial"><a href="Noticia?action=cargarInicio">Noticias</a></li>
                             <li class="item especial"><a href="Publicacion">Posts</a></li>
                             <li class="item especial"><a href="crearPublicacion.jsp">Crear Post</a></li>
-                            <li class="item especial"><a href="">Nosotros</a></li>
+                            <li class="item especial"><a href="/Usuario?action=cerrarSesion">Cerrar sesión</a></li>
                             <li class="item button especial2 limitar">
                                 <a class="perfil" href="#">
                                     <img class="imagen_perfil" src="data:${tipoArchivo};base64,${urlPerfil}" 
@@ -44,10 +44,6 @@
                     </c:choose>
                 </c:when>
                 <c:otherwise>
-
-                    <li class="item especial"><a href="#">Buscar</a></li>
-                    <li class="item especial"><a href="#">Posts</a></li>
-                    <li class="item especial"><a href="#">Nosotros</a></li>
                     <li class="item button especial2"><a href="register.jsp">Registrarse</a></li>
                     <li class="item button secondary especial2"><a href="login.jsp">Iniciar Sesión</a></li>
                     </c:otherwise>

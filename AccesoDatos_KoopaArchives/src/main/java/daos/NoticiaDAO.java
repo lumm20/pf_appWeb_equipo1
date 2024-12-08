@@ -16,6 +16,8 @@ import static com.mongodb.client.model.Filters.lte;
 import static com.mongodb.client.model.Filters.regex;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import conexion.Conexion;
 import conexion.IConexion;
 import entidades.FiltroNoticia;
@@ -77,11 +79,12 @@ public class NoticiaDAO implements INoticiaDAO {
      * @throws PersistenciaException Si ocurre un error al anclar la noticia.
      */
     @Override
-    public void anclarNoticia(Noticia noticia) throws PersistenciaException {
+    public boolean anclarNoticia(Noticia noticia) throws PersistenciaException {
         Bson filtro = Filters.eq("codigo", noticia.getCodigo());
         Bson actualizar;
-        actualizar = Updates.set("destacada", noticia.isDestacada());
-        noticias.updateOne(filtro, actualizar);
+        actualizar = Updates.set("destacada", true);
+        UpdateResult resultado = noticias.updateOne(filtro, actualizar);
+        return resultado.getModifiedCount() > 0;
     }
 
     /**
@@ -257,10 +260,19 @@ public class NoticiaDAO implements INoticiaDAO {
      * @param noticia Noticia con el número de post de la noticia a eliminar.
      */
     @Override
-    public void eliminarNoticia(Noticia noticia) {
-        Bson filtro = Filters.eq("numPost", noticia.getCodigo());
-        System.out.println("Se elimino la noticia: " + noticia.getCodigo());
-        noticias.deleteOne(filtro);
+    public boolean eliminarNoticia(Noticia noticia) {
+        Bson filtro = Filters.eq("codigo", noticia.getCodigo());
+        DeleteResult resultado = noticias.deleteOne(filtro);
+        return resultado.getDeletedCount() > 0;
+    }
+
+    @Override
+    public boolean desanclarNoticia(Noticia noticia) throws PersistenciaException {
+        Bson filtro = Filters.eq("codigo", noticia.getCodigo());
+        Bson actualizar;
+        actualizar = Updates.set("destacada", false);
+        UpdateResult resultado = noticias.updateOne(filtro, actualizar);
+        return resultado.getModifiedCount() > 0;
     }
 
 }

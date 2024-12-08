@@ -15,8 +15,7 @@ public class Comentario {
     private Date fechaPublicacion;
     private Date fechaModificacion;
     private String codigoNoticia;
-    private Noticia noticia;
-    private String idUsuario;
+    private String autor;
     private Usuario usuario;
     private String idComentario;
     private boolean anclado;
@@ -25,8 +24,8 @@ public class Comentario {
 
     }
 
-    public Comentario(String idComentario) {
-        this.idComentario = idComentario;
+    public Comentario(String codigoNoticia) {
+        this.codigoNoticia = codigoNoticia;
     }
 
     public Comentario(String contenido, String idComentario) {
@@ -34,14 +33,11 @@ public class Comentario {
         this.idComentario = idComentario;
     }
 
-    public Comentario(String contenido, Noticia noticia, Usuario usuario) {
+    public Comentario(String contenido, Usuario usuario) {
         this.contenido = contenido;
-        this.noticia = noticia;
         this.usuario = usuario;
         this.fechaPublicacion = new Date();
     }
-
-    
 
     public ObjectId getId() {
         return _id;
@@ -75,13 +71,6 @@ public class Comentario {
         this.codigoNoticia = codigoNoticia;
     }
 
-    public Noticia getNoticia() {
-        return noticia;
-    }
-
-    public void setNoticia(Noticia noticia) {
-        this.noticia = noticia;
-    }
 
     public boolean isAnclado() {
         return anclado;
@@ -91,12 +80,12 @@ public class Comentario {
         this.anclado = anclado;
     }
 
-    public String getIdUsuario() {
-        return idUsuario;
+    public String getAutor() {
+        return autor;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setAutor(String autor) {
+        this.autor = autor;
     }
 
     public Usuario getUsuario() {
@@ -122,10 +111,20 @@ public class Comentario {
     public void setIdComentario(String idComentario) {
         this.idComentario = idComentario;
     }
-    
+
     @Override
     public String toString() {
-        return "Comentario{" + "idComentario=" + _id + ", contenido=" + contenido + ", fecha_comentario=" + fechaPublicacion + ", idNoticia=" + codigoNoticia + ", noticia=" + noticia + ", idUsuario=" + noticia +  ", usuario=" + usuario +'}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Comentario{");
+        sb.append(", idComentario=").append(idComentario);
+        sb.append(", anclado=").append(anclado);
+        sb.append(", usuario=").append(usuario);
+        sb.append("contenido=").append(contenido);
+        sb.append(", fechaPublicacion=").append(fechaPublicacion);
+        sb.append(", fechaModificacion=").append(fechaModificacion);
+        sb.append('}');
+        return sb.toString();
     }
+    
 
 }

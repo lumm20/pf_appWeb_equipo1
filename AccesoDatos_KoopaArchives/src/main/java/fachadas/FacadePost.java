@@ -167,12 +167,32 @@ public class FacadePost implements IFacadePost {
      * @param noticia Noticia a eliminar.
      */
     @Override
-    public void eliminarNoticia(Noticia noticia) {
-        noticiaDAO.eliminarNoticia(noticia);
+    public boolean eliminarNoticia(Noticia noticia) {
+        return noticiaDAO.eliminarNoticia(noticia);
     }
 
     @Override
     public List<Noticia> buscarNoticias(FiltroNoticia filtro) throws PersistenciaException {
         return noticiaDAO.buscarNoticias(filtro);
+    }
+
+    @Override
+    public boolean anclarNoticia(Noticia noticia) {
+        try {
+            return noticiaDAO.anclarNoticia(noticia);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean desanclarNoticia(Noticia noticia) {
+        try {
+            return noticiaDAO.desanclarNoticia(noticia);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

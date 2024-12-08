@@ -21,6 +21,8 @@ public interface IFacadePost {
      * @throws excepciones.PersistenciaException
      */
     public Noticia registrarNoticia(Noticia noticia)throws PersistenciaException;
+    public boolean anclarNoticia(Noticia noticia);
+    public boolean desanclarNoticia(Noticia noticia);
 
     /**
      * Busca una noticia en el sistema según los criterios de búsqueda
@@ -50,7 +52,7 @@ public interface IFacadePost {
      *
      * @param noticia Noticia a eliminar.
      */
-    public void eliminarNoticia(Noticia noticia);
+    public boolean eliminarNoticia(Noticia noticia);
 
     /**
      * Registra una nueva publicación en el sistema.

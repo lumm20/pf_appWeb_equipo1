@@ -15,7 +15,7 @@
 
         <link rel="icon" href="img/logo.png" type="image/x-icon">
         <link rel="stylesheet" href="css/crearPublicacion.css">
-        <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/nave.css">
         <script src="js/nav.js" defer></script>
         <script src="js/crearPublicacion.js" defer></script>
     </head>

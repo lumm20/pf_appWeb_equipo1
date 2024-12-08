@@ -1,9 +1,6 @@
 package objetosNegocio;
 
-import daos.NoticiaDAO;
-import entidades.Noticia;
-import entidades_beans.FiltroBean;
-import entidades_beans.ImagenBean;
+import entidades_beans.ComentarioBean;
 import entidades_beans.NoticiaBean;
 
 /**
@@ -12,17 +9,37 @@ import entidades_beans.NoticiaBean;
  */
 public class Prueba {
     public static void main(String[] args) {
-        NoticiaBO bo = new NoticiaBO();
-        NoticiaBean bean = new NoticiaBean();
-        bean.setCodigo("N6077345630");
-        NoticiaBean noticiaCambiar  = bo.buscarNoticia(bean);
-        System.out.println(noticiaCambiar);
+//        INoticiaBO bo = new NoticiaBO();
+//        NoticiaBean bean = new NoticiaBean();
+        IComentarioBO bo = new ComentarioBO();
+        INoticiaBO bo2 = new NoticiaBO();
+
+        NoticiaBean n = new NoticiaBean();
+        n.setCodigo("N6770884989");
+//        ComentarioBean c = new ComentarioBean();
+//        c.setIdComentario("N0540101153");
+        System.out.println(bo2.desanclar(n));
         
-        noticiaCambiar.setDestacada(false);
-        noticiaCambiar.setTexto("titulo cambiado tirisisisi");
-        bo.actualizarNoticia(noticiaCambiar);
-//        noticiaCambiar.setDestacada(false);
-//        dao.actualizarNoticia(noticiaCambiar);
-        System.out.println(bo.buscarNoticia(bean));
+//        ComentarioBean bean = new ComentarioBean();
+
+//    bean.setAutor("zoro");
+//    bean.setCodigoNoticia("N5526980303");
+////        bean.setContenido("Comentario tutancamon");
+//        bean.setIdComentario("N0803444332");
+//        NoticiaBean beanNoticia = new NoticiaBean();
+//
+//        if (bo.borrarComentario(bean)) {
+//            System.out.println("Si edito");
+//        } else {
+//            System.out.println("No edito");
+//        }
+//    beanNoticia.setCodigo("N5526980303");
+//    List<ComentarioBean> comentarios = bo.obtenerComentariosPorNoticia(beanNoticia);
+//    for(var comentario: comentarios){
+//        
+//        System.out.println(comentario);
+//    }
+//    bo.registrarComentario(bean);
+
     }
 }

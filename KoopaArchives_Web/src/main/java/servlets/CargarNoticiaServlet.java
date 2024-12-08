@@ -61,28 +61,12 @@ private INoticiaBO noticiaBO = new NoticiaBO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String idNoticia = request.getParameter("id");
-        NoticiaBean bean = new NoticiaBean();
-        bean.setCodigo(idNoticia);
-
-        NoticiaBean noticiaEncontrada = noticiaBO.buscarNoticia(bean);
         
-        if(noticiaEncontrada != null){
-            String[] parrafos = noticiaEncontrada.getTexto().split("\n");
-            ImagenBean imagen = noticiaEncontrada.getImagen();
-            
-            request.setAttribute("noticia", noticiaEncontrada);
-            request.setAttribute("tipoArchivo", imagen.getTipoImagen());
-            request.setAttribute("nombreArchivo", imagen.getNombreArchivo());
-            request.setAttribute("url", imagen.getUrl());
-            
-            request.setAttribute("parrafos", parrafos);
-                request.getRequestDispatcher("noticia.jsp").forward(request, response);
-            } else {
-                // Handle case where no news article is found
-                
-                response.sendRedirect("error404");
-            }
+        String idNoticia = request.getParameter("id");
+        request.setAttribute("id", idNoticia);
+
+        // Redirigir al usuario a la página HTML
+        request.getRequestDispatcher("noticia.jsp").forward(request, response);
     }
 
     /**

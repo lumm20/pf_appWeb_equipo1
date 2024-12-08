@@ -106,7 +106,7 @@ public class UsuarioServlet extends HttpServlet {
         }
 
         session.invalidate();
-        response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+        response.sendRedirect(request.getContextPath() + "login.jsp");
 
     }
 
@@ -122,7 +122,7 @@ public class UsuarioServlet extends HttpServlet {
             // Crear sesión
             HttpSession sesion = request.getSession();
             boolean esAdmin = usuario.getRol().equals("Admin");
-            System.out.println(esAdmin);
+//            System.out.println(esAdmin);
             sesion.setAttribute("usuario", usuario);
             sesion.setAttribute("rol", usuario.getRol());
             sesion.setAttribute("urlPerfil", usuario.getImagen().getUrl());
@@ -133,10 +133,10 @@ public class UsuarioServlet extends HttpServlet {
             sesion.setMaxInactiveInterval(30 * 60); // 30 minutos
 
             // Redirigir a página de inicio
-            response.sendRedirect(request.getContextPath() + "/views/inicio.jsp");
+            response.sendRedirect(request.getContextPath() + "Noticia?action=cargarInicio");
         } else {
             request.setAttribute("error", "Datos incorrector intentelo de nuevo");
-            request.getRequestDispatcher("Noticia?action=cargarInicio")
+            request.getRequestDispatcher("login.jsp")
                     .forward(request, response);
         }
     }

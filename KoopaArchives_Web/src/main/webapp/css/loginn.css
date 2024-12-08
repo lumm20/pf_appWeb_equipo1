@@ -41,6 +41,12 @@ h3 {
     color: var(--grisOscuro);
     margin-bottom: 1.5rem;
 }
+h5 {
+    font-size: 2rem;
+    color: var(--blanco);
+    background-color: var(--rojoNintendo);
+    margin-bottom: 1.5rem;
+}
 
 .form-group {
     margin-bottom: 1.5rem;

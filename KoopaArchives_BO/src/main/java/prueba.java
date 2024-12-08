@@ -1,5 +1,10 @@
 
+import entidades.Comentario;
+import entidades_beans.ComentarioBean;
+import entidades_beans.NoticiaBean;
 import entidades_beans.UsuarioBean;
+import objetosNegocio.ComentarioBO;
+import objetosNegocio.IComentarioBO;
 import objetosNegocio.IUsuarioBO;
 import objetosNegocio.UsuarioBO;
 
@@ -14,17 +19,13 @@ import objetosNegocio.UsuarioBO;
  */
 public class prueba {
     public static void main(String[] args) {
-        IUsuarioBO usuarioBO = new UsuarioBO();
-        UsuarioBean frijolito = new UsuarioBean();
-        frijolito.setUsername("luffy27");
-        frijolito.setPassword("luffy");
+        IComentarioBO bo = new ComentarioBO();
+        NoticiaBean bean = new NoticiaBean();
+        bean.setCodigo("N6077345630");
+        for(ComentarioBean comentario :bo.obtenerComentariosPorNoticia(bean)){
+            System.out.println(comentario);
         
-        UsuarioBean frijolitoEncontrado = usuarioBO.iniciarSesion(frijolito);
-        
-        if(frijolitoEncontrado != null){
-            System.out.println(frijolitoEncontrado.getRol());
-            System.out.println(frijolitoEncontrado.getUsername());
-        }
+    }
     }
    
 }

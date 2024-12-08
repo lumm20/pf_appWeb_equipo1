@@ -135,6 +135,7 @@ public class Usuario {
         sb.append(", username=").append(username);
         sb.append(", rol=").append(rol);
         sb.append(", genero=").append(genero);
+        sb.append(", imagen=").append(imagen);
         sb.append('}');
         return sb.toString();
     }

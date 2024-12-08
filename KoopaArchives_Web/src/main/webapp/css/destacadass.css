@@ -14,6 +14,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    
 }
 
 body {
@@ -21,6 +22,9 @@ body {
     line-height: 1.6;
     /* padding: 20px; */
     background-color: #f0f0f0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
 }
 
 .destacadas_titulo{

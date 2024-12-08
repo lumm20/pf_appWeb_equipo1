@@ -23,6 +23,7 @@ import utilities.ConversorImagen;
  */
 public class UsuarioBO implements IUsuarioBO{
     private IFacadeUsuario facadeUsuario;
+    
 
     public UsuarioBO() {
         this.facadeUsuario = new FacadeUsuario();

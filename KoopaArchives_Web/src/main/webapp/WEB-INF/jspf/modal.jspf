@@ -1,0 +1,11 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h4>¿Seguro de querer borrar la noticia?</h4>
+            <div class="button-container">
+                <button class="btn btn-no" onclick="closeModal()">No</button>
+                <button class="btn btn-si" onclick="confirmAction()">Si</button>
+            </div>
+        </div>
+    </div>
