@@ -44,12 +44,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>KoopaArchives_BO</artifactId>
+            <artifactId>KoopaArchives_Entidades</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>KoopaArchives_Entidades</artifactId>
+            <artifactId>KoopaArchives_BO</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

@@ -1,3 +1,4 @@
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
@@ -28,7 +29,7 @@
             <h2>¡Crea una cuenta!</h2>
             
             <div class="form-steps">
-                <form action="Usuario" method="post" id="form-registro" enctype="multipart/form-data">
+                <form action="${pageContext.request.contextPath}/Usuario" method="post" id="form-registro" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="registrar">
                     
                     <!-- Step 1 -->

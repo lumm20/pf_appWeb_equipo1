@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -41,15 +41,179 @@
                 <!-- Paragraphs will be dynamically inserted -->
             </div>
 
-            <section class="comments-section">
-                <!-- Comments section structure remains similar -->
-                <div class="comments-header">
-                    <h2>Comentarios <span id="numero-comentarios"></span></h2>
-                </div>
-            </section>
-        </article>
-    </main>
-        <%@ include file="WEB-INF/jspf/modal.jspf" %>
+                    <c:if test="${not empty sessionScope.usuario}">
+                        <c:if test="${sessionScope.usuario.rol eq 'Normal'}">
+                            <form class="comment-form" action="${pageContext.request.contextPath}/Noticia" method="post">
+                                <input type="hidden" name="action" value="subirComentario">
+                                <textarea placeholder="Escribe algo..." name="comentario"></textarea>
+                                <div class="button-group">
+                                    <button type="submit" class="btn btn-primary">Publicar</button>
+                                </div>
+                            </form>
+                        </c:if>
+                    </c:if>
+
+
+                    <div class="comments-list">
+                        <article class="comment comment-featured">
+                            <div class="comment-avatar"></div>
+                            <div class="comment-content">
+                                <h3 class="comment-author">Link <span class="featured-label">Destacado</span></h3>
+                                <time class="comment-date" datetime="2024-03-27">Hace 1 día</time>
+                                <p>¡Increíble juego! Como fan de la saga Zelda, puedo decir que Echoes of Wisdom supera todas mis expectativas. La atención al detalle en el mundo de Hyrule es asombrosa, y las nuevas mecánicas de juego añaden una frescura que no sabía que necesitaba. Definitivamente, Nintendo ha demostrado una vez más por qué Zelda es una de las franquicias más queridas en la industria de los videojuegos.</p>
+                            </div>
+                            <div class="options-menu">
+                                <div class="options-menu-dots">
+                                    <div class="options-menu-dot"></div>
+                                    <div class="options-menu-dot"></div>
+                                    <div class="options-menu-dot"></div>
+                                </div>
+                                <div class="options-menu-content">
+                                    <div class="options-menu-item">Editar</div>
+                                    <div class="options-menu-item">Eliminar</div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <c:if test="${not empty comentarioDestacado}">
+                            <article class="comment comment-featured">
+                                <div class="comment-avatar"></div>
+                                <div class="comment-content">
+                                    <h3 class="comment-author">Link <span class="featured-label">Destacado</span></h3>
+                                    <time class="comment-date" datetime="2024-03-27">Hace 1 día</time>
+                                    <p>¡Increíble juego! Como fan de la saga Zelda, puedo decir que Echoes of Wisdom supera todas mis expectativas. La atención al detalle en el mundo de Hyrule es asombrosa, y las nuevas mecánicas de juego añaden una frescura que no sabía que necesitaba. Definitivamente, Nintendo ha demostrado una vez más por qué Zelda es una de las franquicias más queridas en la industria de los videojuegos.</p>
+                                </div>
+                                <c:choose>
+                                    <c:when test="${not empty sessionScope.usuario}">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.usuario.rol eq 'Admin'}">
+                                                <div class="options-menu">
+                                                    <div class="options-menu-dots">
+                                                        <div class="options-menu-dot"></div>
+                                                        <div class="options-menu-dot"></div>
+                                                        <div class="options-menu-dot"></div>
+                                                    </div>
+                                                    <div class="options-menu-content">
+                                                        <div class="options-menu-item">Destacar</div>
+                                                        <div class="options-menu-item">Eliminar</div>
+                                                    </div>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:if test="${comentario.autor eq sessionScope.usuario}">
+                                                    <div class="options-menu">
+                                                        <div class="options-menu-dots">
+                                                            <div class="options-menu-dot"></div>
+                                                            <div class="options-menu-dot"></div>
+                                                            <div class="options-menu-dot"></div>
+                                                        </div>
+                                                        <div class="options-menu-content">
+                                                            <div class="options-menu-item">Eliminar</div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                </c:choose>  
+                            </article>
+                        </c:if>
+
+
+                        <c:forEach items="${comentarios}" var="comentario">
+                            <article class="comment">
+                                <div class="comment-avatar"></div>
+                                <div class="comment-content">
+                                    <h3 class="comment-author">${comentario.autor}</h3>
+                                    <p class="comment-date" datetime="2024-03-27">
+                                        <fmt:formatDate value="${comentario.fechaCreacion}" 
+                                                        pattern="dd/MM/yyyy HH:mm"/>
+                                    </p>
+                                    <p>${comentario.contenido}</p>
+                                </div>
+
+                                <c:choose>
+                                    <c:when test="${not empty sessionScope.usuario}">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.usuario.rol eq 'Admin'}">
+                                                <div class="options-menu">
+                                                    <div class="options-menu-dots">
+                                                        <div class="options-menu-dot"></div>
+                                                        <div class="options-menu-dot"></div>
+                                                        <div class="options-menu-dot"></div>
+                                                    </div>
+                                                    <div class="options-menu-content">
+                                                        <div class="options-menu-item">Destacar</div>
+                                                        <div class="options-menu-item">Eliminar</div>
+                                                    </div>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:if test="${comentario.autor eq sessionScope.usuario}">
+                                                    <div class="options-menu">
+                                                        <div class="options-menu-dots">
+                                                            <div class="options-menu-dot"></div>
+                                                            <div class="options-menu-dot"></div>
+                                                            <div class="options-menu-dot"></div>
+                                                        </div>
+                                                        <div class="options-menu-content">
+                                                            <div class="options-menu-item">Eliminar</div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                </c:choose>  
+                            </article>
+                        </c:forEach>
+ 
+
+                        <article class="comment">
+                            <div class="comment-avatar"></div>
+                            <div class="comment-content">
+                                <h3 class="comment-author">John Lennon</h3>
+                                <time class="comment-date" datetime="2024-03-27">Hace 2 horas</time>
+                                <p>Todo tiene un lado 'B'. Y aunque como fan de la saga es complicado admitir las imperfecciones, también son parte de, aunque a mi parecer, son casi insignificantes al lado de lo bueno que hay para.</p>
+                            </div>
+                            <div class="options-menu">
+                                <div class="options-menu-dots">
+                                    <div class="options-menu-dot"></div>
+                                    <div class="options-menu-dot"></div>
+                                    <div class="options-menu-dot"></div>
+                                </div>
+                                <div class="options-menu-content">
+                                    <div class="options-menu-item">Editar</div>
+                                    <div class="options-menu-item">Eliminar</div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="comment">
+                            <div class="comment-avatar"></div>
+                            <div class="comment-content">
+                                <h3 class="comment-author">John Lennon</h3>
+                                <time class="comment-date" datetime="2024-03-27">Hace 3 horas</time>
+                                <p>Todo tiene un lado 'B'. Y aunque como fan de la saga es complicado admitir las imperfecciones, también son parte de, aunque a mi parecer, son casi insignificantes al lado de lo bueno que hay para.</p>
+                            </div>
+                            <div class="options-menu">
+                                <div class="options-menu-dots">
+                                    <div class="options-menu-dot"></div>
+                                    <div class="options-menu-dot"></div>
+                                    <div class="options-menu-dot"></div>
+                                </div>
+                                <div class="options-menu-content">
+                                    <div class="options-menu-item">Editar</div>
+                                    <div class="options-menu-item">Eliminar</div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <button class="load-more">Ver más comentarios</button>
+                </section>
+            </article>
+        </main>
         <%@ include file="WEB-INF/jspf/footer.jspf" %>
     </body>
 

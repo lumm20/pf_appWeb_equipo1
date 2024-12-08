@@ -255,20 +255,22 @@ h1 {
 
 }
 
-.logout.active{
+.logout{
     display: block;
-    padding: 1px;
+    padding: 0.75rem 1.5rem;
     top: 80px;
     right: 10px;
+    cursor: pointer;
     background-color: var(--morado);
-    border-style: none;
-    border-radius: 10px;
-    color: white;
-    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: var(--blanco);
+    transition: background-color 0.3s ease;
 }
 
-.logout.active:hover {
-    background-color: var(--moradoClaro);
+.logout:hover {
+    background-color: var(--moradoOscuro);
 }
 
 .footer {

@@ -1,5 +1,6 @@
 package fachadas;
 
+import entidades.Comentario;
 import entidades.FiltroNoticia;
 import entidades.Noticia;
 import entidades.Publicacion;
@@ -41,6 +42,13 @@ public interface IFacadePost {
     public List<Noticia> buscarNoticias(FiltroNoticia filtro) throws PersistenciaException;
 
     /**
+     * Busca todas las noticias en el sistema.
+     *
+     * @return Lista de noticias encontradas.
+     */
+    public List<Noticia> buscarNoticias() throws PersistenciaException;
+
+    /**
      * Actualiza una noticia existente en el sistema.
      *
      * @param noticia Noticia a actualizar.
@@ -59,7 +67,7 @@ public interface IFacadePost {
      *
      * @param publicacion Publicación a registrar.
      */
-    public void registrarPublicacion(Publicacion publicacion)throws PersistenciaException;
+    public String registrarPublicacion(Publicacion publicacion)throws PersistenciaException;
 
     /**
      * Busca una publicación en el sistema según los criterios de búsqueda
@@ -88,12 +96,15 @@ public interface IFacadePost {
      *
      * @param publicacion Publicación a actualizar.
      */
-    public void actualizarPublicacion(Publicacion publicacion);
+    public boolean actualizarPublicacion(Publicacion publicacion);
 
+    public boolean actualizarInteraccionesPublicacion(Publicacion publicacion);
+    public boolean actualizarComentariosPublicacion(Publicacion publicacion,Comentario comentario, int tipoInteraccion);
+    
     /**
      * Elimina una publicación del sistema.
      *
      * @param publicacion Publicación a eliminar.
      */
-    public void eliminarPublicacion(Publicacion publicacion);
+    public boolean eliminarPublicacion(Publicacion publicacion);
 }

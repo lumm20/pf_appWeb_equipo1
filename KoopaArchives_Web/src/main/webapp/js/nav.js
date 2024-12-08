@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.querySelector('.toggle');
     const items = document.querySelectorAll('.item');
     
+    document.querySelectorAll('.nav').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            console.log('Link clickeado:', this.href);
+            window.location.href = this.href;
+            console.log('mmm');
+        });
+    });
+    
     toggle.addEventListener('click', (event) => {
         event.preventDefault();
 

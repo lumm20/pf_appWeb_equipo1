@@ -109,6 +109,7 @@ public class UsuarioBO implements IUsuarioBO{
     private Usuario convertirUsuarioDAO(UsuarioRegistroBean bean){
        Usuario usuario = FactoryUser.crearUsuario(FactoryUser.NORMAL);
        usuario.setUsername(bean.getUsername());
+       usuario.setNombre(bean.getNombre());
        usuario.setPassword(bean.getPassword());
        usuario.setEmail(bean.getEmail());
        usuario.setApellidoMaterno(bean.getApellidoMaterno());

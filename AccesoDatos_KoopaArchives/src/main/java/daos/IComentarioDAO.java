@@ -18,4 +18,7 @@ public interface IComentarioDAO {
     public boolean editarComentario(Comentario comentario) throws PersistenciaException;
     public List<Comentario> obtenerComentariosPorNoticia(Noticia noticia) throws PersistenciaException;
     public List<Comentario> obtenerComentariosDestacadosPorNoticia(Noticia noticia) throws PersistenciaException;
+    public void registrarComentario(Comentario comentario) throws PersistenciaException;
+    public Comentario agregarComentarioPublicacion(Comentario comentario) throws PersistenciaException;
+    public List<Comentario> obtenerComentarios(List<String> ids) throws PersistenciaException;
 }

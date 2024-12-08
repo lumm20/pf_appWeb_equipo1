@@ -3,6 +3,7 @@
  */
 package daos;
 
+import entidades.Comentario;
 import entidades.Publicacion;
 import excepciones.PersistenciaException;
 import java.util.List;
@@ -22,7 +23,7 @@ public interface IPublicacionDAO {
      * @throws PersistenciaException Si ocurre un error al interactuar con la
      * base de datos.
      */
-    public void publicarNuevaPublicacion(Publicacion publicacion) throws PersistenciaException;
+    public String publicarNuevaPublicacion(Publicacion publicacion) throws PersistenciaException;
 
     /**
      * Busca una publicación en la base de datos según los criterios de búsqueda
@@ -60,12 +61,22 @@ public interface IPublicacionDAO {
      * @throws PersistenciaException Si ocurre un error al interactuar con la
      * base de datos.
      */
-    public void actualizarPublicacion(Publicacion publicacion) throws PersistenciaException;
+    public boolean actualizarPublicacion(Publicacion publicacion) throws PersistenciaException;
 
+    /**
+     * Actualiza los likes  que tiene una publicacion.
+     * Se puede sumar y restar likes
+     * @param publicacion Publicacion a actualizar
+     * @return true si se actualizo correctamente
+     */
+    public boolean actualizarLikesPublicacion(Publicacion publicacion);
+    public boolean agregarComentarioPublicacion(Publicacion publicacion, Comentario comentario);
+    public boolean removerComentarioPublicacion(Publicacion publicacion, Comentario comentario);
+    
     /**
      * Elimina una publicación de la base de datos.
      *
      * @param publicacion Publicación a eliminar.
      */
-    public void eliminarPublicacion(Publicacion publicacion);
+    public boolean eliminarPublicacion(Publicacion publicacion);
 }

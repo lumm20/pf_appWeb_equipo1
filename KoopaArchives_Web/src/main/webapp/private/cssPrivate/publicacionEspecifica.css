@@ -11,7 +11,7 @@
 }
 
 html {
-    scroll-behavior: smooth;  /* Comportamiento de scroll suave para toda la página */
+    scroll-behavior: smooth; 
 }
 
 * {
@@ -35,7 +35,6 @@ main article{
 
 .button{
     border-width: 0;
-    background-color: white;
 }
 
 .article-header {
@@ -86,8 +85,12 @@ main article{
     margin: 0 auto;
 }
 
+.article-text{
+    display: none;
+}
 
-.article-text {
+.article-text.active {
+    display: block;
     margin-bottom: 1.5rem;
 }
 
@@ -135,7 +138,6 @@ main article{
     margin-top: 5px;
 }
 
-/* Efecto hover suave */
 .like-section:hover,
 .comment-section:hover {
     opacity: 0.8;
@@ -151,7 +153,7 @@ main article{
     cursor: pointer;
 }
 
-/* Animación de like */
+/*animacion de like */
 @keyframes likeAnimation {
     0%, 100% { transform: scale(1); }
     50% { 
@@ -240,28 +242,42 @@ main article{
     margin-left: 10px;
 }
 
-.load-more {
+.btn{
     display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #f0f0f0;
+    width: 200px;
+    margin: 30px auto;
+    padding: 12px 24px;
+    background-color: var(--moradoOscuro);
+    color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 25px;
     cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
     transition: background-color 0.3s;
 }
 
-.load-more:hover {
-    background-color: #e0e0e0;
+.btn:hover {
+    background-color: var(--moradoClaro);
+}
+
+.btn #cancel-edit{
+    background-color: var(--morado);
+}
+.btn #cancel-edit::hover{
+    background-color: var(--moradoOscuro);
+}
+
+.btn-desabled{
+    background-color: var(--gris);
 }
 
 
 /* Menú de opciones */
 .options-menu {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 100px;
+    right: 180px;
     cursor: pointer;
 }
 
@@ -316,4 +332,20 @@ main article{
         gap: 0.5rem;
         align-items: flex-start;
     }
+}
+
+.save{
+    display:none;
+}
+
+.save.active{
+    display:block;
+}
+
+.editable-text{
+    display:none;
+}
+
+.editable-text.active{
+    display:block;
 }

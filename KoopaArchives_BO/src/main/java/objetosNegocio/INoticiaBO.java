@@ -16,4 +16,5 @@ public interface INoticiaBO {
     public List<NoticiaBean> buscarNoticias(FiltroBean filtro);
     public boolean anclar(NoticiaBean bean);
     public boolean desanclar(NoticiaBean bean);
+    public List<NoticiaBean> buscarNoticias();
 }

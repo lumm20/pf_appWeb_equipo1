@@ -17,4 +17,8 @@ public interface IFacadeComentario {
     public boolean editarComentario(Comentario comentario);
     public List<Comentario> obtenerComentariosPorNoticia(Noticia noticia);
     public List<Comentario> obtenerComentariosDestacadosPorNoticia(Noticia noticia);
+
+    public void registrarComentario(Comentario comentario);
+    public Comentario registrarComentarioPublicacion(Comentario comentario);
+    public List<Comentario> obtenerComentarios(List<String> ids);
 }

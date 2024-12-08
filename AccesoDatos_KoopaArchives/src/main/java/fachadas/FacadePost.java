@@ -4,6 +4,7 @@ import daos.INoticiaDAO;
 import daos.IPublicacionDAO;
 import daos.NoticiaDAO;
 import daos.PublicacionDAO;
+import entidades.Comentario;
 import entidades.FiltroNoticia;
 import entidades.Noticia;
 import entidades.Publicacion;
@@ -19,7 +20,8 @@ import java.util.logging.Logger;
  * @author karim
  */
 public class FacadePost implements IFacadePost {
-
+    public static final int NUEVO_COMENTARIO = 1;
+    public static final int QUITAR_COMENTARIO = 2;
     private INoticiaDAO noticiaDAO;
     private IPublicacionDAO publicacionDAO;
 
@@ -36,7 +38,7 @@ public class FacadePost implements IFacadePost {
      * Registra una nueva noticia en el sistema.
      *
      * @param noticia Noticia a registrar.
-     * @param contenido Contenido de la noticia.
+     * @return 
      */
     @Override
     public Noticia registrarNoticia(Noticia noticia) throws PersistenciaException {
@@ -86,12 +88,14 @@ public class FacadePost implements IFacadePost {
      * @param publicacion Publicación a registrar.
      */
     @Override
-    public void registrarPublicacion(Publicacion publicacion) {
+    public String registrarPublicacion(Publicacion publicacion) {
+        String registro = null;
         try {
-            publicacionDAO.publicarNuevaPublicacion(publicacion);
+            registro = publicacionDAO.publicarNuevaPublicacion(publicacion);
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return registro;
     }
 
     /**
@@ -124,16 +128,34 @@ public class FacadePost implements IFacadePost {
      * Actualiza una publicación existente en el sistema.
      *
      * @param publicacion Publicación a actualizar.
+     * @return 
      */
     @Override
-    public void actualizarPublicacion(Publicacion publicacion) {
+    public boolean actualizarPublicacion(Publicacion publicacion) {
         try {
-            publicacionDAO.actualizarPublicacion(publicacion);
+            return publicacionDAO.actualizarPublicacion(publicacion);
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 
+    @Override
+    public boolean actualizarInteraccionesPublicacion(Publicacion publicacion){
+        return publicacionDAO.actualizarLikesPublicacion(publicacion);
+    }
+    
+    @Override
+    public boolean actualizarComentariosPublicacion(Publicacion publicacion,
+            Comentario comentario, int tipoActualizacion){
+        if(tipoActualizacion == NUEVO_COMENTARIO){
+            return publicacionDAO.agregarComentarioPublicacion(publicacion, comentario);
+        }else if(tipoActualizacion == QUITAR_COMENTARIO){
+            return publicacionDAO.removerComentarioPublicacion(publicacion, comentario);
+        }
+        return false;
+    }
+    
     /**
      * Busca una publicación en el sistema según los criterios de búsqueda
      * proporcionados.
@@ -157,8 +179,8 @@ public class FacadePost implements IFacadePost {
      * @param publicacion Publicación a eliminar.
      */
     @Override
-    public void eliminarPublicacion(Publicacion publicacion) {
-        publicacionDAO.eliminarPublicacion(publicacion);
+    public boolean eliminarPublicacion(Publicacion publicacion) {
+        return publicacionDAO.eliminarPublicacion(publicacion);
     }
 
     /**
@@ -194,5 +216,9 @@ public class FacadePost implements IFacadePost {
             Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public List<Noticia> buscarNoticias()throws PersistenciaException {
+        return noticiaDAO.buscarNoticias();
     }
 }

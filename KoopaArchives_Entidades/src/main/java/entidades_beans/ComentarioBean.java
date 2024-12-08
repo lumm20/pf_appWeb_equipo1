@@ -94,6 +94,4 @@ public class ComentarioBean implements Serializable{
         return sb.toString();
     }
     
-    
-    
 }

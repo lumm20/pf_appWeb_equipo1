@@ -1,6 +1,21 @@
+function loadPostDetails(){
+    const postCards = document.querySelectorAll(".post-card");
+    
+    postCards.forEach(card  => {
+        card.addEventListener('click', (event) =>{
+            console.log('se dio click a un post-card');
+            const cardId = event.currentTarget.id;
+            window.location.href = '/private/Publicacion?post='+cardId;
+            console.log(cardId);
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const posts = document.querySelectorAll('.post-card');
     const categoryButtons = document.querySelectorAll('.category-button');
+
+    loadPostDetails();
 
     categoryButtons.forEach(button => {
         button.addEventListener('click', (event) => {
@@ -28,12 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             categoryButtons.forEach(b =>{b.classList.remove('active');});
             button.classList.add('active');
             
-        });
-    });
-    posts.forEach(post => {
-        post.addEventListener('click', (event) => {
-            // Aquí puedes agregar la lógica que se ejecutará al hacer clic
-            console.log(`Hiciste clic en un post con id: ${post.id}`);
         });
     });
 });

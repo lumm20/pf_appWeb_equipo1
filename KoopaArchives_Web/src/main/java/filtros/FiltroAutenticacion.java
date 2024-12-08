@@ -1,5 +1,6 @@
 package filtros;
 
+import entidades_beans.UsuarioBean;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -10,6 +11,7 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -18,11 +20,13 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author karim
  */
+@WebFilter("/private/*")
 public class FiltroAutenticacion implements Filter {
 
     private static final boolean debug = true;
-    private static final String[] urlPublicas = {"/Inicio","/Usuario","/Noticia","/Noticia/*","/Harcodeo", "inicio.jsp","register.jsp","login.jsp","crearNoticia.jsp"};
-    private static final String[] urlAdmin = {"crearPublicacion"};
+    private static final String[] urlPublicas = {"/inicio","/Usuario","/Noticia",
+        "/Harcodear","/CargarNoticia","/inicio.jsp","/register.jsp","/login.jsp",
+        "/buscadorNoticias.jsp","/noticia.jsp"};
     
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
@@ -39,7 +43,7 @@ public class FiltroAutenticacion implements Filter {
         }
 
     }
-
+    
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -49,20 +53,26 @@ public class FiltroAutenticacion implements Filter {
     }
 
     //Verifica que haya una sesion activa y que el usuario  se encuentre autenticado
-    private boolean estaLogueado(HttpServletRequest httpRequest) {
-        HttpSession sesion = httpRequest.getSession(false);
-        boolean logueado = (sesion != null && sesion.getAttribute("usuario") != null);
+    private boolean estaLogueado(HttpSession session) {
+        boolean logueado = (session != null && session.getAttribute("usuario") != null);
 
         return logueado;
     }
 
-    private boolean esURLPrivada(String ruta) {
+    private boolean esAdmin(HttpSession session){
+        UsuarioBean user = (UsuarioBean)session.getAttribute("usuario");
+        
+        return user.getRol().equalsIgnoreCase("admin");
+    }
+    
+    private boolean esURLPublica(String uri, String contextPath) {
+        String ruta = uri.substring(contextPath.length());
         for (String url : urlPublicas) {
-            if (ruta.startsWith("/" + url)) {
-                return false;
+            if (ruta.startsWith(url)) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     // Obtiene la ruta a la que desea acceder
@@ -81,6 +91,7 @@ public class FiltroAutenticacion implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
@@ -93,32 +104,49 @@ public class FiltroAutenticacion implements Filter {
         httpResponse.setHeader("Pragma", "no-cache");
         httpResponse.setHeader("Expires", "0");
         
-        String ruta = this.getRutaSolicitada(httpRequest);
-        boolean urlPrivada = this.esURLPrivada(ruta);
-        System.out.println("\n\n\nAutenticado");
-        boolean logueado = this.estaLogueado(httpRequest);
-
-        if (!logueado && urlPrivada) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/Inicio");
-        } else {
+        String uri = httpRequest.getRequestURI();
+        String contextPath = httpRequest.getContextPath();
+        System.out.println("context path: "+contextPath);
+        boolean urlPublica = esURLPublica(uri,contextPath);
+        
+        if(urlPublica){
             chain.doFilter(request, response);
+            return;
+        }
+        
+        HttpSession session = httpRequest.getSession(false);
+        
+        if (session != null && session.getAttribute("usuario") != null) {
+            UsuarioBean user  = (UsuarioBean)session.getAttribute("usuario");
+            
+            if(uri.contains("/private/admin/")){
+                if(validateRole(user)){
+                    chain.doFilter(request, response);
+                }else
+                    httpRequest.getRequestDispatcher("/error401.jsp").
+                            forward(httpRequest, httpResponse);
+            }else if(uri.contains("/private/normal/")){
+                if(user.getRol().equalsIgnoreCase("Normal"))
+                    chain.doFilter(request, response);
+                else
+                    httpRequest.getRequestDispatcher("/error401.jsp").
+                            forward(httpRequest, httpResponse);
+            }else if(uri.contains("/private/")){
+                chain.doFilter(request, response);
+            }
+                
+        }else{
+            session = httpRequest.getSession();
+            session.setAttribute("urlOriginal", uri);
+            httpResponse.sendRedirect("/login.jsp");
         }
 
-//        if (!logueado && urlPrivada) {
-//            if (!ruta.endsWith("index.jsp")) {
-//                httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp");
-//                return;
-//            }
-//        } else if (logueado && !urlPrivada) {
-//            if (ruta.endsWith("index.jsp")) {
-//                httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp");
-//                return;
-//            }
-//        }
-//         chain.doFilter(request, response);
-//        
     }
 
+    private boolean validateRole(UsuarioBean user){
+        return user.getRol().equalsIgnoreCase("admin");
+    }
+    
     /**
      * Return the filter configuration object for this filter.
      */

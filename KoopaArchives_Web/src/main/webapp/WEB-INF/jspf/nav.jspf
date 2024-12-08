@@ -19,7 +19,7 @@
                                  <li class="item especial"><a href="Noticia?action=cargarInicio">Noticias</a></li>
                             <li class="item especial"><a href="crearNoticia.jsp">Crear Noticia</a></li>
                             <li class="item especial"><a href="#">Posts</a></li>
-                            <li class="item especial"><a href="/Usuario?action=cerrarSesion">Cerrar sesión</a></li>
+                            <li class="item especial"><a href="/Usuario?action=cerrarSesion">Cerrar sesiï¿½n</a></li>
                             <li class="item button especial2 limitar">
                                 <div class="perfil">
                                     <img class="imagen_perfil" src="data:${tipoArchivo};base64,${urlPerfil}" 
@@ -32,9 +32,9 @@
                              <li class="item especial"><a href="Noticia?action=cargarInicio">Noticias</a></li>
                             <li class="item especial"><a href="Publicacion">Posts</a></li>
                             <li class="item especial"><a href="crearPublicacion.jsp">Crear Post</a></li>
-                            <li class="item especial"><a href="/Usuario?action=cerrarSesion">Cerrar sesión</a></li>
+                            <li class="item especial"><a href="/Usuario?action=cerrarSesion">Cerrar sesiï¿½n</a></li>
                             <li class="item button especial2 limitar">
-                                <a class="perfil" href="#">
+                                <a class="perfil" href="/private/normal/perfil.jsp">
                                     <img class="imagen_perfil" src="data:${tipoArchivo};base64,${urlPerfil}" 
                                          alt="${nombreArchivo}" />
                                     <p>${sessionScope.usuario.username}</p>
@@ -45,7 +45,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="item button especial2"><a href="register.jsp">Registrarse</a></li>
-                    <li class="item button secondary especial2"><a href="login.jsp">Iniciar Sesión</a></li>
+                    <li class="item button secondary especial2"><a href="login.jsp">Iniciar Sesiï¿½n</a></li>
                     </c:otherwise>
                 </c:choose>    
 

@@ -1,6 +1,7 @@
 package entidades;
 
 import java.util.Date;
+import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
@@ -14,7 +15,8 @@ public class Publicacion extends Post {
     private String contenido;
     private String urlImg;
     private Image imagen;
-
+    private int likes;
+    private List<String> comentarios;
     /**
      * Constructor por defecto.
      */
@@ -29,6 +31,22 @@ public class Publicacion extends Post {
      */
     public Publicacion(String categoria, Date fechaPublicacion) {
         super(categoria, fechaPublicacion);
+    }
+
+    public void setComentarios(List<String> comentarios){
+        this.comentarios = comentarios;
+    }
+    
+    public List<String> getComentarios(){
+        return comentarios;
+    }
+    
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     public Image getImagen() {

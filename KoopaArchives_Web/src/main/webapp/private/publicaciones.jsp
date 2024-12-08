@@ -1,3 +1,4 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,14 +13,14 @@
               rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-        <link rel="icon" href="img/logo.png" type="image/x-icon">
-        <link rel="stylesheet" href="css/publicaciones.css">
-        <link rel="stylesheet" href="css/nave.css">
-        <script src="js/publicaciones.js" defer></script>
-        <script src="js/nav.js" defer></script>
+        <link rel="icon" href="/img/logo.png" type="image/x-icon">
+        <link rel="stylesheet" href="cssPrivate/publicaciones.css">
+        <link rel="stylesheet" href="/css/nave.css">
+        <script src="jsPrivate/publicaciones.js" defer></script>
+        <script src="/js/nav.js" defer></script>
     </head>
     <body>
-        <%@ include file="WEB-INF/jspf/nav.jspf" %>
+        <%@ include file="/WEB-INF/jspf/nav.jspf" %>
         <main>
             <h3>Publicaciones</h3>
 
@@ -33,9 +34,9 @@
 
             <div id="posts-container">
                 <c:choose>
-                    <c:when test="${not empty listaPublicaciones}">
+                    <c:when test="${not empty sessionScope.listaPublicaciones}">
                         <c:forEach items="${listaPublicaciones}" var="publicacion">
-                            <div class="post-card" data-categoria="${publicacion.post.categoria}">
+                            <div id="${publicacion.post.codigo}" class="post-card" data-categoria="${publicacion.post.categoria}">
                                 <div class="post-header">
                                     <div class="post-author">
                                         <div class="author-avatar">
@@ -44,19 +45,7 @@
                                         <div class="author-info">
                                             <span class="author-name">${publicacion.post.autor.username}</span>
                                             <span class="post-tag">Destacado</span>
-                                            <div class="post-date">Hace 1 día</div>
-                                        </div>
-                                    </div>
-                                    <div class="options-menu">
-                                        <div class="options-menu-dots">
-                                            <div class="options-menu-dot"></div>
-                                            <div class="options-menu-dot"></div>
-                                            <div class="options-menu-dot"></div>
-                                        </div>
-                                        <div class="options-menu-content">
-                                            <div class="options-menu-item">Destacar noticia</div>
-                                            <div class="options-menu-item">Editar</div>
-                                            <div class="options-menu-item">Eliminar</div>
+                                            <div class="post-date">${publicacion.fechaCreacion}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +63,7 @@
             </div>
             <button class="load-more" id="load-more-btn">Ver más</button>
         </main>
-        <%@ include file="WEB-INF/jspf/footer.jspf" %>
+        <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 
     </body>
 </html>
