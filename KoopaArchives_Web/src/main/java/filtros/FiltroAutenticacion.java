@@ -123,13 +123,13 @@ public class FiltroAutenticacion implements Filter {
                 if(validateRole(user)){
                     chain.doFilter(request, response);
                 }else
-                    httpRequest.getRequestDispatcher("/error404.jsp").
+                    httpRequest.getRequestDispatcher("/error401.jsp").
                             forward(httpRequest, httpResponse);
             }else if(uri.contains("/private/normal/")){
                 if(user.getRol().equalsIgnoreCase("Normal"))
                     chain.doFilter(request, response);
                 else
-                    httpRequest.getRequestDispatcher("/error404.jsp").
+                    httpRequest.getRequestDispatcher("/error401.jsp").
                             forward(httpRequest, httpResponse);
             }else if(uri.contains("/private/")){
                 chain.doFilter(request, response);

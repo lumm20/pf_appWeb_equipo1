@@ -7,25 +7,6 @@ function loadPostDetails(){
             const cardId = event.currentTarget.id;
             window.location.href = '/private/Publicacion?post='+cardId;
             console.log(cardId);
-//            const params = new URLSearchParams({
-//                idPost: cardId
-//            });
-//            
-//            fetch('/private/Publicacion',{
-//               method: 'post',
-//               headers: {'Content-Type':'application/x-www-form-urlencoded'},
-//               body: params.toString()
-//            }).then(response =>{
-//                console.log('info sent');
-//                console.log(response);
-//                if(response.ok){
-//                    return response.json();
-//                }
-//            }).then(data =>{
-//                console.log(data);
-//            }).catch(error => {
-//                console.error('Error:',error);
-//            });
         });
     });
 }

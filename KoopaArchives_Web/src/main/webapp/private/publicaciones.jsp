@@ -48,18 +48,6 @@
                                             <div class="post-date">${publicacion.fechaCreacion}</div>
                                         </div>
                                     </div>
-                                    <div class="options-menu">
-                                        <div class="options-menu-dots">
-                                            <div class="options-menu-dot"></div>
-                                            <div class="options-menu-dot"></div>
-                                            <div class="options-menu-dot"></div>
-                                        </div>
-                                        <div class="options-menu-content">
-                                            <div class="options-menu-item">Destacar noticia</div>
-                                            <div class="options-menu-item">Editar</div>
-                                            <div class="options-menu-item">Eliminar</div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <c:if test="${not empty publicacion.imagenPost}">
                                     <img src="data:${publicacion.tipoArchivoPost};base64,${publicacion.imagenPost}" alt="${publicacion.nombreArchivoPost}" class="post-image">

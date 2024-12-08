@@ -21,35 +21,32 @@
     </head>
     <body>
         <%@ include file="/WEB-INF/jspf/nav.jspf" %>
-                <main>
-                    <h3>Subir Nueva Publicación</h3>
-                    <form class="upload-form" id="upload-form" action="/private/Publicacion" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="action" value="publicar">
-                               <div class="form-group">
-                            <label for="image-upload">Imagen:</label>
-                            <input type="file" id="image-upload" name="image-post" accept="image/*" required>
-                            <div class="image-preview" id="image-preview">
-                                <span>Vista previa de la imagen</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="category">Categoría:</label>
-                            <select id="category" name="category" required>
-                                <option value="">Selecciona una categoría</option>
-                                <option value="mario-bros">Mario Bros</option>
-                                <option value="pokemon">Pokemon</option>
-                                <option value="animal-crossing">Animal Crossing</option>
-                                <option value="zelda">Zelda</option>
-                                <option value="otros">Otros</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Descripción:</label>
-                            <textarea id="description" name="description" required></textarea>
-                        </div>
-                        <button type="submit" id="post-btn" class="submit-btn">Publicar</button>
-                    </form>
-                </main>
+        <main>
+            <h3>Subir Nueva Publicación</h3>
+            <div class="form-group">
+                <label for="image-upload">Imagen:</label>
+                <input type="file" id="image-upload" name="image-post" accept="image/*" required>
+                <div class="image-preview" id="image-preview">
+                    <span>Vista previa de la imagen</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="category">Categoría:</label>
+                <select id="category" name="category" required>
+                    <option value="">Selecciona una categoría</option>
+                    <option value="mario-bros">Mario Bros</option>
+                    <option value="pokemon">Pokemon</option>
+                    <option value="animal-crossing">Animal Crossing</option>
+                    <option value="zelda">Zelda</option>
+                    <option value="otros">Otros</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Descripción:</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            <button id="post-btn" class="submit-btn">Publicar</button>
+        </main>
         <%@ include file="/WEB-INF/jspf/footer.jspf" %>
     </body>
 </html>

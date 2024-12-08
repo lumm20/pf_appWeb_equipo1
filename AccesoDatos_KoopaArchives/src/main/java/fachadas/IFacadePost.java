@@ -65,7 +65,7 @@ public interface IFacadePost {
      *
      * @param publicacion Publicación a registrar.
      */
-    public void registrarPublicacion(Publicacion publicacion)throws PersistenciaException;
+    public String registrarPublicacion(Publicacion publicacion)throws PersistenciaException;
 
     /**
      * Busca una publicación en el sistema según los criterios de búsqueda

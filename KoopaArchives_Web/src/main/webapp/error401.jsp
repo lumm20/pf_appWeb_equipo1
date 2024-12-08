@@ -1,16 +1,10 @@
-<%-- 
-    Document   : error404
-    Created on : 23 nov 2024, 18:22:17
-    Author     : karim
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 404</title>
+    <title>Error 401</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,12 +18,12 @@
     <body>
         <div class="container">
          <%@ include file="WEB-INF/jspf/nav.jspf" %>
-        <main class="error-content">
-            <img src="/img/zoro_perdido.jpg" alt="Imagen de algo perdido" class="error-image">
-            <h3>¡Oops! Página no encontrada</h3>
-            <p class="error-description">Lo sentimos, pero la página que estás buscando parece haberse perdido en el mar. ¿Quizás un pirata se la llevó?</p>
-            <button onclick="">Regresar</button>
-        </main>
+         <main class="error-content">
+             <img src="/img/akainu.png" alt="Imagen de un Marine" class="error-image">
+             <h3>Alto ahí pirata. Creo que vas por el camino equivocado</h3>
+             <p class="error-description">Necesitas una autorización de nivel Marine o superior para acceder</p>
+             <button onclick="">Regresar</button>
+         </main>
         <%@ include file="WEB-INF/jspf/footer.jspf" %>
         </div>
     </body>

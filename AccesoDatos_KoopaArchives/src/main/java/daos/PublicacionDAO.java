@@ -52,14 +52,17 @@ public class PublicacionDAO implements IPublicacionDAO {
      * Añade una nueva publicación a la colección de publicaciones
      *
      * @param publicacion Nueva publicación a añadir a la base de datos
+     * @return 
      * @throws PersistenciaException Si ocurre un error al insertar la
      * publicación a la colección
      */
     @Override
-    public void publicarNuevaPublicacion(Publicacion publicacion) throws PersistenciaException {
+    public String publicarNuevaPublicacion(Publicacion publicacion) throws PersistenciaException {
         try {
             publicacion.setCodigo(generarNumeroAleatorio());
-            publicaciones.insertOne(publicacion);
+            if(publicaciones.insertOne(publicacion).getInsertedId() != null)
+                return publicacion.getCodigo();
+            return null;
         } catch (MongoException me) {
             throw new PersistenciaException("No se pudo guardar la noticia.");
         }
@@ -82,7 +85,7 @@ public class PublicacionDAO implements IPublicacionDAO {
         // Lookup siempre presente
         pipeline.add(project(fields(
                 include( "categoria", "codigo", "fechaCreacion", "ultimaModificacion", 
-                        "contenido", "imagen", "usernamePublicador","comentarios","cantidadLikes")
+                        "contenido", "imagen", "usernamePublicador","comentarios","likes")
         )));
 
         return publicaciones
@@ -118,17 +121,18 @@ public class PublicacionDAO implements IPublicacionDAO {
      *
      * @param publicacion Publicación con el número de post de la publicación a
      * actualizar y la información actualizada
+     * @return 
      * @throws PersistenciaException Si ocurre un error al hacer la
      * actualización en la colección
      */
     @Override
     public boolean actualizarPublicacion(Publicacion publicacion) throws PersistenciaException {
-        Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
+        Bson filtro = Filters.eq("codigo", publicacion.getCodigo());
         Bson actualizar;
 
         actualizar = Updates.combine(
                 Updates.set("ultimaModificacion", new Date()),
-                Updates.set("urlImg", publicacion.getUrlImg()),
+//                Updates.set("urlImg", publicacion.getUrlImg()),
                 Updates.set("contenido", publicacion.getContenido())
         );
 
@@ -138,7 +142,7 @@ public class PublicacionDAO implements IPublicacionDAO {
     @Override
     public boolean actualizarLikesPublicacion(Publicacion publicacion){
         Bson filtro = Filters.eq("codigo", publicacion.getCodigo());
-        Bson actualizar = Updates.set("likes", publicacion.getCantidadLikes());
+        Bson actualizar = Updates.set("likes", publicacion.getLikes());
         UpdateResult result = publicaciones.updateOne(filtro, actualizar);
         return result.getModifiedCount() >0;
     }
@@ -204,10 +208,11 @@ public class PublicacionDAO implements IPublicacionDAO {
      * Elimina una publicación de la colección de publicaciones
      *
      * @param publicacion Publicación a eliminar de la colección
+     * @return 
      */
     @Override
     public boolean eliminarPublicacion(Publicacion publicacion) {
-        Bson filtro = Filters.eq("numPost", publicacion.getCodigo());
+        Bson filtro = Filters.eq("codigo", publicacion.getCodigo());
         System.out.println("Se elimino las publicaciones: " + publicacion.getCodigo());
         return publicaciones.deleteOne(filtro).getDeletedCount()>0;
     }

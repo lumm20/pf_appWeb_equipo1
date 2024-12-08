@@ -126,7 +126,6 @@ public class PublicacionServlet extends HttpServlet {
                     List<Map<String, Object>> mapeo = mapearPublicaciones(posts);
                     session.setAttribute("listaPublicaciones", mapeo);
                     //request.setAttribute("listaPublicaciones", mapeo);
-                    System.out.println("se mando el post");
                     response.sendRedirect("/private/publicaciones.jsp");
 //                    request.getRequestDispatcher("/private/publicaciones.jsp").forward(request, response);
                     flag = false;
@@ -156,19 +155,18 @@ public class PublicacionServlet extends HttpServlet {
         if(publicacion != null){
             String date = dateToString(publicacion.getFechaCreacion());
             
-            System.out.println("likes: "+publicacion.getLikes());
             ImagenBean imagen = publicacion.getImagen();
             ImagenBean iconoPublicador = publicacion.getAutor().getImagen();
             request.setAttribute("iconoAutor", iconoPublicador);
             request.setAttribute("imagenPost", imagen);
             request.setAttribute("fechaPost", date);
             request.setAttribute("cantComentarios", publicacion.getComentarios().size());
+            if(publicacion.getTexto()!= null){
+                String txt[] = publicacion.getTexto().split("\n");
+                List parrafos = Arrays.asList(txt);
+                request.setAttribute("parrafos", parrafos);
+            }
             
-            String txt[] = publicacion.getTexto().split("\n");
-            List parrafos = Arrays.asList(txt);
-            
-            
-            request.setAttribute("parrafos", parrafos);
             request.setAttribute("post", publicacion);
 
             request.getRequestDispatcher("/private/publicacionEspecifica.jsp").forward(request, response);
@@ -204,9 +202,6 @@ public class PublicacionServlet extends HttpServlet {
 
         Map<String, Object> mapeoPublicacion;
         for (PostBean post : posts) {
-            System.out.println("codigo post: "+post.getCodigo());
-            System.out.println("post de: "+post.getCategoria());
-            System.out.println("publicador: "+post.getAutor());
             mapeoPublicacion = new HashMap<>();
             mapeoPublicacion.put("post", post);
             String date = dateToString(post.getFechaCreacion());
@@ -215,7 +210,6 @@ public class PublicacionServlet extends HttpServlet {
             ImagenBean iconoPublicador = post.getAutor().getImagen();
             
             if (imagen != null) {
-                System.out.println("imagen encontrada: " + imagen.getNombreArchivo());
                 String base64Image = Base64.getEncoder().encodeToString(imagen.getImageBytes());
                 mapeoPublicacion.put("imagenPost", base64Image);
                 mapeoPublicacion.put("tipoArchivoPost", imagen.getTipoImagen());
@@ -223,7 +217,6 @@ public class PublicacionServlet extends HttpServlet {
             }
             
             if (iconoPublicador != null) {
-                System.out.println("imagen de icono encontrada: " + iconoPublicador.getNombreArchivo());
                 String base64Image = Base64.getEncoder().encodeToString(iconoPublicador.getImageBytes());
                 mapeoPublicacion.put("iconoPublicador", base64Image);
                 mapeoPublicacion.put("tipoArchivoIcon", iconoPublicador.getTipoImagen());
@@ -259,45 +252,92 @@ public class PublicacionServlet extends HttpServlet {
                 case "comentario"-> actualizarComentarios(request, response);
                 case "publicar"-> nuevoPost(request, response);
                 case "reaccion"-> actualizarLikes(request, response);
+                case "eliminarPost"-> borrarPost(request, response);
+                case "editarPost"-> editarPost(request, response);
             }
+        }
+    }
+    
+    private void editarPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+        
+        IPostBO postBO = new PostBO();
+        String codigo = request.getParameter("codigoPost");
+        String contenido = request.getParameter("contenido");
+        
+        System.out.println("prueba de editar");
+        System.out.println("codigo: "+codigo);
+        System.out.println("contenido: "+contenido);
+        PostBean post = new PostBean();
+        post.setCodigo(codigo);
+        post.setTexto(contenido);
+        
+        if(!postBO.actualizarPublicacion(post, PostBO.ACTUALIZAR_CONTENIDO)){
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\": \"No se pudo editar el post\"}");
+        } else {
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("{\"mensaje\": \"Post editado con éxito\"}");
+        }
+    }
+    
+    private void borrarPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+        IPostBO postBO = new PostBO();
+        String codigo = request.getParameter("codigoPost");
+        
+        PostBean post = new PostBean();
+        post.setCodigo(codigo);
+        
+        if(!postBO.eliminarPublicacion(post)){
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\": \"No se pudo eliminar el post\"}");
+        }else{
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("{\"mensaje\": \"Post eliminado con éxito\"}");
         }
     }
     
     private void nuevoPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException{
         PostBean post = new PostBean();
-
         HttpSession session = request.getSession(false);
         UsuarioBean user = (UsuarioBean) session.getAttribute("usuario");
 
         post.setAutor(user);
-        System.out.println("usuario bean : " + user.getUsername());
         String cat = request.getParameter("category");
         post.setCategoria(cat);
         String descripcion = request.getParameter("description");
 
-        System.out.println("categoria y descripcion: " + cat + ", " + descripcion);
         if (descripcion != null) {
             post.setTexto(descripcion);
         }
-
         post.setImagen(leerImagen(request));
 
         Date fechaCreacion = Calendar.getInstance().getTime();
         post.setFechaCreacion(fechaCreacion);
 
         IPostBO postBO = new PostBO();
-        if (postBO.subirPublicacion(post)) {
-            session.setAttribute("resultado", "Publicacion realizada con exito");
+        PostBean postNuevo = postBO.subirPublicacion(post);
+        
+        if (postNuevo != null) {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
 
-            response.sendRedirect("/private/publicaciones.jsp");
+            //session.setAttribute("resultado", "Publicacion realizada con exito");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("{\"codigo\":\"" + postNuevo.getCodigo() + "\", \"mensaje\":\"Post creado exitosamente\"}");
+            //response.sendRedirect("/private/publicaciones.jsp");
+        }else{
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\": \"No se pudo crear el post\"}");
         }
     }
     
     private void guardarImg(Part filePart){
         try {
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            String dir = "C:/Users/luiis/Desktop/uploads";
+            String dir = "D:/uploads";
             File uploadDir = new File(dir);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
@@ -332,7 +372,6 @@ public class PublicacionServlet extends HttpServlet {
         imagenPerfil.setNombreArchivo(extractFileName(filePart));
         imagenPerfil.setTipoImagen(contentType);
         imagenPerfil.setFechaSubida(new Date());
-        System.out.println("Se cargo completa la imagen");
         return imagenPerfil;
     }
 

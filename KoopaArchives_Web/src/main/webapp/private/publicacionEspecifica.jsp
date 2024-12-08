@@ -35,7 +35,8 @@
                     <div class="article-content">
                         <c:if test="${not empty parrafos}">
                             <c:forEach items="${parrafos}" var="parrafo">
-                                <p class="article-text">${parrafo}</p>
+                                <p id="parrafo" class="article-text active">${parrafo}</p>
+                                <input id="input-text" class="article-text editable-text" value="${parrafo}">
                             </c:forEach>
                         </c:if>
                     </div>
@@ -51,54 +52,30 @@
                                 <div class="options-menu-dot"></div>
                             </div>
                             <div class="options-menu-content">
-                                <div class="options-menu-item">Editar</div>
-                                <div class="options-menu-item">Eliminar</div>
+                                <div id="edit-btn" class="options-menu-item">Editar</div>
+                                <div id="delete-btn" class="options-menu-item" >Eliminar</div>
                             </div>
                         </div>
                     </c:if> 
+                        <div id="save" class="save">
+                        <button id="save-btn" class="btn">Guardar cambios</button>
+                        <button id="cancel-edit" class="btn">Cancelar</button>
+                    </div>
                 </section>
-                    <section class="interactions">
-                        <div class="like-section">
-                            <button id="likeButton" type="button" class="button">
-                                <img id="likeIcon" src="imgPrivate/mano.png" alt="Like" class="interaction-icon like-icon">
-                            </button>
-                            <p id="cant-likes" class="interaction-count">${post.likes}<span class="interaction-label">likes</span></p>
-                            
-                            <!--form action="Publicacion" method="post">
-                                <input type="hidden" id="like-action" name="action" value="like">
-                                <input type="hidden" name="codigoPost" value="${post.codigo}">
-                                <button id="likeButton" type="submit" class="button">
-                                    <img id="likeIcon" src="imgPrivate/mano.png" alt="Like" class="interaction-icon like-icon">
-                                </button>
-                                <p id="cant-likes" class="interaction-count">${post.likes}<span class="interaction-label">likes</span></p>
-                            </form-->
-
-                        </div>
-                        <div class="comment-section">
-                            <img id="comment-icon" src="imgPrivate/comentario.png" alt="Comentarios"
-                                 class="interaction-icon comment-icon">
-                            <p id="cant-comments" class="interaction-count">${cantComentarios}<span class="interaction-label">comentarios</span>
-                            </p>
-                        </div>
-                    </section>
-                <!--div class="interactions">
+                <section class="interactions">
                     <div class="like-section">
-                        <form action="Publicacion" method="post">
-                            <input type="hidden" id="like-action" name="action" value="like">
-                            <button id="likeButton" type="submit" class="button">
-                                <img id="likeIcon" src="../img/mano.png" alt="Like" class="interaction-icon like-icon">
-                            </button>
-                            <p id="cant-likes" class="interaction-count">10<span class="interaction-label">likes</span></p>
-                        </form>
-
+                        <button id="likeButton" type="button" class="button">
+                            <img id="likeIcon" src="imgPrivate/mano.png" alt="Like" class="interaction-icon like-icon">
+                        </button>
+                        <p id="cant-likes" class="interaction-count">${post.likes}<span class="interaction-label">likes</span></p>
                     </div>
                     <div class="comment-section">
-                        <img id="comment-icon" src="../img/comentario (1).png" alt="Comentarios"
+                        <img id="comment-icon" src="imgPrivate/comentario.png" alt="Comentarios"
                              class="interaction-icon comment-icon">
-                        <p id="cant-comments" class="interaction-count">10<span class="interaction-label">comentarios</span>
+                        <p id="cant-comments" class="interaction-count">${cantComentarios}<span class="interaction-label">comentarios</span>
                         </p>
                     </div>
-                </div-->
+                </section>
                 <section class="comments-section">
                     <div class="comments-header">
                         <h2>Comentarios</h2>
@@ -123,25 +100,24 @@
                                         <time class="comment-date" datetime="${comentario.fechaCreacion}"></time>
                                         <p>${comentario.contenido}</p>
                                     </div>
-                                        <c:if test="${comentario.autor.username eq sessionScope.usuario.username}">
-                                            <div class="options-menu">
-                                                <div class="options-menu-dots">
-                                                    <div class="options-menu-dot"></div>
-                                                    <div class="options-menu-dot"></div>
-                                                    <div class="options-menu-dot"></div>
-                                                </div>
-                                                <div class="options-menu-content">
-                                                    <div class="options-menu-item">Editar</div>
-                                                    <div class="options-menu-item">Eliminar</div>
-                                                </div>
+                                    <c:if test="${comentario.autor.username eq sessionScope.usuario.username}">
+                                        <div class="options-menu">
+                                            <div class="options-menu-dots">
+                                                <div class="options-menu-dot"></div>
+                                                <div class="options-menu-dot"></div>
+                                                <div class="options-menu-dot"></div>
                                             </div>
-                                        </c:if>
+                                            <div class="options-menu-content">
+                                                <div class="options-menu-item">Editar</div>
+                                                <div class="options-menu-item">Eliminar</div>
+                                            </div>
+                                        </div>
+                                    </c:if>
                                 </article>
                             </c:forEach>
                         </c:if>
                     </div>
 
-                    <button class="load-more">Ver más comentarios</button>
                 </section>
 
             </article>

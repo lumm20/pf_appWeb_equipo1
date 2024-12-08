@@ -46,6 +46,7 @@ public class PostBO implements IPostBO {
     @Override
     public boolean actualizarPublicacion(PostBean bean, int tipoActualizacion){
         Publicacion publicacion = new Publicacion();
+        publicacion.setCodigo(bean.getCodigo());
         boolean flag=true;
         switch (tipoActualizacion) {
             case ACTUALIZAR_CONTENIDO->publicacion.setContenido(bean.getTexto());
@@ -72,7 +73,7 @@ public class PostBO implements IPostBO {
     public boolean actualizarReacciones(PostBean post){
         Publicacion publicacion = new Publicacion();
         publicacion.setCodigo(post.getCodigo());
-        publicacion.setCantidadLikes(post.getLikes());
+        publicacion.setLikes(post.getLikes());
         return facadePost.actualizarInteraccionesPublicacion(publicacion);
     }
 
@@ -108,14 +109,18 @@ public class PostBO implements IPostBO {
     }
 
     @Override
-    public boolean subirPublicacion(PostBean post) {
+    public PostBean subirPublicacion(PostBean post) {
         try {
-            facadePost.registrarPublicacion(convertirBeanPublicacion(post));
-            return true;
+            String codigo = facadePost.registrarPublicacion(convertirBeanPublicacion(post));
+            if(codigo != null){
+                PostBean bean = new PostBean();
+                bean.setCodigo(codigo);
+                return bean;
+            }
         } catch (PersistenciaException e) {
             Logger.getLogger(PostBO.class.getName()).log(Level.SEVERE, null, e);
-            return false;
         }
+        return null;
     }
 
 
@@ -141,7 +146,7 @@ public class PostBO implements IPostBO {
     
     private PostBean setInfoPost(Publicacion publicacion){
         PostBean postEncontrado = convertirPublicacion(publicacion);
-        postEncontrado.setLikes(publicacion.getCantidadLikes());
+        postEncontrado.setLikes(publicacion.getLikes());
         postEncontrado.setAutor(buscarPublicador(publicacion.getUsernamePublicador()));
         if(publicacion.getComentarios() != null && !publicacion.getComentarios().isEmpty()){
             List<ComentarioBean> comentarios = buscarComentarios(publicacion);
@@ -236,7 +241,7 @@ public class PostBO implements IPostBO {
         }
         publicacion.setImagen(ConversorImagen.convertirAImagenDAO(bean.getImagen()));
         publicacion.setFechaCreacion(bean.getFechaCreacion());
-//        publicacion.setContenido(bean.getContenido().getDescripcion());
+        publicacion.setContenido(bean.getTexto());
         return publicacion;
     }
     

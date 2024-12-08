@@ -23,7 +23,7 @@ public interface IPublicacionDAO {
      * @throws PersistenciaException Si ocurre un error al interactuar con la
      * base de datos.
      */
-    public void publicarNuevaPublicacion(Publicacion publicacion) throws PersistenciaException;
+    public String publicarNuevaPublicacion(Publicacion publicacion) throws PersistenciaException;
 
     /**
      * Busca una publicación en la base de datos según los criterios de búsqueda

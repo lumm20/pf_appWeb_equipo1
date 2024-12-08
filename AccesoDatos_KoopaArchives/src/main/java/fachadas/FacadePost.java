@@ -88,12 +88,14 @@ public class FacadePost implements IFacadePost {
      * @param publicacion Publicación a registrar.
      */
     @Override
-    public void registrarPublicacion(Publicacion publicacion) {
+    public String registrarPublicacion(Publicacion publicacion) {
+        String registro = null;
         try {
-            publicacionDAO.publicarNuevaPublicacion(publicacion);
+            registro = publicacionDAO.publicarNuevaPublicacion(publicacion);
         } catch (PersistenciaException ex) {
             Logger.getLogger(FacadePost.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return registro;
     }
 
     /**

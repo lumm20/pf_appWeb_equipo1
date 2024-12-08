@@ -37,12 +37,6 @@ function createLikeHandler() {
                 
                 if(response.ok){
                     console.log(response);
-//                    if (currentLikeState) {
-//                        document.getElementById('like-action').value = 'dislike';
-//                    } else {
-//                        document.getElementById('like-action').value = 'like';
-//                    }
-//                    likesCounter.firstChild.textContent = cantLikes;
                 }
             }).catch(error => {
                 console.error('Error:',error);
@@ -50,10 +44,137 @@ function createLikeHandler() {
             
             console.log("cambio el estado de like");
             return true;
-        }, 7000); // Espera de 7 segundos antes de enviar
+        }, 7000);
     }
 
     return sendLike;
+}
+
+function editPost(){
+    const editBtn = document.getElementById('edit-btn');
+    
+    editBtn.addEventListener('click',function (){
+        const saveBtn = document.getElementById('save');
+        const inputTxt = document.getElementById('input-text');
+        const pTxt = document.getElementById('parrafo');
+        
+        if(!saveBtn.classList.contains('active')){
+            saveBtn.classList.add('active');
+        }
+        if(!inputTxt.classList.contains('active')){
+            inputTxt.classList.add('active');
+        }
+        if(pTxt.classList.contains('active')){
+            pTxt.classList.remove('active');
+        }
+    });
+}
+
+function cancelEdit(){
+    const cancelBtn = document.getElementById('cancel-edit');
+    
+    cancelBtn.addEventListener('click', function () {
+        const saveBtn = document.getElementById('save');
+        const inputTxt = document.getElementById('input-text');
+        const pTxt = document.getElementById('parrafo');
+        
+        saveBtn.classList.remove('active');
+        inputTxt.classList.remove('active');
+        pTxt.classList.add('active');
+    });
+}
+
+function sendChanges(){
+    const saveBtn = document.getElementById('save-btn');
+    
+    saveBtn.addEventListener('click',function (){
+        
+        if (!saveBtn.classList.contains('disabled')) {
+            const code = document.getElementById('codigoPost').value;
+            const newText = document.getElementById('input-text').value;
+            
+            const params = new URLSearchParams({
+                action: 'editarPost',
+                contenido: newText,
+                codigoPost: code
+            });
+
+            fetch('/private/Publicacion', {
+                method: 'post',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: params.toString()
+            }).then(async (response) => {
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert('Hubo un error al editar el post');
+                    throw new Error(error.error || 'Ocurrio un error desconocido');
+                }
+
+                const data = await response.json();
+                console.log('Exito:', data.mensaje);
+                alert('El post se edito con exito');
+                window.location.href = "./Publicacion?post="+code;
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        
+    });
+}
+
+function savePost(){
+    const saveBtn = document.getElementById('save-btn');
+    const txtArea = document.getElementById('input-text');
+    let txtActual =document.getElementById('input-text').value;
+    
+    txtArea.addEventListener('input',function (){
+        const txtNuevo =document.getElementById('input-text').value;
+        if(txtActual === txtNuevo){
+            if(!saveBtn.classList.contains('disabled')){
+                saveBtn.classList.add('disabled');
+            }
+        }else{
+            if (saveBtn.classList.contains('disabled')) {
+                saveBtn.classList.remove('disabled');
+            }
+        }
+    });
+}
+
+function deletePost(){
+    const deleteBtn = document.getElementById('delete-btn');
+    
+    deleteBtn.addEventListener('click',function (){
+        
+        if (confirm("¿Estás seguro que deseas eliminar el post?")) {
+            const codigo = document.getElementById('codigoPost').value;
+            
+            const params = new URLSearchParams({
+                action: 'eliminarPost',
+                codigoPost: codigo
+            });
+            
+            fetch('/private/Publicacion', {
+                method: 'post',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: params.toString()
+            }).then(async (response) => {
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert('Hubo un error al eliminar el post');
+                    throw new Error(error.error || 'Ocurrio un error desconocido');
+                }
+
+                const data = await response.json();
+                console.log('Exito:', data.mensaje);
+                alert('El post se elimino con exito');
+                window.location.href="./Publicacion";
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -104,4 +225,11 @@ document.addEventListener('DOMContentLoaded', function() {
             block: 'start'       // Alinea la parte superior de la sección
         });
     });
+    
+    deletePost();
+    editPost();
+    savePost();
+    cancelEdit();
+    sendChanges();
+    
 });
